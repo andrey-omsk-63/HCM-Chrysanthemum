@@ -1,9 +1,9 @@
-import * as React from "react";
-import { useSelector } from "react-redux";
+import * as React from 'react';
+import { useSelector } from 'react-redux';
 
-import { Placemark, YMapsApi } from "react-yandex-maps";
+import { Placemark, YMapsApi } from 'react-yandex-maps';
 
-import { GetPointData } from "../SdcServiceFunctions";
+import { GetPointData } from '../HcmServiceFunctions';
 
 //import { massMem } from "./SdcControlVertex";
 
@@ -35,30 +35,30 @@ const SdcDoPlacemarkDo = (props: {
   }
 
   const Hoster = React.useCallback(() => {
-    let host = "https://localhost:3000/18.svg";
+    let host = 'https://localhost:3000/18.svg';
     let nomInMass = datestat.massMem.indexOf(props.idx);
 
     if (!debug) {
       let mpp = mapp;
       if (DEMO) {
-        mpp = "1"; // режим Демо
+        mpp = '1'; // режим Демо
         if (nomInMass >= 0) {
           mpp = datestat.demoTlsost[nomInMass].toString();
         }
       } else {
         if (nomSvg > 0) mpp = nomSvg.toString();
       }
-      host = window.location.origin + "/free/img/trafficLights/" + mpp + ".svg";
+      host = window.location.origin + '/free/img/trafficLights/' + mpp + '.svg';
       if (datestat.demoLR[nomInMass])
-        host = window.location.origin + "/free/img/trafficLights/5.svg";
+        host = window.location.origin + '/free/img/trafficLights/5.svg';
     } else {
       if (DEMO) {
-        host = "https://localhost:3000/1.svg";
+        host = 'https://localhost:3000/1.svg';
         if (nomInMass >= 0) {
           //console.log("###:", props.idx, nomInMass, datestat);
           let mpp = datestat.demoTlsost[nomInMass].toString();
-          host = "https://localhost:3000/" + mpp + ".svg";
-          if (datestat.demoLR[nomInMass]) host = "https://localhost:3000/5.svg"; // режим ЛР
+          host = 'https://localhost:3000/' + mpp + '.svg';
+          if (datestat.demoLR[nomInMass]) host = 'https://localhost:3000/5.svg'; // режим ЛР
         }
       }
     }
@@ -79,9 +79,7 @@ const SdcDoPlacemarkDo = (props: {
       const Chips = props.ymaps?.templateLayoutFactory.createClass(
         '<div class="placemark"  ' +
           `style="background-image:url(${Hoster()}); ` +
-          `background-size: 100%; transform: rotate(${
-            rotateDeg ?? 0
-          }deg);\n"></div>`,
+          `background-size: 100%; transform: rotate(${rotateDeg ?? 0}deg);\n"></div>`,
         {
           build: function () {
             Chips.superclass.build.call(this);
@@ -92,7 +90,7 @@ const SdcDoPlacemarkDo = (props: {
               let zoom = map.getZoom();
               // Подпишемся на событие изменения области просмотра карты.
               map.events.add(
-                "boundschange",
+                'boundschange',
                 function () {
                   // Запустим перестраивание макета при изменении уровня зума.
                   const currentZoom = map.getZoom();
@@ -102,37 +100,36 @@ const SdcDoPlacemarkDo = (props: {
                     this.rebuild();
                   }
                 },
-                this
+                this,
               );
             }
             const options = this.getData().options,
               // Получим размер метки в зависимости от уровня зума.
               size = calcFunc(map.getZoom()) + 6,
-              element =
-                this.getParentElement().getElementsByClassName("placemark")[0],
+              element = this.getParentElement().getElementsByClassName('placemark')[0],
               // По умолчанию при задании своего HTML макета фигура активной области не задается,
               // и её нужно задать самостоятельно.
               // Создадим фигуру активной области "Круг".
               circleShape = {
-                type: "Circle",
+                type: 'Circle',
                 coordinates: [0, 0],
                 radius: size / 2,
               };
             // Зададим высоту и ширину метки.
-            element.style.width = element.style.height = size + "px";
+            element.style.width = element.style.height = size + 'px';
             // Зададим смещение.
             //element.style.marginLeft = element.style.marginTop =
             //-size / 2 + "px";
-            element.style.marginLeft = -size / 2.0 + "px";
-            element.style.marginTop = -size / 1.97 + "px";
+            element.style.marginLeft = -size / 2.0 + 'px';
+            element.style.marginTop = -size / 1.97 + 'px';
             // Зададим фигуру активной области.
-            options.set("shape", circleShape);
+            options.set('shape', circleShape);
           },
-        }
+        },
       );
       return Chips;
     },
-    [Hoster, props.ymaps?.templateLayoutFactory]
+    [Hoster, props.ymaps?.templateLayoutFactory],
   );
 
   const calculate = function (zoom: number): number {
@@ -165,11 +162,11 @@ const SdcDoPlacemarkDo = (props: {
         geometry={props.coordinate}
         properties={GetPointData(idx, map)}
         options={getPointOptions1()}
-        modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
+        modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
         onClick={() => props.OnPlacemarkClickPoint(idx)}
       />
     ),
-    [idx, map, getPointOptions1, props]
+    [idx, map, getPointOptions1, props],
   );
   return MemoPlacemarkDo;
 };

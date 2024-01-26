@@ -1,26 +1,26 @@
-import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { massfazCreate, statsaveCreate } from "../../redux/actions";
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { massfazCreate, statsaveCreate } from '../../redux/actions';
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
-import { CloseInterval } from "../SdcServiceFunctions";
+import { CloseInterval } from '../HcmServiceFunctions';
 
-import { SendSocketDispatch } from "../SdcSocketFunctions";
+import { SendSocketDispatch } from '../HcmSocketFunctions';
 
-import { MaxFaz, CLINCH } from "./../MapConst";
+import { MaxFaz, CLINCH } from '../HcmMainConst';
 
-import { DEMO } from "./../MainMapSdc";
+import { DEMO } from '../HcmMain';
 
-import { styleModalEnd } from "../MainMapStyle";
+import { styleModalEnd } from '../HcmMainStyle';
 
-import { styleVarKnopNum } from "./SdcComponentsStyle";
-import { styleKnop, styleOutputFaza } from "./SdcComponentsStyle";
-import { StyleSetControl, styleControl01 } from "./SdcComponentsStyle";
-import { StyleTitle, styleTitleDEMO } from "./SdcComponentsStyle";
-import { StyleModalMenuVar, StyleModalMenuConst } from "./SdcComponentsStyle";
+import { styleVarKnopNum } from './HcmComponentsStyle';
+import { styleKnop, styleOutputFaza } from './HcmComponentsStyle';
+import { StyleSetControl, styleControl01 } from './HcmComponentsStyle';
+import { StyleTitle, styleTitleDEMO } from './HcmComponentsStyle';
+import { StyleModalMenuVar, StyleModalMenuConst } from './HcmComponentsStyle';
 
 let oldIdx = -1;
 let needRend = false;
@@ -32,15 +32,15 @@ let kolFaz: Array<number> = []; // количестово доступных ф�
 let nomInMass = -1; // номер в массиве "запущенных" светофоров
 let present = -1;
 let statusVertex = 0;
-let statusName = "";
+let statusName = '';
 
-let kluchGl = "";
+let kluchGl = '';
 let mF: any = null;
 
-const colorNormal = "#E9F5D8"; // светло-салатовый
-const colorExtra = "#96CD8F"; // тёмно-салатовый
-const colorSent = "#AFDAF3"; // светло-голубой
-const colorBad = "#bec6ce"; // серый
+const colorNormal = '#E9F5D8'; // светло-салатовый
+const colorExtra = '#96CD8F'; // тёмно-салатовый
+const colorSent = '#AFDAF3'; // светло-голубой
+const colorBad = '#bec6ce'; // серый
 
 const SdcControlVertex = (props: {
   setOpen: Function;
@@ -104,10 +104,10 @@ const SdcControlVertex = (props: {
       idevice: map.tflight[props.idx].idevice,
     };
     let sumFaz = map.tflight[props.idx].phases.length;
-    kluchGl = map.tflight[props.idx].ID + " ";
+    kluchGl = map.tflight[props.idx].ID + ' ';
 
     let nomIn = datestat.massMem.indexOf(props.idx); // запускался ли светофор ранее?
-    console.log("запускался ли светофор ранее?", nomIn, datestat.massMem);
+    console.log('запускался ли светофор ранее?', nomIn, datestat.massMem);
     if (nomIn < 0) {
       // светофор ранее не запускался
       massfaz.push(massFaz);
@@ -123,12 +123,7 @@ const SdcControlVertex = (props: {
       kolFaz.push(sumFaz < MaxFaz ? sumFaz + 1 : MaxFaz);
       needDopKnop.push(sumFaz === MaxFaz ? false : true);
 
-      console.log(
-        "Новый id:",
-        massfaz[nomInMass].id,
-        nomInMass,
-        datestat.massMem
-      );
+      console.log('Новый id:', massfaz[nomInMass].id, nomInMass, datestat.massMem);
     } else {
       nomInMass = nomIn; // повторное открытие
     }
@@ -159,8 +154,7 @@ const SdcControlVertex = (props: {
   }
   //========================================================
   const handleCloseSet = React.useCallback(() => {
-    if (!DEMO && shippedKU[nomInMass])
-      SendSocketDispatch(debug, ws, mF.idevice, 4, 0);
+    if (!DEMO && shippedKU[nomInMass]) SendSocketDispatch(debug, ws, mF.idevice, 4, 0);
     datestat.working = false; // свободно
     // if (DEMO) {
     //   datestat.demoTlsost[nomInMass] = 1;
@@ -169,8 +163,8 @@ const SdcControlVertex = (props: {
     dispatch(statsaveCreate(datestat));
     oldIdx = -1;
 
-    console.log("1Финиш:", shippedKU[nomInMass], datestat.massMem);
-    console.log("2Финиш:", datestat.timerId, datestat.massInt);
+    console.log('1Финиш:', shippedKU[nomInMass], datestat.massMem);
+    console.log('2Финиш:', datestat.timerId, datestat.massInt);
 
     props.setOpen(false);
   }, [datestat, debug, ws, props, dispatch]);
@@ -186,7 +180,7 @@ const SdcControlVertex = (props: {
       dispatch(massfazCreate(massfaz));
       shippedKU[nomInMass] = mode === 9 ? true : false;
 
-      console.log(nomInMass, "New_Отправка ", mode, shippedKU[nomInMass], mF);
+      console.log(nomInMass, 'New_Отправка ', mode, shippedKU[nomInMass], mF);
 
       !DEMO && SendSocketDispatch(debug, ws, mF.idevice, 9, mode);
 
@@ -197,19 +191,19 @@ const SdcControlVertex = (props: {
           datestat.timerId[nomInMass] = setInterval(() => DoTimerId(), timer);
           datestat.massInt = datestat.timerId[nomInMass];
         }
-        console.log("Отпр:", nomInMass, datestat.timerId, datestat.massInt);
+        console.log('Отпр:', nomInMass, datestat.timerId, datestat.massInt);
         if (DEMO) {
           needRend = true;
           setFlagPusk(!flagPusk);
         }
       } else {
         if (mode === 9) {
-          console.log("1Пришло КУ", datestat.massInt, datestat.timerId);
-          console.log("2Пришло КУ", props.idx, nomInMass, datestat.massMem);
+          console.log('1Пришло КУ', datestat.massInt, datestat.timerId);
+          console.log('2Пришло КУ', props.idx, nomInMass, datestat.massMem);
           let nomIn = datestat.massMem.indexOf(props.idx);
           if (nomIn >= 0) datestat.massMem[nomIn] = -1;
           CloseInterval(datestat, nomInMass);
-          console.log("Почистили", mode, datestat.massInt, datestat.timerId);
+          console.log('Почистили', mode, datestat.massInt, datestat.timerId);
           handleCloseSet();
           return;
         }
@@ -231,14 +225,12 @@ const SdcControlVertex = (props: {
   //========================================================
   const DoTimerId = () => {
     let ch = 0; // проверка массива timerId на заполненость
-    for (let i = 0; i < datestat.timerId.length; i++)
-      if (datestat.timerId[i] !== null) ch++;
-    !ch && console.log("Нет запущенных светофоров!!!");
+    for (let i = 0; i < datestat.timerId.length; i++) if (datestat.timerId[i] !== null) ch++;
+    !ch && console.log('Нет запущенных светофоров!!!');
     if (!ch) return;
 
     let mass = JSON.parse(JSON.stringify(datestat.timerId));
-    for (let i = 0; i < datestat.timerId.length; i++)
-      mass.push(datestat.timerId[i]);
+    for (let i = 0; i < datestat.timerId.length; i++) mass.push(datestat.timerId[i]);
     let begin = mass.indexOf(present);
     if (begin < 0) begin = 0; // первый проход
     for (let i = 0; i < mass.length; i++) {
@@ -252,9 +244,9 @@ const SdcControlVertex = (props: {
     //console.log("Отправка с", DEMO, present, datestat.timerId[present], mF);
     if (!DEMO) {
       if (mF.fazaZU) {
-        console.log("Отправлена фаза c id", mF.id, mF.faza);
+        console.log('Отправлена фаза c id', mF.id, mF.faza);
         SendSocketDispatch(debug, ws, mF.idevice, 9, mF.faza);
-      } else console.log("Отправлена пустышка c id", mF.id);
+      } else console.log('Отправлена пустышка c id', mF.id);
     } else {
       datestat.demoTlsost[present] = 1;
       if (!datestat.stopSwitch[present]) {
@@ -263,7 +255,7 @@ const SdcControlVertex = (props: {
         mF.fazaSist = mF.faza;
       }
       dispatch(massfazCreate(massfaz));
-      console.log("Отпр id", mF.id, mF.fazaSist, datestat.stopSwitch[present]);
+      console.log('Отпр id', mF.id, mF.fazaSist, datestat.stopSwitch[present]);
       needRend = true;
       setFlagPusk(!flagPusk);
     }
@@ -272,10 +264,9 @@ const SdcControlVertex = (props: {
 
     if (DEMO) {
       if ((!mF.fazaSist && !mF.faza) || (mF.fazaSist === 9 && mF.faza === 9)) {
-        console.log("id:", mF.id, "DEMO ЛР или КУ", mF.faza);
+        console.log('id:', mF.id, 'DEMO ЛР или КУ', mF.faza);
         if (!mF.fazaSist && !mF.faza) datestat.demoTlsost[present] = 5; // ЛР
-        if (mF.fazaSist === 9 && mF.faza === 9)
-          datestat.demoTlsost[present] = 1; // КУ
+        if (mF.fazaSist === 9 && mF.faza === 9) datestat.demoTlsost[present] = 1; // КУ
         mF.fazaSist = 1;
         needRend = true;
         datestat.stopSwitch[present] = false;
@@ -288,7 +279,7 @@ const SdcControlVertex = (props: {
     //timerId = setInterval(() => DoTimerId(nomInMass, timerId), timer); // Нужно?
 
     if ((DEMO && mF.fazaSist === 10) || (DEMO && mF.fazaSist === 11)) {
-      console.log("id:", mF.id, "DEMO ЖМ или ОС");
+      console.log('id:', mF.id, 'DEMO ЖМ или ОС');
       if (mF.fazaSist === 10) datestat.demoTlsost[present] = 7; // ЖМ
       if (mF.fazaSist === 11) datestat.demoTlsost[present] = 12; // ОС
       // } else {
@@ -328,13 +319,8 @@ const SdcControlVertex = (props: {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
-            style={{ width: window.innerHeight / 5.5, height: widthHeight }}
-          >
-            <image
-              width={"95%"}
-              height={"100%"}
-              xlinkHref={"data:image/png;base64," + img}
-            />
+            style={{ width: window.innerHeight / 5.5, height: widthHeight }}>
+            <image width={'95%'} height={'100%'} xlinkHref={'data:image/png;base64,' + img} />
           </svg>
         )}
         {!img && i >= 0 && <Box sx={{ fontSize: 41 }}>{i + 1}</Box>}
@@ -355,19 +341,12 @@ const SdcControlVertex = (props: {
           colorKnop = colorExtra;
           bShadow = 12;
         }
-        if (needDopKnop[nomInMass] && i === kolFaz[nomInMass] - 1)
-          colorKnop = colorNormal;
+        if (needDopKnop[nomInMass] && i === kolFaz[nomInMass] - 1) colorKnop = colorNormal;
         let styleMenuVar = StyleModalMenuVar(colorKnop, bShadow);
         let contentKnop1 =
-          needDopKnop[nomInMass] && i === kolFaz[nomInMass] - 1
-            ? null
-            : datestat.phSvg[i];
-        let contentKnop2 =
-          needDopKnop[nomInMass] && i === kolFaz[nomInMass] - 1 ? -1 : i;
-        let num =
-          needDopKnop[nomInMass] && i === kolFaz[nomInMass] - 1
-            ? ""
-            : (i + 1).toString();
+          needDopKnop[nomInMass] && i === kolFaz[nomInMass] - 1 ? null : datestat.phSvg[i];
+        let contentKnop2 = needDopKnop[nomInMass] && i === kolFaz[nomInMass] - 1 ? -1 : i;
+        let num = needDopKnop[nomInMass] && i === kolFaz[nomInMass] - 1 ? '' : (i + 1).toString();
 
         resStr.push(
           <Grid container key={i}>
@@ -381,7 +360,7 @@ const SdcControlVertex = (props: {
                 </Button>
               </Box>
             </Grid>
-          </Grid>
+          </Grid>,
         );
       }
     }
@@ -393,7 +372,7 @@ const SdcControlVertex = (props: {
     let bShadow = 4;
     let handleMode = 0;
     switch (mode) {
-      case "ЖМ":
+      case 'ЖМ':
         handleMode = 10;
         if (sentParam === 10) colorKnop = colorSent;
         if (mF.fazaSist === 10 || mF.fazaSist === 14) {
@@ -401,7 +380,7 @@ const SdcControlVertex = (props: {
           bShadow = 12;
         }
         break;
-      case "ОС":
+      case 'ОС':
         handleMode = 11;
         if (sentParam === 11) colorKnop = colorSent;
         if (mF === 11 || mF.fazaSist === 15) {
@@ -409,11 +388,11 @@ const SdcControlVertex = (props: {
           bShadow = 12;
         }
         break;
-      case "ЛР":
+      case 'ЛР':
         if (DEMO && sentParam === 0) colorKnop = colorSent;
         handleMode = 0;
         break;
-      case "КУ":
+      case 'КУ':
         if (DEMO && sentParam === 9) colorKnop = colorSent;
         handleMode = 9;
     }
@@ -443,23 +422,22 @@ const SdcControlVertex = (props: {
   const Clicker = (ref: any) => {
     const handleClickOutside = React.useCallback(
       (event: any) => {
-        if (ref.current && !ref.current.contains(event.target))
-          handleCloseSet();
+        if (ref.current && !ref.current.contains(event.target)) handleCloseSet();
       },
-      [ref]
+      [ref],
     );
 
     React.useEffect(() => {
-      document.addEventListener("click", handleClickOutside, true);
+      document.addEventListener('click', handleClickOutside, true);
       return () => {
-        document.removeEventListener("click", handleClickOutside, true);
+        document.removeEventListener('click', handleClickOutside, true);
       };
     }, [handleClickOutside]);
   };
 
   Clicker(boxer);
   //========================================================
-  let titleDEMO = DEMO ? "( Демонстрационный режим )" : "";
+  let titleDEMO = DEMO ? '( Демонстрационный режим )' : '';
 
   return (
     <Box ref={boxer} sx={styleSetControl}>
@@ -474,22 +452,22 @@ const SdcControlVertex = (props: {
       </Box>
       <Box sx={styleControl01}>
         <Grid container sx={{}}>
-          <Grid item xs={8} sx={{ padding: "0px 6px 0px 1px" }}>
+          <Grid item xs={8} sx={{ padding: '0px 6px 0px 1px' }}>
             <Grid container>{StrokaFazaKnop()} </Grid>
           </Grid>
           <Grid item xs sx={{ paddingRight: 1 }}>
             <Grid container>
-              {OutputConstFaza("ЖМ")}
-              {OutputConstFaza("ОС")}
-              {OutputConstFaza("ЛР")}
-              {OutputConstFaza("КУ")}
+              {OutputConstFaza('ЖМ')}
+              {OutputConstFaza('ОС')}
+              {OutputConstFaza('ЛР')}
+              {OutputConstFaza('КУ')}
             </Grid>
           </Grid>
         </Grid>
       </Box>
       {!DEMO && (
         <Box sx={StyleTitle(12.1)}>
-          cостояние:{" "}
+          cостояние:{' '}
           <em>
             <b>{statusName}</b>
           </em>

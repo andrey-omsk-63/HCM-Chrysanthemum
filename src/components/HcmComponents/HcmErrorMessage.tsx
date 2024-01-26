@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 //import { styleModalEnd } from '../MainMapStyle';
 
-const SdcErrorMessage = (props: { sErr: string; setOpen: any }) => {
+const HcmErrorMessage = (props: { sErr: string; setOpen: any }) => {
   const [openSet, setOpenSet] = React.useState(true);
 
   const styleSetInf = {
@@ -21,7 +21,7 @@ const SdcErrorMessage = (props: { sErr: string; setOpen: any }) => {
     borderColor: 'red',
     borderRadius: 1,
     boxShadow: 24,
-    textShadow: "2px 2px 3px rgba(0,0,0,0.3)",
+    textShadow: '2px 2px 3px rgba(0,0,0,0.3)',
     p: 1.5,
   };
 
@@ -55,4 +55,4 @@ const SdcErrorMessage = (props: { sErr: string; setOpen: any }) => {
   );
 };
 
-export default SdcErrorMessage;
+export default HcmErrorMessage;
