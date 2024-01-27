@@ -4,51 +4,55 @@ import { massfazCreate, statsaveCreate } from '../redux/actions';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 
-import { YMaps, Map, FullscreenControl } from 'react-yandex-maps';
-import { GeolocationControl, YMapsApi } from 'react-yandex-maps';
-import { RulerControl, SearchControl } from 'react-yandex-maps';
-import { TrafficControl, TypeSelector, ZoomControl } from 'react-yandex-maps';
+//import { YMaps, Map, FullscreenControl } from 'react-yandex-maps';
+//import { GeolocationControl, YMapsApi } from 'react-yandex-maps';
+//import { RulerControl, SearchControl } from 'react-yandex-maps';
+//import { TrafficControl, TypeSelector, ZoomControl } from 'react-yandex-maps';
 
-import SdcDoPlacemarkDo from './HcmComponents/SdcDoPlacemarkDo';
-import SdcControlVertex from './HcmComponents/SdcControlVertex';
-import HcmErrorMessage from './HcmComponents/HcmErrorMessage';
+//import SdcDoPlacemarkDo from './HcmComponents/SdcDoPlacemarkDo';
+//import SdcControlVertex from './HcmComponents/SdcControlVertex';
+//import HcmErrorMessage from './HcmComponents/HcmErrorMessage';
 
-import { StrokaMenuGlob, CenterCoord } from './HcmServiceFunctions';
+//import { StrokaMenuGlob, CenterCoord } from './HcmServiceFunctions';
 import { CloseInterval } from './HcmServiceFunctions';
 
-import { SendSocketGetPhases } from './HcmSocketFunctions';
+//import { SendSocketGetPhases } from './HcmSocketFunctions';
 
 import { SendSocketDispatch } from './HcmSocketFunctions';
 
-import { MyYandexKey } from './HcmMainConst';
+//import { MyYandexKey } from './HcmMainConst';
 
-import { searchControl } from './HcmMainStyle';
+//import { searchControl } from './HcmMainStyle';
 
 export let DEMO = false;
 
-let flagOpen = false;
-const zoomStart = 10;
-let zoom = zoomStart;
-let pointCenter: any = 0;
-let newCenter: any = [];
-let funcBound: any = null;
+//et flagOpen = false;
+// const zoomStart = 10;
+// let zoom = zoomStart;
+// let pointCenter: any = 0;
+// let newCenter: any = [];
+// let funcBound: any = null;
 
-let soobErr = '';
-let idxObj = -1;
+// let soobErr = '';
+// let idxObj = -1;
 
 //let ev: any = null
 
+let widthGl = window.innerWidth - 3;
+
 const HcmMain = (props: { trigger: boolean }) => {
   //== Piece of Redux =======================================
-  const map = useSelector((state: any) => {
-    const { mapReducer } = state;
-    return mapReducer.map.dateMap;
-  });
-  let coordinates = useSelector((state: any) => {
-    const { coordinatesReducer } = state;
-    return coordinatesReducer.coordinates;
-  });
+  // const map = useSelector((state: any) => {
+  //   const { mapReducer } = state;
+  //   return mapReducer.map.dateMap;
+  // });
+  // let coordinates = useSelector((state: any) => {
+  //   const { coordinatesReducer } = state;
+  //   return coordinatesReducer.coordinates;
+  // });
   let massfaz = useSelector((state: any) => {
     const { massfazReducer } = state;
     return massfazReducer.massfaz;
@@ -59,16 +63,16 @@ const HcmMain = (props: { trigger: boolean }) => {
   });
   const debug = datestat.debug;
   const ws = datestat.ws;
-  const homeRegion = datestat.region;
+  //const homeRegion = datestat.region;
   DEMO = datestat.demo;
   const dispatch = useDispatch();
   //===========================================================
-  const [control, setControl] = React.useState(false);
-  const [flagCenter, setFlagCenter] = React.useState(false);
-  const [demoSost, setDemoSost] = React.useState(-1);
-  const [openSetErr, setOpenSetErr] = React.useState(false);
-  const [ymaps, setYmaps] = React.useState<YMapsApi | null>(null);
-  const mapp = React.useRef<any>(null);
+  // const [control, setControl] = React.useState(false);
+  // const [flagCenter, setFlagCenter] = React.useState(false);
+  // const [demoSost, setDemoSost] = React.useState(-1);
+  // const [openSetErr, setOpenSetErr] = React.useState(false);
+  // const [ymaps, setYmaps] = React.useState<YMapsApi | null>(null);
+  // const mapp = React.useRef<any>(null);
 
   const StatusQuo = (mode: boolean) => {
     for (let i = 0; i < datestat.timerId.length; i++) {
@@ -95,57 +99,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     }
   };
 
-  const OnPlacemarkClickPoint = (index: number) => {
-    //console.log("1OnPlacemarkClickPoint:", index, datestat.working);
-    if (!datestat.working) {
-      let area = map.tflight[index].area.num;
-      let id = map.tflight[index].ID;
-      console.log('OnPlacemarkClickPoint id:', id);
-      datestat.area = area;
-      datestat.id = id;
-      if (!debug) datestat.phSvg = Array(8).fill(null);
-      SendSocketGetPhases(debug, ws, homeRegion, area, id);
-      dispatch(statsaveCreate(datestat));
-      idxObj = index;
-      setControl(true);
-    } else {
-      soobErr = 'В данный момент происходит управление другим перекрёстком';
-      setOpenSetErr(true);
-    }
-  };
   //=== вывод светофоров ===================================
-  const PlacemarkDo = () => {
-    return (
-      <>
-        {flagOpen &&
-          coordinates.map((coordinate: any, idx: any) => (
-            <SdcDoPlacemarkDo
-              key={idx}
-              ymaps={ymaps}
-              coordinate={coordinate}
-              idx={idx}
-              OnPlacemarkClickPoint={OnPlacemarkClickPoint}
-            />
-          ))}
-      </>
-    );
-  };
-
-  const InstanceRefDo = (ref: React.Ref<any>) => {
-    if (ref) {
-      mapp.current = ref;
-      mapp.current.events.remove('boundschange', funcBound);
-      funcBound = function () {
-        pointCenter = mapp.current.getCenter();
-        zoom = mapp.current.getZoom(); // покрутили колёсико мыши
-      };
-      mapp.current.events.add('boundschange', funcBound);
-      if (flagCenter) {
-        pointCenter = newCenter;
-        setFlagCenter(false);
-      }
-    }
-  };
 
   const PressButton = (mode: number) => {
     switch (mode) {
@@ -164,36 +118,22 @@ const HcmMain = (props: { trigger: boolean }) => {
         DEMO = true;
         break;
       case 63: // Косяк при работе с меню
-        soobErr = 'Завершите предыдущий режим нормальным образом';
-        setOpenSetErr(true);
+      //soobErr = 'Завершите предыдущий режим нормальным образом';
+      //setOpenSetErr(true);
     }
   };
   //=== Функции - обработчики ==============================
-  const RandomNumber = (min: number, max: number) => {
-    let rand = Math.random() * (max - min) + min;
-    return Math.floor(rand);
-  };
 
-  const ChangeDemoSost = (mode: number) => {
-    //console.log("ChangeDemoSost:", mode);
-    //setDemoSost(mode + demoSost);// костыль
-    setDemoSost(RandomNumber(1, 1000) + demoSost); // костыль
-  };
-
-  const SetControl = (mode: any) => {
-    console.log('SETCONTROL:', mode);
-    setControl(mode);
-  };
   //=== инициализация ======================================
-  if (!flagOpen && Object.keys(map.tflight).length) {
-    pointCenter = CenterCoord(
-      map.boxPoint.point0.Y,
-      map.boxPoint.point0.X,
-      map.boxPoint.point1.Y,
-      map.boxPoint.point1.X,
-    );
-    flagOpen = true;
-  }
+  // if (!flagOpen && Object.keys(map.tflight).length) {
+  //   pointCenter = CenterCoord(
+  //     map.boxPoint.point0.Y,
+  //     map.boxPoint.point0.X,
+  //     map.boxPoint.point1.Y,
+  //     map.boxPoint.point1.X,
+  //   );
+  //   flagOpen = true;
+  // }
   //=== Закрытие или перезапуск вкладки ====================
   React.useEffect(() => {
     window.addEventListener('beforeunload', alertUser);
@@ -222,74 +162,171 @@ const HcmMain = (props: { trigger: boolean }) => {
     throw new Error('Function not implemented.');
   }
   //========================================================
-  let mapState: any = {
-    center: pointCenter,
-    zoom,
+
+  // const styleChat05 = {
+  //   fontSize: 11,
+  //   flexGrow: 1,
+  //   width: '100%',
+  //   //background: '#E5E5E5',
+  //   background: 'linear-gradient(125deg, #DCE0AB 30%,#97BB92 52%, #D2D8B7 85%)',
+  //   paddingLeft: '12px',
+  //   paddingRight: '12px',
+  //   height: '86vh',
+  // };
+
+  const styleMain01 = {
+    height: '99.9vh',
+    background: 'linear-gradient(105deg, #DCE0AB 25%,#97BB92 52%, #D2D8B7 85%)',
+    padding: '3px 0px 0px 0px',
   };
 
-  const styleChat05 = {
-    fontSize: 11,
-    flexGrow: 1,
-    width: '100%',
-    //background: '#E5E5E5',
-    background: 'linear-gradient(125deg, #DCE0AB 30%,#97BB92 52%, #D2D8B7 85%)',
-    paddingLeft: '12px',
-    paddingRight: '12px',
-    height: '86vh',
+  const InputDirect = (func: any, widthBlok: number) => {
+    const styleSetNapr = {
+      width: widthBlok - 25,
+      maxHeight: '2px',
+      minHeight: '2px',
+      bgcolor: '#BAE186', // салатовый
+      border: '1px solid #93D145', // тёмно салатовый
+      borderRadius: 1,
+      p: 1.25,
+      textAlign: 'center',
+      boxShadow: 6,
+    };
+
+    const styleBoxFormNapr = {
+      '& > :not(style)': {
+        marginTop: '-10px',
+        marginLeft: '-12px',
+        width: widthBlok,
+      },
+    };
+    const handleKey = (event: any) => {
+      if (event.key === 'Enter') event.preventDefault();
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrency(Number(event.target.value));
+      switch (Number(event.target.value)) {
+        case 0: // режим управления
+          func(61);
+          break;
+        case 1: // режим Demo
+          func(62);
+      }
+    };
+
+    let dat = ['Режим управления', 'Режим Демо'];
+    let massKey = [];
+    let massDat: any[] = [];
+    const currencies: any = [];
+    for (let key in dat) {
+      massKey.push(key);
+      massDat.push(dat[key]);
+    }
+    for (let i = 0; i < massKey.length; i++) {
+      let maskCurrencies = {
+        value: '',
+        label: '',
+      };
+      maskCurrencies.value = massKey[i];
+      maskCurrencies.label = massDat[i];
+      currencies.push(maskCurrencies);
+    }
+
+    const [currency, setCurrency] = React.useState(0);
+
+    console.log('Ширина: ', widthBlok);
+
+    return (
+      <Box sx={styleSetNapr}>
+        <Box component="form" sx={styleBoxFormNapr}>
+          <TextField
+            select
+            size="small"
+            onKeyPress={handleKey} //отключение Enter
+            value={currency}
+            onChange={handleChange}
+            InputProps={{
+              disableUnderline: true,
+              style: {
+                fontSize: currency === 1 ? 14.5 : 14,
+                //fontSize: 14,
+                fontWeight: 700,
+                color: currency === 1 ? 'red' : 'black',
+                //marginTop: currency === 1 ? -3 : 0,
+              },
+            }}
+            variant="standard"
+            color="secondary">
+            {currencies.map((option: any) => (
+              <MenuItem
+                key={option.value}
+                value={option.value}
+                sx={{
+                  fontSize: 14,
+                  color: option.label === 'Режим Демо' ? 'red' : 'black',
+                }}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+      </Box>
+    );
+  };
+
+  const StrokaMenuGlob = (func: any, wdth: number) => {
+    let widthBlok = (widthGl / 12) * wdth + 1;
+
+    const styleApp01 = {
+      fontSize: 12.9,
+      //marginRight: 0.1,
+      //marginLeft: 0.1,
+      width: widthBlok,
+      //paddingBottom: 0.5,
+    };
+
+    return <Box sx={styleApp01}>{InputDirect(func, widthBlok)}</Box>;
   };
 
   return (
-    <Grid
-      container
-      sx={{
-        height: '99.9vh',
-        background: 'linear-gradient(105deg, #DCE0AB 25%,#97BB92 52%, #D2D8B7 85%)',
-      }}>
-      <Grid item xs={12}>
-        {/* главное меню */}
-        <Box>{StrokaMenuGlob(PressButton, datestat.working)}</Box>
-        {/* Яндекс карта */}
-
-        {/* <Grid container sx={{ height: '96.9vh' }}>
-          <Grid item xs>
-            {Object.keys(map.tflight).length && (
-              <YMaps query={{ apikey: MyYandexKey, lang: 'ru_RU' }}>
-                <Map
-                  modules={['templateLayoutFactory']}
-                  state={mapState}
-                  instanceRef={(ref) => InstanceRefDo(ref)}
-                  onLoad={(ref) => {
-                    ref && setYmaps(ref);
-                  }}
-                  width={'99.9%'}
-                  height={'99.9%'}>
-                 
-                  <FullscreenControl />
-                  <GeolocationControl options={{ float: 'left' }} />
-                  <RulerControl options={{ float: 'right' }} />
-                  <SearchControl options={searchControl} />
-                  <TrafficControl options={{ float: 'right' }} />
-                  <TypeSelector options={{ float: 'right' }} />
-                  <ZoomControl options={{ float: 'right' }} />
-                  
-                  <PlacemarkDo />
-                  {control && datestat.readyFaza && (
-                    <SdcControlVertex
-                      setOpen={SetControl}
-                      idx={idxObj}
-                      trigger={props.trigger}
-                      change={ChangeDemoSost}
-                    />
-                  )}
-                  {openSetErr && <HcmErrorMessage setOpen={setOpenSetErr} sErr={soobErr} />}
-                </Map>
-              </YMaps>
-            )}
+    <Grid container sx={styleMain01}>
+      <Grid item xs={12} sx={{ height: '24px' }}>
+        <Grid container sx={{ height: '24px', fontSize: 12.9 }}>
+          <Grid item xs={1.5} sx={{ border: 1 }}>
+            Логотип
           </Grid>
-        </Grid> */}
+
+          <Grid item xs={1.25} sx={{ border: 0 }}>
+            {/* Личный кабинет */}
+            <Box>{StrokaMenuGlob(PressButton, 1.25)}</Box>
+          </Grid>
+          <Grid item xs={1.45} sx={{ border: 0 }}>
+            {/* Мои подразделения */}
+            <Box>{StrokaMenuGlob(PressButton, 1.45)}</Box>
+          </Grid>
+          <Grid item xs={1.75} sx={{ border: 0 }}>
+            {/* Справочная информация */}
+            <Box>{StrokaMenuGlob(PressButton, 1.75)}</Box>
+          </Grid>
+          <Grid item xs={2.05} sx={{ border: 0 }}>
+            {/* Аналитика по подразделениям */}
+            <Box>{StrokaMenuGlob(PressButton, 2.05)}</Box>
+          </Grid>
+          <Grid item xs={1} sx={{ border: 0 }}>
+            {/* Ввод данных */}
+            <Box>{StrokaMenuGlob(PressButton, 1)}</Box>
+          </Grid>
+
+          <Grid item xs={1.5} sx={{ border: 1 }}></Grid>
+          <Grid item xs={1.5} sx={{ border: 1 }}>
+            Поиск
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
 };
 
 export default HcmMain;
+//{/* <Box>{StrokaMenuGlob(PressButton, datestat.working)}</Box> */}
