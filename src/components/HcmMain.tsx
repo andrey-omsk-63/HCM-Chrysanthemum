@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { massfazCreate, statsaveCreate } from '../redux/actions';
+import { useSelector } from 'react-redux';
+//import { massfazCreate, statsaveCreate } from '../redux/actions';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -16,32 +16,29 @@ import MenuItem from '@mui/material/MenuItem';
 //import SdcControlVertex from './HcmComponents/SdcControlVertex';
 //import HcmErrorMessage from './HcmComponents/HcmErrorMessage';
 
-//import { StrokaMenuGlob, CenterCoord } from './HcmServiceFunctions';
-import { CloseInterval } from './HcmServiceFunctions';
+import { PreparCurrencies01, PreparCurrencies02 } from './HcmServiceFunctions';
+import { PreparCurrencies03, PreparCurrencies04 } from './HcmServiceFunctions';
+import { PreparCurrencies05 } from './HcmServiceFunctions';
 
 //import { SendSocketGetPhases } from './HcmSocketFunctions';
 
-import { SendSocketDispatch } from './HcmSocketFunctions';
+//import { SendSocketDispatch } from './HcmSocketFunctions';
 
 //import { MyYandexKey } from './HcmMainConst';
 
-//import { searchControl } from './HcmMainStyle';
+import { styleMain01 } from './HcmMainStyle';
 
 export let DEMO = false;
 
-//et flagOpen = false;
-// const zoomStart = 10;
-// let zoom = zoomStart;
-// let pointCenter: any = 0;
-// let newCenter: any = [];
-// let funcBound: any = null;
+let currencies01: any = []; // Личный кабинет
+let currencies02: any = [];
+let currencies03: any = [];
+let currencies04: any = [];
+let currencies05: any = [];
 
-// let soobErr = '';
-// let idxObj = -1;
-
-//let ev: any = null
-
+let flagOpen = false;
 let widthGl = window.innerWidth - 3;
+let ILLUM = -1;
 
 const HcmMain = (props: { trigger: boolean }) => {
   //== Piece of Redux =======================================
@@ -53,19 +50,19 @@ const HcmMain = (props: { trigger: boolean }) => {
   //   const { coordinatesReducer } = state;
   //   return coordinatesReducer.coordinates;
   // });
-  let massfaz = useSelector((state: any) => {
-    const { massfazReducer } = state;
-    return massfazReducer.massfaz;
-  });
+  // let massfaz = useSelector((state: any) => {
+  //   const { massfazReducer } = state;
+  //   return massfazReducer.massfaz;
+  // });
   let datestat = useSelector((state: any) => {
     const { statsaveReducer } = state;
     return statsaveReducer.datestat;
   });
-  const debug = datestat.debug;
-  const ws = datestat.ws;
+  //const debug = datestat.debug;
+  //const ws = datestat.ws;
   //const homeRegion = datestat.region;
   DEMO = datestat.demo;
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   //===========================================================
   // const [control, setControl] = React.useState(false);
   // const [flagCenter, setFlagCenter] = React.useState(false);
@@ -73,67 +70,96 @@ const HcmMain = (props: { trigger: boolean }) => {
   // const [openSetErr, setOpenSetErr] = React.useState(false);
   // const [ymaps, setYmaps] = React.useState<YMapsApi | null>(null);
   // const mapp = React.useRef<any>(null);
+  const [currency01, setCurrency01] = React.useState('0');
+  const [currency02, setCurrency02] = React.useState('0');
+  const [currency03, setCurrency03] = React.useState('0');
+  const [currency04, setCurrency04] = React.useState('0');
+  const [currency05, setCurrency05] = React.useState('0');
 
-  const StatusQuo = (mode: boolean) => {
-    for (let i = 0; i < datestat.timerId.length; i++) {
-      if (!DEMO && datestat.timerId[i] !== null) {
-        SendSocketDispatch(debug, ws, massfaz[i].idevice, 9, 9); // КУ
-        SendSocketDispatch(debug, ws, massfaz[i].idevice, 4, 0); // закрытие id
-      }
-      mode && CloseInterval(datestat, i);
-    }
-    if (mode) {
-      datestat.timerId = [];
-      datestat.massInt = [];
-      datestat.first = true;
-      datestat.working = false;
-      datestat.massMem = [];
-      datestat.demoIdx = [];
-      datestat.demoTlsost = [];
-      datestat.demoLR = [];
-      datestat.stopSwitch = [];
-      datestat.tekDemoTlsost = [];
-      dispatch(statsaveCreate(datestat));
-      massfaz = [];
-      dispatch(massfazCreate(massfaz));
-    }
+  const Turn01 = () => {
+    setCurrency02('0');
+    setCurrency03('0');
+    setCurrency04('0');
+    setCurrency05('0');
   };
 
-  //=== вывод светофоров ===================================
-
-  const PressButton = (mode: number) => {
-    switch (mode) {
-      case 61: // режим управления
-        StatusQuo(true);
-        datestat.finish = false;
-        datestat.demo = false;
-        dispatch(statsaveCreate(datestat));
-        DEMO = false;
-        break;
-      case 62: // режим Демо
-        StatusQuo(true);
-        datestat.finish = false;
-        datestat.demo = true;
-        dispatch(statsaveCreate(datestat));
-        DEMO = true;
-        break;
-      case 63: // Косяк при работе с меню
-      //soobErr = 'Завершите предыдущий режим нормальным образом';
-      //setOpenSetErr(true);
-    }
+  const Turn02 = () => {
+    setCurrency01('0');
+    setCurrency03('0');
+    setCurrency04('0');
+    setCurrency05('0');
   };
+
+  const Turn03 = () => {
+    setCurrency01('0');
+    setCurrency02('0');
+    setCurrency04('0');
+    setCurrency05('0');
+  };
+
+  const Turn04 = () => {
+    setCurrency01('0');
+    setCurrency02('0');
+    setCurrency03('0');
+    setCurrency05('0');
+  };
+
+  const Turn05 = () => {
+    setCurrency01('0');
+    setCurrency02('0');
+    setCurrency03('0');
+    setCurrency04('0');
+  };
+
   //=== Функции - обработчики ==============================
+  const PressButton = (mode: number) => {
+    mode < 200 && Turn01();
+    mode < 300 && mode > 200 && Turn02();
+    mode < 400 && mode > 300 && Turn03();
+    mode < 500 && mode > 400 && Turn04();
+    mode > 500 && Turn05();
+    switch (mode) {
+      case 101: // Личный кабинет
+        break;
+      case 102: // Личный кабинет
+        break;
+      case 103: // Справочная информация
+        break;
+      case 201: // Мои подразделения
+        break;
+      case 202: // Мои подразделения
+        break;
+      case 203: // Мои подразделения
+        break;
+      case 301: // Мои подразделения
+        break;
+      case 302: // Мои подразделения
+        break;
+      case 303: // Мои подразделения
+        break;
+      case 401: // Аналитика по подразделениям
+        break;
+      case 402: // Аналитика по подразделениям
+        break;
+      case 403: // Аналитика по подразделениям
+        break;
+      case 501: // Ввод данных
+        break;
+      case 502: // Ввод данных
+        break;
+      case 503: // Ввод данных
+    }
+  };
 
   //=== инициализация ======================================
-  // if (!flagOpen && Object.keys(map.tflight).length) {
-  //   pointCenter = CenterCoord(
-  //     map.boxPoint.point0.Y,
-  //     map.boxPoint.point0.X,
-  //     map.boxPoint.point1.Y,
-  //     map.boxPoint.point1.X,
-  //   );
-  //   flagOpen = true;
-  // }
+  if (!flagOpen) {
+    currencies01 = PreparCurrencies01(); // Личный кабинет
+    currencies02 = PreparCurrencies02(); // Мои подразделения
+    currencies03 = PreparCurrencies03(); // Справочная информация
+    currencies04 = PreparCurrencies04(); // Аналитика по подразделениям
+    currencies05 = PreparCurrencies05(); // Ввод данных
+    flagOpen = true;
+  }
   //=== Закрытие или перезапуск вкладки ====================
   React.useEffect(() => {
     window.addEventListener('beforeunload', alertUser);
@@ -153,7 +179,7 @@ const HcmMain = (props: { trigger: boolean }) => {
   const alertUser = (event: any) => {
     console.log('2пришло:', event);
     // ev = JSON.parse(JSON.stringify(event));
-    StatusQuo(false);
+    ////StatusQuo(false);
     //  event.preventDefault();
     //  event.returnValue = "";
   };
@@ -163,40 +189,30 @@ const HcmMain = (props: { trigger: boolean }) => {
   }
   //========================================================
 
-  // const styleChat05 = {
-  //   fontSize: 11,
-  //   flexGrow: 1,
-  //   width: '100%',
-  //   //background: '#E5E5E5',
-  //   background: 'linear-gradient(125deg, #DCE0AB 30%,#97BB92 52%, #D2D8B7 85%)',
-  //   paddingLeft: '12px',
-  //   paddingRight: '12px',
-  //   height: '86vh',
-  // };
-
-  const styleMain01 = {
-    height: '99.9vh',
-    background: 'linear-gradient(105deg, #DCE0AB 25%,#97BB92 52%, #D2D8B7 85%)',
-    padding: '3px 0px 0px 0px',
-  };
-
-  const InputDirect = (func: any, widthBlok: number) => {
+  const InputDirect = (
+    mode: number,
+    func: any,
+    widthBlok: number,
+    currency: any,
+    currencies: any,
+  ) => {
     const styleSetNapr = {
       width: widthBlok - 25,
       maxHeight: '2px',
       minHeight: '2px',
-      bgcolor: '#BAE186', // салатовый
+      bgcolor: mode === ILLUM ? '#BAE186' : '#E6F5D6', // тёмно-салатовый/светло-салатовый
       border: '1px solid #93D145', // тёмно салатовый
       borderRadius: 1,
       p: 1.25,
       textAlign: 'center',
-      boxShadow: 6,
+      boxShadow: mode === ILLUM ? 9 : 3,
     };
 
     const styleBoxFormNapr = {
       '& > :not(style)': {
+        border: 0,
         marginTop: '-10px',
-        marginLeft: '-12px',
+        marginLeft: '-8px',
         width: widthBlok,
       },
     };
@@ -205,37 +221,75 @@ const HcmMain = (props: { trigger: boolean }) => {
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setCurrency(Number(event.target.value));
-      switch (Number(event.target.value)) {
-        case 0: // режим управления
-          func(61);
+      ILLUM = mode;
+      let evTV = event.target.value === '0' ? '1' : event.target.value;
+      switch (mode) {
+        case 1: // Личный кабинет
+          setCurrency01(evTV);
+          switch (Number(evTV)) {
+            case 0: // Работа с перекрёстками
+              func(101);
+              break;
+            case 1: // Создание связей
+              func(102);
+              break;
+            case 3: // Настройки
+              func(103);
+          }
           break;
-        case 1: // режим Demo
-          func(62);
+        case 2: // Мои подразделения
+          setCurrency02(evTV);
+          switch (Number(evTV)) {
+            case 0: // Работа с перекрёстками
+              func(201);
+              break;
+            case 1: // Создание связей
+              func(202);
+              break;
+            case 3: // Настройки
+              func(203);
+          }
+          break;
+        case 3: // Справочная информация
+          setCurrency03(evTV);
+          switch (Number(evTV)) {
+            case 0: // Работа с перекрёстками
+              func(301);
+              break;
+            case 1: // Создание связей
+              func(302);
+              break;
+            case 3: // Настройки
+              func(303);
+          }
+          break;
+        case 4: // Аналитика по подразделениям
+          setCurrency04(evTV);
+          switch (Number(evTV)) {
+            case 0: // Работа с перекрёстками
+              func(401);
+              break;
+            case 1: // Создание связей
+              func(402);
+              break;
+            case 3: // Настройки
+              func(403);
+          }
+          break;
+        case 5: // Ввод данных
+          setCurrency05(evTV);
+          switch (Number(evTV)) {
+            case 0: // Работа с перекрёстками
+              func(501);
+              break;
+            case 1: // Создание связей
+              func(502);
+              break;
+            case 3: // Настройки
+              func(503);
+          }
       }
     };
-
-    let dat = ['Режим управления', 'Режим Демо'];
-    let massKey = [];
-    let massDat: any[] = [];
-    const currencies: any = [];
-    for (let key in dat) {
-      massKey.push(key);
-      massDat.push(dat[key]);
-    }
-    for (let i = 0; i < massKey.length; i++) {
-      let maskCurrencies = {
-        value: '',
-        label: '',
-      };
-      maskCurrencies.value = massKey[i];
-      maskCurrencies.label = massDat[i];
-      currencies.push(maskCurrencies);
-    }
-
-    const [currency, setCurrency] = React.useState(0);
-
-    console.log('Ширина: ', widthBlok);
 
     return (
       <Box sx={styleSetNapr}>
@@ -249,11 +303,8 @@ const HcmMain = (props: { trigger: boolean }) => {
             InputProps={{
               disableUnderline: true,
               style: {
-                fontSize: currency === 1 ? 14.5 : 14,
-                //fontSize: 14,
-                fontWeight: 700,
-                color: currency === 1 ? 'red' : 'black',
-                //marginTop: currency === 1 ? -3 : 0,
+                fontSize: currency === '0' ? 12.9 : 12.4,
+                fontWeight: currency === '0' ? 700 : 400,
               },
             }}
             variant="standard"
@@ -263,8 +314,9 @@ const HcmMain = (props: { trigger: boolean }) => {
                 key={option.value}
                 value={option.value}
                 sx={{
-                  fontSize: 14,
-                  color: option.label === 'Режим Демо' ? 'red' : 'black',
+                  fontSize: 12.9,
+                  color: option.label === currencies[0].label ? 'blue' : 'black',
+                  cursor: option.label === currencies[0].label ? 'none' : 'pointer',
                 }}>
                 {option.label}
               </MenuItem>
@@ -275,52 +327,54 @@ const HcmMain = (props: { trigger: boolean }) => {
     );
   };
 
-  const StrokaMenuGlob = (func: any, wdth: number) => {
+  const StrokaMenuGlob = (
+    mode: number,
+    wdth: number,
+    func: any,
+    currency: any,
+    currencies: any,
+  ) => {
     let widthBlok = (widthGl / 12) * wdth + 1;
 
-    const styleApp01 = {
-      fontSize: 12.9,
-      //marginRight: 0.1,
-      //marginLeft: 0.1,
-      width: widthBlok,
-      //paddingBottom: 0.5,
-    };
-
-    return <Box sx={styleApp01}>{InputDirect(func, widthBlok)}</Box>;
+    return (
+      <Box sx={{ fontSize: 12.9, width: widthBlok }}>
+        {InputDirect(mode, func, widthBlok, currency, currencies)}
+      </Box>
+    );
   };
 
   return (
     <Grid container sx={styleMain01}>
       <Grid item xs={12} sx={{ height: '24px' }}>
         <Grid container sx={{ height: '24px', fontSize: 12.9 }}>
-          <Grid item xs={1.5} sx={{ border: 1 }}>
+          <Grid item xs={1.5} sx={{ bgcolor: '#BDE6FB', textAlign: 'center' }}>
             Логотип
           </Grid>
 
           <Grid item xs={1.25} sx={{ border: 0 }}>
             {/* Личный кабинет */}
-            <Box>{StrokaMenuGlob(PressButton, 1.25)}</Box>
+            <Box>{StrokaMenuGlob(1, 1.25, PressButton, currency01, currencies01)}</Box>
           </Grid>
           <Grid item xs={1.45} sx={{ border: 0 }}>
             {/* Мои подразделения */}
-            <Box>{StrokaMenuGlob(PressButton, 1.45)}</Box>
+            <Box>{StrokaMenuGlob(2, 1.45, PressButton, currency02, currencies02)}</Box>
           </Grid>
           <Grid item xs={1.75} sx={{ border: 0 }}>
             {/* Справочная информация */}
-            <Box>{StrokaMenuGlob(PressButton, 1.75)}</Box>
+            <Box>{StrokaMenuGlob(3, 1.75, PressButton, currency03, currencies03)}</Box>
           </Grid>
           <Grid item xs={2.05} sx={{ border: 0 }}>
             {/* Аналитика по подразделениям */}
-            <Box>{StrokaMenuGlob(PressButton, 2.05)}</Box>
+            <Box>{StrokaMenuGlob(4, 2.05, PressButton, currency04, currencies04)}</Box>
           </Grid>
           <Grid item xs={1} sx={{ border: 0 }}>
             {/* Ввод данных */}
-            <Box>{StrokaMenuGlob(PressButton, 1)}</Box>
+            <Box>{StrokaMenuGlob(5, 1, PressButton, currency05, currencies05)}</Box>
           </Grid>
 
-          <Grid item xs={1.5} sx={{ border: 1 }}></Grid>
-          <Grid item xs={1.5} sx={{ border: 1 }}>
-            Поиск
+          <Grid item xs={1.5} sx={{ border: 0 }}></Grid>
+          <Grid item xs={1.5} sx={{ bgcolor: '#FFFEF7', padding: '0px 0px 0px 8px' }}>
+            🔍 Поиск
           </Grid>
         </Grid>
       </Grid>
@@ -329,4 +383,3 @@ const HcmMain = (props: { trigger: boolean }) => {
 };
 
 export default HcmMain;
-//{/* <Box>{StrokaMenuGlob(PressButton, datestat.working)}</Box> */}

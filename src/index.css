@@ -3,9 +3,10 @@ body {
   /* height: 670px; */
   height: 100%;
   width: 100%;
-  /* background-color: #024492; */
-  /* background: linear-gradient(45deg, #57741D, #024492); 
+  background-color: #024492;
+  /* background: linear-gradient(45deg, #57741D, #024492);
   background: linear-gradient(45deg, #b7c182, #0083d0); */
+  /* background: linear-gradient(105deg, #DCE0AB 25%, #97BB92 52%, #D2D8B7 85%); */
 
   /* background: url(./imagJournal.jpg); */
   /* background-color: #DAF0C5; */
