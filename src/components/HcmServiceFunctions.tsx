@@ -1,13 +1,19 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
 
 export const PreparCurrencies01 = () => {
   const currencies: any = [];
-  let dat = ['Личный кабинет:', 'Работа с перекрёстками', 'Создание связей', 'Настройки'];
+  let dat = [
+    "Личный кабинет:",
+    "Первый пункт меню",
+    "Второй пункт меню",
+    "Третий пункт меню",
+    "Настройки",
+  ];
   let massKey: any = [];
   let massDat: any = [];
   for (let key in dat) {
@@ -15,8 +21,8 @@ export const PreparCurrencies01 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -28,7 +34,13 @@ export const PreparCurrencies01 = () => {
 
 export const PreparCurrencies02 = () => {
   const currencies: any = [];
-  let dat = ['Мои подразделения:', 'Работа с перекрёстками', 'Создание связей', 'Настройки'];
+  let dat = [
+    "Мои подразделения:",
+    "Первый пункт меню",
+    "Второй пункт меню",
+    "Третий пункт меню",
+    "Настройки",
+  ];
   let massKey: any = [];
   let massDat: any = [];
   for (let key in dat) {
@@ -36,8 +48,8 @@ export const PreparCurrencies02 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -49,7 +61,13 @@ export const PreparCurrencies02 = () => {
 
 export const PreparCurrencies03 = () => {
   const currencies: any = [];
-  let dat = ['Справочная информация:', 'Работа с перекрёстками', 'Создание связей', 'Настройки'];
+  let dat = [
+    "Справочная информация:",
+    "Первый пункт меню",
+    "Второй пункт меню",
+    "Третий пункт меню",
+    "Настройки",
+  ];
   let massKey: any = [];
   let massDat: any = [];
   for (let key in dat) {
@@ -57,8 +75,8 @@ export const PreparCurrencies03 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -71,10 +89,11 @@ export const PreparCurrencies03 = () => {
 export const PreparCurrencies04 = () => {
   const currencies: any = [];
   let dat = [
-    'Аналитика по подразделениям:',
-    'Работа с перекрёстками',
-    'Создание связей',
-    'Настройки',
+    "Аналитика по подразделениям:",
+    "Первый пункт меню",
+    "Второй пункт меню",
+    "Третий пункт меню",
+    "Настройки",
   ];
   let massKey: any = [];
   let massDat: any = [];
@@ -83,8 +102,8 @@ export const PreparCurrencies04 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -96,7 +115,13 @@ export const PreparCurrencies04 = () => {
 
 export const PreparCurrencies05 = () => {
   const currencies: any = [];
-  let dat = ['Ввод данных:', 'Работа с перекрёстками', 'Создание связей', 'Настройки'];
+  let dat = [
+    "Ввод данных:",
+    "Первый пункт меню",
+    "Второй пункт меню",
+    "Третий пункт меню",
+    "Настройки",
+  ];
   let massKey: any = [];
   let massDat: any = [];
   for (let key in dat) {
@@ -104,8 +129,8 @@ export const PreparCurrencies05 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -126,7 +151,7 @@ export const CenterCoord = (aY: number, aX: number, bY: number, bX: number) => {
 };
 
 export const CloseInterval = (datestat: any, nominmass: number) => {
-  console.log('CloseInt:', nominmass, datestat.massInt[nominmass]);
+  console.log("CloseInt:", nominmass, datestat.massInt[nominmass]);
   if (datestat.massInt[nominmass]) {
     clearInterval(datestat.massInt[nominmass]);
     datestat.massInt[nominmass] = null;
@@ -136,14 +161,14 @@ export const CloseInterval = (datestat: any, nominmass: number) => {
 
 //=== Placemark =====================================
 export const GetPointData = (index: number, map: any) => {
-  let cont1 = '';
-  let cont2 = '';
-  let cont3 = '';
-  cont1 = map.tflight[index].description + '<br/>';
-  cont3 = map.tflight[index].tlsost.description + '<br/>';
-  cont2 = '[';
+  let cont1 = "";
+  let cont2 = "";
+  let cont3 = "";
+  cont1 = map.tflight[index].description + "<br/>";
+  cont3 = map.tflight[index].tlsost.description + "<br/>";
+  cont2 = "[";
   // + map.tflight[index].area.num + ", ";
-  cont2 += map.tflight[index].ID + ', ' + map.tflight[index].idevice + ']';
+  cont2 += map.tflight[index].ID + ", " + map.tflight[index].idevice + "]";
 
   return { hintContent: cont1 + cont3 + cont2 };
 };
@@ -151,7 +176,7 @@ export const GetPointData = (index: number, map: any) => {
 export const GetPointOptions1 = (Hoster: any) => {
   return {
     // данный тип макета
-    iconLayout: 'default#image',
+    iconLayout: "default#image",
     // изображение иконки метки
     iconImageHref: Hoster(),
     // размеры метки
@@ -164,26 +189,26 @@ export const GetPointOptions1 = (Hoster: any) => {
 //=== Разное =======================================
 export const InputDirect = (func: any, otherWork: boolean) => {
   const styleSetNapr = {
-    width: '140px',
-    maxHeight: '2px',
-    minHeight: '2px',
-    bgcolor: '#BAE186', // салатовый
-    border: '1px solid #93D145', // тёмно салатовый
+    width: "140px",
+    maxHeight: "2px",
+    minHeight: "2px",
+    bgcolor: "#BAE186", // салатовый
+    border: "1px solid #93D145", // тёмно салатовый
     borderRadius: 1,
     p: 1.25,
-    textAlign: 'center',
+    textAlign: "center",
     boxShadow: 6,
   };
 
   const styleBoxFormNapr = {
-    '& > :not(style)': {
-      marginTop: '-10px',
-      marginLeft: '-12px',
-      width: '165px',
+    "& > :not(style)": {
+      marginTop: "-10px",
+      marginLeft: "-12px",
+      width: "165px",
     },
   };
   const handleKey = (event: any) => {
-    if (event.key === 'Enter') event.preventDefault();
+    if (event.key === "Enter") event.preventDefault();
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -201,7 +226,7 @@ export const InputDirect = (func: any, otherWork: boolean) => {
     }
   };
 
-  let dat = ['Режим управления', 'Режим Демо'];
+  let dat = ["Режим управления", "Режим Демо"];
   let massKey = [];
   let massDat: any[] = [];
   const currencies: any = [];
@@ -211,8 +236,8 @@ export const InputDirect = (func: any, otherWork: boolean) => {
   }
   for (let i = 0; i < massKey.length; i++) {
     let maskCurrencies = {
-      value: '',
-      label: '',
+      value: "",
+      label: "",
     };
     maskCurrencies.value = massKey[i];
     maskCurrencies.label = massDat[i];
@@ -236,20 +261,22 @@ export const InputDirect = (func: any, otherWork: boolean) => {
               fontSize: currency === 1 ? 14.5 : 14,
               //fontSize: 14,
               fontWeight: 700,
-              color: currency === 1 ? 'red' : 'black',
+              color: currency === 1 ? "red" : "black",
               //marginTop: currency === 1 ? -3 : 0,
             },
           }}
           variant="standard"
-          color="secondary">
+          color="secondary"
+        >
           {currencies.map((option: any) => (
             <MenuItem
               key={option.value}
               value={option.value}
               sx={{
                 fontSize: 14,
-                color: option.label === 'Режим Демо' ? 'red' : 'black',
-              }}>
+                color: option.label === "Режим Демо" ? "red" : "black",
+              }}
+            >
               {option.label}
             </MenuItem>
           ))}

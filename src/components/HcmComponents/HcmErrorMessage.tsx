@@ -13,8 +13,9 @@ const HcmErrorMessage = (props: { sErr: string; setOpen: any }) => {
   const styleSetInf = {
     outline: 'none',
     position: 'absolute',
-    marginTop: '15vh',
-    marginLeft: '24vh',
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
     width: 380,
     bgcolor: 'background.paper',
     border: '1px solid #000',
