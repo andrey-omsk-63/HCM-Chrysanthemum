@@ -42,8 +42,12 @@ const HcmErrorMessage = (props: { sErr: string; setOpen: any }) => {
     setOpenSet(false);
   };
 
+  const CloseEnd = (event: any, reason: string) => {
+    if (reason === "escapeKeyDown") handleClose();
+  };
+
   return (
-    <Modal open={openSet} onClose={handleClose} hideBackdrop={false}>
+    <Modal open={openSet} onClose={CloseEnd} hideBackdrop={false}>
       <Box sx={styleSetInf}>
         <Button sx={styleModalEnd} onClick={handleClose}>
           <b>&#10006;</b>

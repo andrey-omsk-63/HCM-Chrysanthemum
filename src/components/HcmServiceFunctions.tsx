@@ -65,10 +65,10 @@ export const PreparCurrencies03 = () => {
   const currencies: any = [];
   let dat = [
     'Справочная информация:',
-    'Первый пункт меню',
-    'Второй пункт меню',
-    'Третий пункт меню',
-    'Настройки',
+    'Регламенты',
+    'Структура компании',
+    'Структура компании copy',
+    'Профили компетенций',
   ];
   let massKey: any = [];
   let massDat: any = [];
@@ -119,10 +119,11 @@ export const PreparCurrencies05 = () => {
   const currencies: any = [];
   let dat = [
     'Ввод данных:',
-    'Первый пункт меню',
-    'Второй пункт меню',
-    'Третий пункт меню',
-    'Настройки',
+    'Адаптация',
+    'Добавить ИПР',
+    'Создать задачу',
+    //'Добавить Risk&Value',
+    'Добавить Healt Check',
   ];
   let massKey: any = [];
   let massDat: any = [];
@@ -156,7 +157,9 @@ export const InputDirect = (
     bgcolor: mode === ILLUM ? '#BAE186' : '#E6F5D6', // тёмно-салатовый/светло-салатовый
     border: '1px solid #93D145', // тёмно салатовый
     borderRadius: 1,
-    p: 1.25,
+    //p: 1.25,
+    padding: "15px 10px 11px 12px",
+    //p: 1.45,
     textAlign: 'center',
     boxShadow: mode === ILLUM ? 9 : 3,
   };
@@ -196,7 +199,8 @@ export const InputDirect = (
               key={option.value}
               value={option.value}
               sx={{
-                fontSize: 12.9,
+                fontSize: option.label === currencies[0].label ? 12.9 : 12.4,
+                fontWeight: option.label === currencies[0].label ? 700 : 400,
                 color: option.label === currencies[0].label ? 'blue' : 'black',
                 cursor: option.label === currencies[0].label ? 'none' : 'pointer',
               }}>
