@@ -5,31 +5,25 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
 import HcmBl2Form101 from './HcmBl2Form101';
+import HcmBl2Form102 from './HcmBl2Form102';
 
 import { styleMain04, styleBl2Gl01, styleBl2Gl02 } from '../../HcmMainStyle';
 
 let Illum = 1;
+let oldIdx = -1;
 
-const HcmBlock2Gl = () => {
-  const [bl2Form101, setBl2Form101] = React.useState(true);
+const HcmBlock2Gl = (props: { idx: number }) => {
+  const [bl2Form101, setBl2Form101] = React.useState(false);
   const [bl2Form102, setBl2Form201] = React.useState(false);
   const [bl2Form103, setBl2Form301] = React.useState(false);
 
-  // const styleBl2Gl01 = {
-  //   border: 0,
-  //   marginTop: 2,
-  //   height: window.innerHeight - 52,
-  //   padding: '0px 1px 0px 1px',
-  // };
-
-  // const styleBl2Gl02 = {
-  //   height: '30px',
-  //   bgcolor: 'background.paper',
-  //   border: '1px solid #FFFFFF',
-  //   borderRadius: 1,
-  //   boxShadow: 24,
-  //   textAlign: 'center',
-  // };
+  //=== инициализация ======================================
+  if (props.idx !== oldIdx) {
+    oldIdx = props.idx;
+    Illum = 1;
+    setBl2Form101(true);
+  }
+  //========================================================
 
   const ClickKnop1 = () => {
     Illum = 1;
@@ -85,6 +79,7 @@ const HcmBlock2Gl = () => {
           </Grid>
         </Grid>
         {bl2Form101 && <HcmBl2Form101 />}
+        {bl2Form102 && <HcmBl2Form102 />}
       </Grid>
     </Grid>
   );

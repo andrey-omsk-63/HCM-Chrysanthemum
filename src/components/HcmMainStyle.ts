@@ -67,6 +67,19 @@ export const styleBl2Gl02 = {
   boxShadow: 9,
   textAlign: 'center',
 };
+
+export const styleBl2Form00 = (part: number, mt: number) => {
+  const styleBl2Form = {
+    marginTop: mt,
+    height: window.innerHeight - part,
+    bgcolor: 'background.paper',
+    border: '1px solid #FFFFFF',
+    borderRadius: 1,
+    boxShadow: 9,
+    padding: '0px 1px 0px 1px',
+  };
+  return styleBl2Form;
+};
 //=====================================================================
 //=== InputObject =====================================================
 export const searchControl = {

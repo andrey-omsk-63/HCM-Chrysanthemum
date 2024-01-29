@@ -13,7 +13,7 @@ import HcmBlock5Disp from './HcmComponents/HcmBlock5Components/HcmBlock5Disp';
 
 //import { PreparCurrencies01, PreparCurrencies02, PreparCurrencies04 } from './HcmServiceFunctions';
 import { PreparCurrencies05, PreparCurrencies03 } from './HcmServiceFunctions';
-import { InputDirect } from './HcmServiceFunctions';
+import { InputDirect, RandomNumber } from './HcmServiceFunctions';
 
 //import { SendSocketGetPhases } from './HcmSocketFunctions';
 
@@ -301,7 +301,7 @@ const HcmMain = (props: { trigger: boolean }) => {
             </Grid>
           </Grid>
         </Grid>
-        {dispBlock2 && <HcmBlock2Gl />}
+        {dispBlock2 && <HcmBlock2Gl idx={RandomNumber(1, 1000)} />}
       </Grid>
       {dispBlock3 && <HcmBlock3Disp setOpen={SetDispBlock3} />}
       {dispBlock5 && <HcmBlock5Disp setOpen={SetDispBlock5} />}

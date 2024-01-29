@@ -7,6 +7,11 @@ import MenuItem from '@mui/material/MenuItem';
 
 import { ILLUM } from './HcmMain';
 
+export const RandomNumber = (min: number, max: number) => {
+  let rand = Math.random() * (max - min) + min;
+  return Math.floor(rand);
+};
+
 export const PreparCurrencies01 = () => {
   const currencies: any = [];
   let dat = [
