@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import HcmErrorMessage from "./HcmComponents/HcmErrorMessage";
+import HcmBlock2Gl from "./HcmComponents/HcmBlock2Components/HcmBlock2Gl";
 import HcmBlock3Disp from "./HcmComponents/HcmBlock3Components/HcmBlock3Disp";
 import HcmBlock5Disp from "./HcmComponents/HcmBlock5Components/HcmBlock5Disp";
 
@@ -58,6 +59,7 @@ const HcmMain = (props: { trigger: boolean }) => {
   //const ws = datestat.ws;
   //const dispatch = useDispatch();
   //===========================================================
+  const [dispBlock2, setDispBlock2] = React.useState(false);
   const [dispBlock3, setDispBlock3] = React.useState(false);
   const [dispBlock5, setDispBlock5] = React.useState(false);
   const [openSetErr, setOpenSetErr] = React.useState(false);
@@ -84,6 +86,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     setCurrency03("0");
     //setCurrency04("0");
     setCurrency05("0");
+    setDispBlock2(false)
   };
 
   const Turn01 = () => {
@@ -91,6 +94,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     setCurrency03("0");
     //setCurrency04("0");
     setCurrency05("0");
+    setDispBlock2(false)
   };
 
   const Turn02 = () => {
@@ -112,6 +116,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     //setCurrency02('0');
     setCurrency03("0");
     setCurrency05("0");
+    setDispBlock2(false)
   };
 
   // const Turn05 = () => {
@@ -143,8 +148,9 @@ const HcmMain = (props: { trigger: boolean }) => {
   const ClickKnop2 = () => {
     ILLUM = 2;
     Turn02();
-    soob = "Здесь будет действие по нажатию на кнопку МОИ ПОДРАЗДЕЛЕНИЯ";
-    setOpenSetErr(true);
+    setDispBlock2(true);
+    // soob = "Здесь будет действие по нажатию на кнопку МОИ ПОДРАЗДЕЛЕНИЯ";
+    // setOpenSetErr(true);
   };
 
   const ClickKnop4 = () => {
@@ -210,12 +216,14 @@ const HcmMain = (props: { trigger: boolean }) => {
           FORM3 = evTV;
           ILLUM = 3;
           setDispBlock3(true);
+          setDispBlock2(false)
           break;
         case 5: // Ввод данных
           setCurrency05(evTV);
           FORM5 = evTV;
           ILLUM = 5;
           setDispBlock5(true);
+          setDispBlock2(false)
       }
     };
 
@@ -301,6 +309,7 @@ const HcmMain = (props: { trigger: boolean }) => {
             </Grid>
           </Grid>
         </Grid>
+        {dispBlock2 && <HcmBlock2Gl />}
       </Grid>
       {dispBlock3 && <HcmBlock3Disp setOpen={SetDispBlock3} />}
       {dispBlock5 && <HcmBlock5Disp setOpen={SetDispBlock5} />}

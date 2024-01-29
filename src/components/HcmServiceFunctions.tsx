@@ -157,9 +157,7 @@ export const InputDirect = (
     bgcolor: mode === ILLUM ? '#BAE186' : '#E6F5D6', // тёмно-салатовый/светло-салатовый
     border: '1px solid #93D145', // тёмно салатовый
     borderRadius: 1,
-    //p: 1.25,
     padding: "15px 10px 11px 12px",
-    //p: 1.45,
     textAlign: 'center',
     boxShadow: mode === ILLUM ? 9 : 3,
   };
