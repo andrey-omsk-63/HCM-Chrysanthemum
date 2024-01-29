@@ -151,13 +151,14 @@ export const InputDirect = (
   currencies: any,
 ) => {
   const styleSetNapr = {
-    width: widthBlok - 25,
+    width: widthBlok - 27,
     maxHeight: '2px',
     minHeight: '2px',
+    fontSize: mode === ILLUM ? 14 : 12.5,
     bgcolor: mode === ILLUM ? '#BAE186' : '#E6F5D6', // тёмно-салатовый/светло-салатовый
     border: '1px solid #93D145', // тёмно салатовый
     borderRadius: 1,
-    padding: "15px 10px 11px 12px",
+    padding: '15px 10px 11px 12px',
     textAlign: 'center',
     boxShadow: mode === ILLUM ? 9 : 3,
   };
@@ -165,9 +166,9 @@ export const InputDirect = (
   const styleBoxFormNapr = {
     '& > :not(style)': {
       border: 0,
-      marginTop: '-10px',
+      marginTop: '-11px',
       marginLeft: '-8px',
-      width: widthBlok - 5,
+      width: widthBlok - 7,
     },
   };
   const handleKey = (event: any) => {
@@ -186,7 +187,8 @@ export const InputDirect = (
           InputProps={{
             disableUnderline: true,
             style: {
-              fontSize: currency === '0' ? 12.9 : 12.4,
+              fontSize: currency === '0' && mode === ILLUM ? 13.5 : 12.5,
+              //fontSize: 12.9,
               fontWeight: currency === '0' ? 700 : 400,
             },
           }}
@@ -197,7 +199,7 @@ export const InputDirect = (
               key={option.value}
               value={option.value}
               sx={{
-                fontSize: option.label === currencies[0].label ? 12.9 : 12.4,
+                fontSize: option.label === currencies[0].label ? 13.5 : 12.9,
                 fontWeight: option.label === currencies[0].label ? 700 : 400,
                 color: option.label === currencies[0].label ? 'blue' : 'black',
                 cursor: option.label === currencies[0].label ? 'none' : 'pointer',
