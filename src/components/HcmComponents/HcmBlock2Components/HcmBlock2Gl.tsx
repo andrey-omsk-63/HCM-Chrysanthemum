@@ -1,15 +1,18 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 //import Box from "@mui/material/Box";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
-import HcmBl2Form101 from './HcmBl2Form101';
-import HcmBl2Form102 from './HcmBl2Form102';
+import HcmBl2Form101 from "./HcmBl2Form101";
+import HcmBl2Form102 from "./HcmBl2Form102";
+import HcmBl2Form103 from "./HcmBl2Form103";
 
-import { styleMain04, styleBl2Gl01, styleBl2Gl02 } from '../../HcmMainStyle';
+import { RandomNumber } from '../../HcmServiceFunctions';
 
-let Illum = 1;
+import { styleMain04, styleBl2Gl01, styleBl2Gl02 } from "../../HcmMainStyle";
+
+let Illum = -1;
 let oldIdx = -1;
 
 const HcmBlock2Gl = (props: { idx: number }) => {
@@ -17,11 +20,21 @@ const HcmBlock2Gl = (props: { idx: number }) => {
   const [bl2Form102, setBl2Form201] = React.useState(false);
   const [bl2Form103, setBl2Form301] = React.useState(false);
 
+console.log('вход:',props.idx)
+
   //=== инициализация ======================================
   if (props.idx !== oldIdx) {
     oldIdx = props.idx;
-    Illum = 1;
-    setBl2Form101(true);
+    switch (Illum) {
+      case 1: // Сотрудники
+        setBl2Form101(true);
+        break;
+      case 2: // HealtH Check
+        setBl2Form201(true);
+        break;
+      case 3: // Задачи
+        setBl2Form301(true);
+    }
   }
   //========================================================
 
@@ -52,21 +65,30 @@ const HcmBlock2Gl = (props: { idx: number }) => {
         <Grid container>
           <Grid item xs={4}>
             <Grid container>
-              <Grid item xs={4} sx={{ border: 0, height: '30px' }}>
+              <Grid item xs={4} sx={{ border: 0, height: "30px" }}>
                 {/* Сотрудники */}
-                <Button sx={styleMain04(1.33, Illum, 1)} onClick={() => ClickKnop1()}>
+                <Button
+                  sx={styleMain04(1.33, Illum, 1)}
+                  onClick={() => ClickKnop1()}
+                >
                   Сотрудники
                 </Button>
               </Grid>
-              <Grid item xs={4} sx={{ border: 0, height: '30px' }}>
+              <Grid item xs={4} sx={{ border: 0, height: "30px" }}>
                 {/* HealtH Check */}
-                <Button sx={styleMain04(1.33, Illum, 2)} onClick={() => ClickKnop2()}>
+                <Button
+                  sx={styleMain04(1.33, Illum, 2)}
+                  onClick={() => ClickKnop2()}
+                >
                   HealtH Check
                 </Button>
               </Grid>
-              <Grid item xs={4} sx={{ border: 0, height: '30px' }}>
+              <Grid item xs={4} sx={{ border: 0, height: "30px" }}>
                 {/* Задачи */}
-                <Button sx={styleMain04(1.33, Illum, 3)} onClick={() => ClickKnop3()}>
+                <Button
+                  sx={styleMain04(1.33, Illum, 3)}
+                  onClick={() => ClickKnop3()}
+                >
                   Задачи
                 </Button>
               </Grid>
@@ -80,6 +102,7 @@ const HcmBlock2Gl = (props: { idx: number }) => {
         </Grid>
         {bl2Form101 && <HcmBl2Form101 />}
         {bl2Form102 && <HcmBl2Form102 />}
+        {bl2Form103 && <HcmBl2Form103 idx={RandomNumber(1, 10000)} />}
       </Grid>
     </Grid>
   );

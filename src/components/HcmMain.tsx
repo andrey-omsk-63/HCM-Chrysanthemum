@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import HcmErrorMessage from './HcmComponents/HcmErrorMessage';
 import HcmBlock2Gl from './HcmComponents/HcmBlock2Components/HcmBlock2Gl';
 import HcmBlock3Disp from './HcmComponents/HcmBlock3Components/HcmBlock3Disp';
+import HcmBlock4Gl from './HcmComponents/HcmBlock4Components/HcmBlock4Gl';
 import HcmBlock5Disp from './HcmComponents/HcmBlock5Components/HcmBlock5Disp';
 
 //import { PreparCurrencies01, PreparCurrencies02, PreparCurrencies04 } from './HcmServiceFunctions';
@@ -61,6 +62,7 @@ const HcmMain = (props: { trigger: boolean }) => {
   //===========================================================
   const [dispBlock2, setDispBlock2] = React.useState(false);
   const [dispBlock3, setDispBlock3] = React.useState(false);
+  const [dispBlock4, setDispBlock4] = React.useState(false);
   const [dispBlock5, setDispBlock5] = React.useState(false);
   const [openSetErr, setOpenSetErr] = React.useState(false);
   //const [currency01, setCurrency01] = React.useState('0');
@@ -87,6 +89,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     //setCurrency04("0");
     setCurrency05('0');
     setDispBlock2(false);
+    setDispBlock4(false);
   };
 
   const Turn01 = () => {
@@ -95,6 +98,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     //setCurrency04("0");
     setCurrency05('0');
     setDispBlock2(false);
+    setDispBlock4(false);
   };
 
   const Turn02 = () => {
@@ -102,6 +106,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     setCurrency03('0');
     //setCurrency04("0");
     setCurrency05('0');
+    setDispBlock4(false);
   };
 
   // const Turn03 = () => {
@@ -149,15 +154,14 @@ const HcmMain = (props: { trigger: boolean }) => {
     ILLUM = 2;
     Turn02();
     setDispBlock2(true);
-    // soob = "Здесь будет действие по нажатию на кнопку МОИ ПОДРАЗДЕЛЕНИЯ";
-    // setOpenSetErr(true);
   };
 
   const ClickKnop4 = () => {
     ILLUM = 4;
     Turn04();
-    soob = 'Здесь будет действие по нажатию на кнопку АНАЛИТИКА ПО ПОДРАЗДЕЛЕНИЯМ';
-    setOpenSetErr(true);
+    setDispBlock4(true);
+    // soob = 'Здесь будет действие по нажатию на кнопку АНАЛИТИКА ПО ПОДРАЗДЕЛЕНИЯМ';
+    // setOpenSetErr(true);
   };
 
   const SetDispBlock3 = (mode: boolean) => {
@@ -211,6 +215,7 @@ const HcmMain = (props: { trigger: boolean }) => {
           ILLUM = 3;
           setDispBlock3(true);
           setDispBlock2(false);
+          setDispBlock4(false);
           break;
         case 5: // Ввод данных
           setCurrency05(evTV);
@@ -218,6 +223,7 @@ const HcmMain = (props: { trigger: boolean }) => {
           ILLUM = 5;
           setDispBlock5(true);
           setDispBlock2(false);
+          setDispBlock4(false);
       }
     };
 
@@ -271,6 +277,8 @@ const HcmMain = (props: { trigger: boolean }) => {
     );
   };
 
+  console.log('dispBlock2:',dispBlock2)
+
   return (
     <>
       <Grid container sx={styleMain01}>
@@ -301,7 +309,8 @@ const HcmMain = (props: { trigger: boolean }) => {
             </Grid>
           </Grid>
         </Grid>
-        {dispBlock2 && <HcmBlock2Gl idx={RandomNumber(1, 1000)} />}
+        {dispBlock2 && <HcmBlock2Gl idx={RandomNumber(1, 10000)} />}
+        {dispBlock4 && <HcmBlock4Gl idx={RandomNumber(1, 10000)} />}
       </Grid>
       {dispBlock3 && <HcmBlock3Disp setOpen={SetDispBlock3} />}
       {dispBlock5 && <HcmBlock5Disp setOpen={SetDispBlock5} />}

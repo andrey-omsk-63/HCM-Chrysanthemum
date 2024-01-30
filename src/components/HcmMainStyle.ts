@@ -71,7 +71,7 @@ export const styleBl2Gl02 = {
 export const styleBl2Form00 = (part: number, mt: number) => {
   const styleBl2Form = {
     marginTop: mt,
-    height: window.innerHeight - part,
+    height: part,
     bgcolor: 'background.paper',
     border: '1px solid #FFFFFF',
     borderRadius: 1,
