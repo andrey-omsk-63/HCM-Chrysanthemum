@@ -160,8 +160,10 @@ export const InputDirect = (
     maxHeight: '2px',
     minHeight: '2px',
     fontSize: mode === ILLUM ? 14 : 12.5,
-    bgcolor: mode === ILLUM ? '#BAE186' : '#E6F5D6', // тёмно-салатовый/светло-салатовый
-    border: '1px solid #93D145', // тёмно салатовый
+    //bgcolor: mode === ILLUM ? '#BAE186' : '#E6F5D6', // тёмно-салатовый/светло-салатовый
+    //border: '1px solid #93D145', // тёмно салатовый
+    bgcolor: ILLUM === mode ? '#82e94a' : '#E6F5D6', // ярко-салатовый/светло-салатовый
+    border: '1px solid #d4d4d4', // серый
     borderRadius: 1,
     padding: '15px 10px 11px 12px',
     textAlign: 'center',

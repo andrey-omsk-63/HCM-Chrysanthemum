@@ -4,9 +4,9 @@ import Grid from "@mui/material/Grid";
 //import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-// import HcmBl5Form101 from "./HcmBl5Form101";
-// import HcmBl5Form102 from "./HcmBl5Form102";
-// import HcmBl5Form103 from "./HcmBl5Form103";
+// import HcmBl4Form101 from "./HcmBl4Form101";
+// import HcmBl4Form102 from "./HcmBl4Form102";
+// import HcmBl4Form103 from "./HcmBl4Form103";
 
 //import { RandomNumber } from '../../HcmServiceFunctions';
 
@@ -16,78 +16,80 @@ let Illum = -1;
 let oldIdx = -1;
 
 const HcmBlock4Gl = (props: { idx: number }) => {
-  const [bl5Form101, setBl5Form101] = React.useState(false);
-  const [bl5Form102, setBl5Form201] = React.useState(false);
-  const [bl5Form103, setBl5Form301] = React.useState(false);
-  const [bl5Form104, setBl5Form401] = React.useState(false);
-  const [bl5Form105, setBl5Form501] = React.useState(false);
+  const [bl4Form101, setBl4Form101] = React.useState(false);
+  const [bl4Form102, setBl4Form201] = React.useState(false);
+  const [bl4Form103, setBl4Form301] = React.useState(false);
+  const [bl4Form104, setBl4Form401] = React.useState(false);
+  const [bl4Form105, setBl4Form501] = React.useState(false);
 
   //=== инициализация ======================================
   if (props.idx !== oldIdx) {
     oldIdx = props.idx;
     switch (Illum) {
       case 1: // Адаптация
-        setBl5Form101(true);
+        setBl4Form101(true);
         break;
       case 2: // HealtH Check
-        setBl5Form201(true);
+        setBl4Form201(true);
         break;
       case 3: // Задачи
-        setBl5Form301(true);
+        setBl4Form301(true);
         break;
       case 4: // ИПР
-        setBl5Form401(true);
+        setBl4Form401(true);
         break;
       case 5: // Оценка компетенций
-        setBl5Form501(true);
+        setBl4Form501(true);
     }
   }
   //========================================================
 
   const ClickKnop1 = () => {
     Illum = 1;
-    setBl5Form101(true);
-    setBl5Form201(false);
-    setBl5Form301(false);
-    setBl5Form401(false);
-    setBl5Form501(false);
+    setBl4Form101(true);
+    bl4Form102 && setBl4Form201(false);
+    bl4Form103 && setBl4Form301(false);
+    bl4Form104 && setBl4Form401(false);
+    bl4Form105 && setBl4Form501(false);
   };
 
   const ClickKnop2 = () => {
     Illum = 2;
-    setBl5Form101(false);
-    setBl5Form201(true);
-    setBl5Form301(false);
-    setBl5Form401(false);
-    setBl5Form501(false);
+    setBl4Form101(false);
+    setBl4Form201(true);
+    setBl4Form301(false);
+    setBl4Form401(false);
+    setBl4Form501(false);
   };
 
   const ClickKnop3 = () => {
     Illum = 3;
-    setBl5Form101(false);
-    setBl5Form201(false);
-    setBl5Form301(true);
-    setBl5Form401(false);
-    setBl5Form501(false);
+    setBl4Form101(false);
+    setBl4Form201(false);
+    setBl4Form301(true);
+    setBl4Form401(false);
+    setBl4Form501(false);
   };
 
   const ClickKnop4 = () => {
     Illum = 4;
-    setBl5Form101(false);
-    setBl5Form201(false);
-    setBl5Form301(false);
-    setBl5Form401(true);
-    setBl5Form501(false);
+    setBl4Form101(false);
+    setBl4Form201(false);
+    setBl4Form301(false);
+    setBl4Form401(true);
+    setBl4Form501(false);
   };
 
   const ClickKnop5 = () => {
     Illum = 5;
-    setBl5Form101(false);
-    setBl5Form201(false);
-    setBl5Form301(false);
-    setBl5Form401(false);
-    setBl5Form501(true);
+    setBl4Form101(false);
+    setBl4Form201(false);
+    setBl4Form301(false);
+    setBl4Form401(false);
+    setBl4Form501(true);
   };
+
+  console.log('###:',Illum)
 
   return (
     <Grid container sx={styleBl2Gl01}>
@@ -148,9 +150,9 @@ const HcmBlock4Gl = (props: { idx: number }) => {
             <em>это сервисная строка</em>
           </Grid>
         </Grid>
-        {/* {bl5Form101 && <HcmBl5Form101 />}
-        {bl5Form102 && <HcmBl5Form102 />}
-        {bl5Form103 && <HcmBl5Form103 idx={RandomNumber(1, 10000)} />} */}
+        {/* {bl4Form101 && <HcmBl4Form101 />}
+        {bl4Form102 && <HcmBl4Form102 />}
+        {bl4Form103 && <HcmBl4Form103 idx={RandomNumber(1, 10000)} />} */}
       </Grid>
     </Grid>
   );

@@ -8,20 +8,17 @@ import HcmBl2Form101 from "./HcmBl2Form101";
 import HcmBl2Form102 from "./HcmBl2Form102";
 import HcmBl2Form103 from "./HcmBl2Form103";
 
-import { RandomNumber } from '../../HcmServiceFunctions';
+import { RandomNumber } from "../../HcmServiceFunctions";
 
 import { styleMain04, styleBl2Gl01, styleBl2Gl02 } from "../../HcmMainStyle";
 
-let Illum = -1;
+let Illum = 1;
 let oldIdx = -1;
 
 const HcmBlock2Gl = (props: { idx: number }) => {
   const [bl2Form101, setBl2Form101] = React.useState(false);
   const [bl2Form102, setBl2Form201] = React.useState(false);
   const [bl2Form103, setBl2Form301] = React.useState(false);
-
-console.log('вход:',props.idx)
-
   //=== инициализация ======================================
   if (props.idx !== oldIdx) {
     oldIdx = props.idx;

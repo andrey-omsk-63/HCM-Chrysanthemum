@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import HcmErrorMessage from './HcmComponents/HcmErrorMessage';
+import HcmBlock1Gl from './HcmComponents/HcmBlock1Components/HcmBlock1Gl';
 import HcmBlock2Gl from './HcmComponents/HcmBlock2Components/HcmBlock2Gl';
 import HcmBlock3Disp from './HcmComponents/HcmBlock3Components/HcmBlock3Disp';
 import HcmBlock4Gl from './HcmComponents/HcmBlock4Components/HcmBlock4Gl';
@@ -60,6 +61,7 @@ const HcmMain = (props: { trigger: boolean }) => {
   //const ws = datestat.ws;
   //const dispatch = useDispatch();
   //===========================================================
+  const [dispBlock1, setDispBlock1] = React.useState(false);
   const [dispBlock2, setDispBlock2] = React.useState(false);
   const [dispBlock3, setDispBlock3] = React.useState(false);
   const [dispBlock4, setDispBlock4] = React.useState(false);
@@ -88,6 +90,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     setCurrency03('0');
     //setCurrency04("0");
     setCurrency05('0');
+    setDispBlock1(false);
     setDispBlock2(false);
     setDispBlock4(false);
   };
@@ -106,6 +109,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     setCurrency03('0');
     //setCurrency04("0");
     setCurrency05('0');
+    setDispBlock1(false);
     setDispBlock4(false);
   };
 
@@ -121,6 +125,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     //setCurrency02('0');
     setCurrency03('0');
     setCurrency05('0');
+    setDispBlock1(false);
     setDispBlock2(false);
   };
 
@@ -146,8 +151,7 @@ const HcmMain = (props: { trigger: boolean }) => {
   const ClickKnop1 = () => {
     ILLUM = 1;
     Turn01();
-    soob = 'Здесь будет действие по нажатию на кнопку ЛИЧНЫЙ КАБИНЕТ';
-    setOpenSetErr(true);
+    setDispBlock1(true);
   };
 
   const ClickKnop2 = () => {
@@ -160,8 +164,6 @@ const HcmMain = (props: { trigger: boolean }) => {
     ILLUM = 4;
     Turn04();
     setDispBlock4(true);
-    // soob = 'Здесь будет действие по нажатию на кнопку АНАЛИТИКА ПО ПОДРАЗДЕЛЕНИЯМ';
-    // setOpenSetErr(true);
   };
 
   const SetDispBlock3 = (mode: boolean) => {
@@ -206,24 +208,27 @@ const HcmMain = (props: { trigger: boolean }) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       ILLUM = mode;
-      console.log('ILLUM:', ILLUM);
       let evTV = event.target.value === '0' ? '1' : event.target.value;
       switch (mode) {
         case 3: // Справочная информация
           setCurrency03(evTV);
           FORM3 = evTV;
           ILLUM = 3;
-          setDispBlock3(true);
+          setDispBlock1(false);
           setDispBlock2(false);
+          setDispBlock3(true);
           setDispBlock4(false);
+          setDispBlock5(false);
           break;
         case 5: // Ввод данных
           setCurrency05(evTV);
           FORM5 = evTV;
           ILLUM = 5;
-          setDispBlock5(true);
+          setDispBlock1(false);
           setDispBlock2(false);
+          setDispBlock3(false);
           setDispBlock4(false);
+          setDispBlock5(true);
       }
     };
 
@@ -238,7 +243,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     return (
       <Grid item xs={1.5} onClick={() => ClickLogo()}>
         <Box sx={{ width: (widthGl / 12) * 1.5 - 3 }}>
-          <Box sx={styleMain02}>Л О Г О Т И П</Box>
+          <Box sx={styleMain02}><em>Л О Г О Т И П</em></Box>
         </Box>
       </Grid>
     );
@@ -277,8 +282,6 @@ const HcmMain = (props: { trigger: boolean }) => {
     );
   };
 
-  console.log('dispBlock2:',dispBlock2)
-
   return (
     <>
       <Grid container sx={styleMain01}>
@@ -309,6 +312,7 @@ const HcmMain = (props: { trigger: boolean }) => {
             </Grid>
           </Grid>
         </Grid>
+        {dispBlock1 && <HcmBlock1Gl idx={RandomNumber(1, 10000)} />}
         {dispBlock2 && <HcmBlock2Gl idx={RandomNumber(1, 10000)} />}
         {dispBlock4 && <HcmBlock4Gl idx={RandomNumber(1, 10000)} />}
       </Grid>
