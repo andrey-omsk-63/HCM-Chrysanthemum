@@ -25,8 +25,8 @@ import { styleMain01, styleMain02, styleMain03 } from './HcmMainStyle';
 import { styleMain04, styleMain05 } from './HcmMainStyle';
 
 export let ILLUM = -1; // номер активной кнопки меню
-export let FORM3 = '0'; // какую форму нужно выдать через диспетчер
-export let FORM5 = '0'; // какую форму нужно выдать через диспетчер
+export let FORM3 = '0'; // какую форму Справочная информация выдать через диспетчер
+export let FORM5 = '0'; // какую форму Ввода данных выдать через диспетчер
 
 //let currencies01: any = []; // Личный кабинет
 //let currencies02: any = [];
@@ -243,7 +243,9 @@ const HcmMain = (props: { trigger: boolean }) => {
     return (
       <Grid item xs={1.5} onClick={() => ClickLogo()}>
         <Box sx={{ width: (widthGl / 12) * 1.5 - 3 }}>
-          <Box sx={styleMain02}><em>Л О Г О Т И П</em></Box>
+          <Box sx={styleMain02}>
+            <b>deeplay</b>
+          </Box>
         </Box>
       </Grid>
     );

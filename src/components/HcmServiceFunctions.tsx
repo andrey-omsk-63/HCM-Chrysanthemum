@@ -2,8 +2,11 @@ import * as React from 'react';
 
 import Box from '@mui/material/Box';
 
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
 
 import { ILLUM } from './HcmMain';
 
@@ -162,7 +165,7 @@ export const InputDirect = (
     fontSize: mode === ILLUM ? 14 : 12.5,
     //bgcolor: mode === ILLUM ? '#BAE186' : '#E6F5D6', // тёмно-салатовый/светло-салатовый
     //border: '1px solid #93D145', // тёмно салатовый
-    bgcolor: ILLUM === mode ? '#82e94a' : '#E6F5D6', // ярко-салатовый/светло-салатовый
+    bgcolor: ILLUM === mode ? '#82e94a' : '#F4E8FB', // ярко-салатовый/светло-сиреневый
     border: '1px solid #d4d4d4', // серый
     borderRadius: 1,
     padding: '15px 10px 11px 12px',
@@ -195,7 +198,6 @@ export const InputDirect = (
             disableUnderline: true,
             style: {
               fontSize: currency === '0' && mode === ILLUM ? 13.5 : 12.5,
-              //fontSize: 12.9,
               fontWeight: currency === '0' ? 700 : 400,
             },
           }}
@@ -208,7 +210,7 @@ export const InputDirect = (
               sx={{
                 fontSize: option.label === currencies[0].label ? 13.5 : 12.9,
                 fontWeight: option.label === currencies[0].label ? 700 : 400,
-                color: option.label === currencies[0].label ? 'blue' : 'black',
+                color: option.label === currencies[0].label ? '#7c31ab' : 'black',
                 cursor: option.label === currencies[0].label ? 'none' : 'pointer',
               }}>
               {option.label}
@@ -220,6 +222,120 @@ export const InputDirect = (
   );
 };
 
+export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
+  const styleSetPoint = {
+    outline: 'none',
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '1px solid #000',
+    borderColor: 'red',
+    borderRadius: 1,
+    boxShadow: 24,
+    textAlign: 'center',
+    p: 1,
+  };
+
+  const styleModalMenu = {
+    marginTop: 0.5,
+    maxHeight: '24px',
+    minHeight: '24px',
+    border: '1px solid #d4d4d4', // серый
+    borderRadius: 1,
+    backgroundColor: '#E6F5D6', // светло салатовый
+    color: 'black',
+    textTransform: 'unset !important',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+    boxShadow: 6,
+  };
+
+  const styleModalEndAttent = {
+    position: 'absolute',
+    top: '0%',
+    left: 'auto',
+    right: '-0%',
+    maxHeight: '21px',
+    minHeight: '21px',
+    maxWidth: '2%',
+    minWidth: '2%',
+    color: 'red',
+    textShadow: '2px 2px 3px rgba(0,0,0,0.3)',
+  };
+
+  const handleClose = (mode: boolean) => {
+    handleCloseEnd(mode);
+  };
+
+  const CloseEnd = (event: any, reason: string) => {
+    if (reason === 'escapeKeyDown') handleClose(false);
+  };
+
+  return (
+    <Modal open={badExit} onClose={CloseEnd} hideBackdrop>
+      <Box sx={styleSetPoint}>
+        <Button sx={styleModalEndAttent} onClick={() => handleClose(false)}>
+          <b>&#10006;</b>
+        </Button>
+        <Typography variant="h6" sx={{ color: 'red' }}>
+          Предупреждение
+        </Typography>
+        <Box sx={{ marginTop: 0.5 }}>
+          <Box sx={{ marginBottom: 1.2 }}>
+            Будет произведён выход без сохранения введённых данных. Продолжать?
+          </Box>
+          <Button sx={styleModalMenu} onClick={() => handleClose(false)}>
+            Нет
+          </Button>
+          &nbsp;
+          <Button sx={styleModalMenu} onClick={() => handleClose(true)}>
+            Да
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
+  );
+};
+
+export const FooterContent = (SaveForm: Function) => {
+  const styleSetPK04 = {
+    marginTop: 1.2,
+    display: 'flex',
+    justifyContent: 'center',
+  };
+
+  const styleFormPK03 = {
+    maxHeight: '24px',
+    minHeight: '24px',
+    backgroundColor: '#E6F5D6', // светло салатовый
+    border: '1px solid #000',
+    borderRadius: 1,
+    borderColor: '#d4d4d4', // серый
+    textTransform: 'unset !important',
+    boxShadow: 6,
+    textShadow: '2px 2px 3px rgba(0,0,0,0.3)',
+    color: 'black',
+  };
+
+  console.log('FooterContent:');
+
+  return (
+    <Box sx={styleSetPK04}>
+      <Box sx={{ display: 'inline-block', margin: '0px 5px 0px 0px' }}>
+        <Button sx={styleFormPK03} onClick={() => SaveForm(0)}>
+          Выйти без сохранения
+        </Button>
+      </Box>
+      <Box sx={{ display: 'inline-block', margin: '0px 5px 0px 5px' }}>
+        <Button sx={styleFormPK03} onClick={() => SaveForm(1)}>
+          Сохранить изменения
+        </Button>
+      </Box>
+    </Box>
+  );
+};
 //===========================================================
 
 export const CenterCoord = (aY: number, aX: number, bY: number, bX: number) => {

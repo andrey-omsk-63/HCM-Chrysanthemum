@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import HcmErrorMessage from '../HcmErrorMessage';
-// import MapFormPK01 from './MapFormPK01';
+import HcmBl5Form101 from './HcmBl5Form101';
 // import MapFormPK02 from './MapFormPK02';
 // import MapFormPK03 from './MapFormPK03';
 // import MapFormPK04 from './MapFormPK04';
@@ -32,12 +32,12 @@ const HcmBlock5Disp = (props: { setOpen: any }) => {
 
   return (
     <>
-      {/* {FORM === '1' && <MapFormPK01 view={true} handleClose={props.setOpen} />}
-      {FORM === '2' && <MapFormPK02 view={true} handleClose={props.setOpen} />}
+      {FORM5 === '1' && <HcmBl5Form101 close={props.setOpen} />}
+      {/* {FORM === '2' && <MapFormPK02 view={true} handleClose={props.setOpen} />}
       {FORM === '3' && <MapFormPK03 view={true} handleClose={props.setOpen} />}
       {FORM === '4' && <MapFormPK04 view={true} handleClose={props.setOpen} />}
       {FORM === '5' && <MapFormPK05 view={true} handleClose={props.setOpen} />} */}
-      {Number(FORM5) > 0 && <HcmErrorMessage sErr={soob} setOpen={props.setOpen} />}
+      {Number(FORM5) > 1 && <HcmErrorMessage sErr={soob} setOpen={props.setOpen} />}
     </>
   );
 };

@@ -11,6 +11,7 @@ export const styleMain01 = {
 };
 
 export const styleMain02 = {
+  fontSize: 17,
   //bgcolor: '#BDE6FB', // голубой
   //bgcolor: '#EFDE7E', // светло оранжевый
   bgcolor: '#e67aef', // сиреневый
@@ -18,7 +19,8 @@ export const styleMain02 = {
   //border: '3px solid #EFDE7E', // светло оранжевый
   border: '3px solid #e67aef', // сиреневый
   borderRadius: 1,
-  padding: '3px 5px 3px 0px',
+  color: 'background.paper',
+  padding: '0px 0px 1px 0px',
   marginRigth: 10,
   boxShadow: 3,
   cursor: 'pointer',
@@ -39,7 +41,8 @@ export const styleMain04 = (part: number, ILLUM: number, mode: number) => {
     height: '30px',
     width: ((window.innerWidth - 3) / 12) * part - 3,
     //bgcolor: ILLUM === mode ? '#BAE186' : '#E6F5D6', // тёмно-салатовый/светло-салатовый
-    bgcolor: ILLUM === mode ? '#82e94a' : '#E6F5D6', // ярко-салатовый/светло-салатовый
+    // bgcolor: ILLUM === mode ? '#82e94a' : '#E6F5D6', // ярко-салатовый/светло-салатовый
+    bgcolor: ILLUM === mode ? '#82e94a' : '#F4E8FB', // ярко-салатовый/светло-сиреневый
     border: '1px solid #d4d4d4', // серый
     borderRadius: 1,
     color: 'black',
