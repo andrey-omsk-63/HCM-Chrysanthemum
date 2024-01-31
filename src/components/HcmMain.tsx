@@ -92,6 +92,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     setCurrency05('0');
     setDispBlock1(false);
     setDispBlock2(false);
+    setDispBlock3(false);
     setDispBlock4(false);
   };
 
@@ -101,6 +102,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     //setCurrency04("0");
     setCurrency05('0');
     setDispBlock2(false);
+    setDispBlock3(false);
     setDispBlock4(false);
   };
 
@@ -110,6 +112,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     //setCurrency04("0");
     setCurrency05('0');
     setDispBlock1(false);
+    setDispBlock3(false);
     setDispBlock4(false);
   };
 
@@ -126,6 +129,7 @@ const HcmMain = (props: { trigger: boolean }) => {
     setCurrency03('0');
     setCurrency05('0');
     setDispBlock1(false);
+    setDispBlock3(false);
     setDispBlock2(false);
   };
 
@@ -160,19 +164,20 @@ const HcmMain = (props: { trigger: boolean }) => {
     setDispBlock2(true);
   };
 
+  const SetDispBlock3 = (mode: boolean) => {
+    setCurrency03((FORM3 = '0'));
+    setDispBlock3(mode);
+  };
+
   const ClickKnop4 = () => {
     ILLUM = 4;
     Turn04();
     setDispBlock4(true);
   };
 
-  const SetDispBlock3 = (mode: boolean) => {
-    setCurrency03((FORM3 = '0'));
-    setDispBlock3(mode);
-  };
-
   const SetDispBlock5 = (mode: boolean) => {
     setCurrency05((FORM5 = '0'));
+    setCurrency03((FORM3 = '0'));
     setDispBlock5(mode);
   };
   //=== Закрытие или перезапуск вкладки ====================
@@ -316,9 +321,10 @@ const HcmMain = (props: { trigger: boolean }) => {
         </Grid>
         {dispBlock1 && <HcmBlock1Gl idx={RandomNumber(1, 10000)} />}
         {dispBlock2 && <HcmBlock2Gl idx={RandomNumber(1, 10000)} />}
+        {dispBlock3 && <HcmBlock3Disp setOpen={SetDispBlock3} />}
         {dispBlock4 && <HcmBlock4Gl idx={RandomNumber(1, 10000)} />}
       </Grid>
-      {dispBlock3 && <HcmBlock3Disp setOpen={SetDispBlock3} />}
+
       {dispBlock5 && <HcmBlock5Disp setOpen={SetDispBlock5} />}
       {openSetErr && <HcmErrorMessage sErr={soob} setOpen={setOpenSetErr} />}
     </>

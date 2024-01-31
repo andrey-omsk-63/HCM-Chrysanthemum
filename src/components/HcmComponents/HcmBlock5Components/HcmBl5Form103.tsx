@@ -1,23 +1,16 @@
-import * as React from "react";
+import * as React from 'react';
 //import { useSelector } from "react-redux";
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 
-import { FooterContent, BadExit, StrTablProp } from "../../HcmServiceFunctions";
+import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
 
-// import { FooterContent, BadExit, WaysInput } from "./../MapServiceFunctions";
-// import { StrTablVert, ShiftOptimal } from "./../MapServiceFunctions";
-// import { PreparCurrenciesFaza, InputFromList } from "./../MapServiceFunctions";
-
-//import { PLANER } from "./../MainMapGl";
-//import { MaxFaz } from "./../MapConst";
-
-import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
-import { styleBl5Form01, styleBl5Form02 } from "../../HcmMainStyle";
-import { styleBl5Form03 } from "../../HcmMainStyle";
+import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
+import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
+import { styleBl5Form03 } from '../../HcmMainStyle';
 
 //let massForm: any = null;
 let flagInput = true;
@@ -57,7 +50,7 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === "escapeKeyDown") handleCloseBad();
+    if (reason === 'escapeKeyDown') handleCloseBad();
   };
 
   const handleCloseBadExit = (mode: boolean) => {
@@ -134,18 +127,18 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   const TableContent = () => {
     return (
       <>
-        {StrTablProp(4, "Объект*", "Пупкин Иван")}
-        {StrTablProp(4, "Оснвание*", "Очень важное основание")}
-        {StrTablProp(4, "Тема*", "Суд вынес приговор")}
-        {StrTablProp(4, "Дата выполнения*", "21.12.2023")}
-        {StrTablProp(4, "Исполнитель*", "Ник Фантомас")}
+        {StrTablProp(4, 'Объект*', 'Пупкин Иван')}
+        {StrTablProp(4, 'Оснвание*', 'Очень важное основание')}
+        {StrTablProp(4, 'Тема*', 'Суд вынес приговор')}
+        {StrTablProp(4, 'Дата выполнения*', '21.12.2023')}
+        {StrTablProp(4, 'Исполнитель*', 'Ник Фантомас')}
         <Grid container sx={{ marginTop: 2 }}>
           <Grid item xs={4} sx={{ height: 100, border: 0 }}>
             Описание
           </Grid>
           <Grid item xs sx={styleBl5Form03}>
-            Центральный районный суд города Омска вынес приговор 37-летнему
-            жителю города Омска, обвиняемому в хулиганстве.
+            Центральный районный суд города Омска вынес приговор 37-летнему жителю города Омска,
+            обвиняемому в хулиганстве.
           </Grid>
         </Grid>
       </>

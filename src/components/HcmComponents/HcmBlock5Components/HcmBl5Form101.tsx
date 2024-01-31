@@ -1,23 +1,16 @@
-import * as React from "react";
+import * as React from 'react';
 //import { useSelector } from "react-redux";
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 
-import { FooterContent, BadExit, StrTablProp } from "../../HcmServiceFunctions";
+import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
 
-// import { FooterContent, BadExit, WaysInput } from "./../MapServiceFunctions";
-// import { StrTablProp, ShiftOptimal } from "./../MapServiceFunctions";
-// import { PreparCurrenciesFaza, InputFromList } from "./../MapServiceFunctions";
-
-//import { PLANER } from "./../MainMapGl";
-//import { MaxFaz } from "./../MapConst";
-
-import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
-import { styleBl5Form01, styleBl5Form02 } from "../../HcmMainStyle";
-import { styleBl5Form03 } from "../../HcmMainStyle";
+import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
+import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
+import { styleBl5Form03 } from '../../HcmMainStyle';
 
 //let massForm: any = null;
 let flagInput = true;
@@ -57,7 +50,7 @@ const HcmBl5Form101 = (props: { close: Function }) => {
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === "escapeKeyDown") handleCloseBad();
+    if (reason === 'escapeKeyDown') handleCloseBad();
   };
 
   const handleCloseBadExit = (mode: boolean) => {
@@ -134,24 +127,23 @@ const HcmBl5Form101 = (props: { close: Function }) => {
   const TableContent = () => {
     return (
       <>
-        {StrTablProp(4, "Сотрудник*", "Пупкин Иван")}
-        {StrTablProp(4, "Ментор*", "Бупкин Фёдор")}
-        {StrTablProp(4, "Дата начала*", "12.12.2021")}
-        {StrTablProp(4, "Дата окончания*", "21.12.2023")}
-        {StrTablProp(4, "Автор", "Ник Фантомас")}
+        {StrTablProp(4, 'Сотрудник*', 'Пупкин Иван')}
+        {StrTablProp(4, 'Ментор*', 'Бупкин Фёдор')}
+        {StrTablProp(4, 'Дата начала*', '12.12.2021')}
+        {StrTablProp(4, 'Дата окончания*', '21.12.2023')}
+        {StrTablProp(4, 'Автор', 'Ник Фантомас')}
         {StrTablProp(
           4,
-          "Ссылка на план адаптации",
-          "https://e.mail.ru/newsletters/0:17066793751836945566"
+          'Ссылка на план адаптации',
+          'https://e.mail.ru/newsletters/0:17066793751836945566',
         )}
         <Grid container sx={{ marginTop: 2 }}>
           <Grid item xs={4} sx={{ height: 100, border: 0 }}>
             Коментарий
           </Grid>
           <Grid item xs sx={styleBl5Form03}>
-            Политик напомнил, что согласно референдуму, проведенному в 1991
-            году, Закарпатье должно существовать как автономия с широким кругом
-            прав.
+            Политик напомнил, что согласно референдуму, проведенному в 1991 году, Закарпатье должно
+            существовать как автономия с широким кругом прав.
           </Grid>
         </Grid>
       </>

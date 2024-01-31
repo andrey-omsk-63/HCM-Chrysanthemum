@@ -1,23 +1,16 @@
-import * as React from "react";
+import * as React from 'react';
 //import { useSelector } from "react-redux";
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 
-import { FooterContent, BadExit, StrTablProp } from "../../HcmServiceFunctions";
+import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
 
-// import { FooterContent, BadExit, WaysInput } from "./../MapServiceFunctions";
-// import { StrTablVert, ShiftOptimal } from "./../MapServiceFunctions";
-// import { PreparCurrenciesFaza, InputFromList } from "./../MapServiceFunctions";
-
-//import { PLANER } from "./../MainMapGl";
-//import { MaxFaz } from "./../MapConst";
-
-import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
-import { styleBl5Form01, styleBl5Form02 } from "../../HcmMainStyle";
-import { styleBl5Form03 } from "../../HcmMainStyle";
+import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
+import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
+//import { styleBl5Form03 } from "../../HcmMainStyle";
 
 //let massForm: any = null;
 let flagInput = true;
@@ -57,7 +50,7 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === "escapeKeyDown") handleCloseBad();
+    if (reason === 'escapeKeyDown') handleCloseBad();
   };
 
   const handleCloseBadExit = (mode: boolean) => {
@@ -135,21 +128,21 @@ const HcmBl5Form104 = (props: { close: Function }) => {
     return (
       <>
         <Grid container>
-          <Grid item xs={6} sx={{ padding: "0px 2px 0px 0px" }}>
-            {StrTablProp(4.5, "Автор", "Пупкин Иван")}
-            {StrTablProp(4.5, "Причина проведения", "очень важная причина")}
-            {StrTablProp(7, "Общее состояние команды", "хорошее")}
-            {StrTablProp(7, "Взаимодействие с руководителем", "прекрасное")}
-            {StrTablProp(7, "Заработная плата, бонусы", "хорошая")}
-            {StrTablProp(7, "Нагрузка, режим работы", "сильная")}
+          <Grid item xs={6} sx={{ padding: '0px 2px 0px 0px' }}>
+            {StrTablProp(4.5, 'Автор', 'Пупкин Иван')}
+            {StrTablProp(4.5, 'Причина проведения', 'очень важная причина')}
+            {StrTablProp(7, 'Общее состояние команды', 'хорошее')}
+            {StrTablProp(7, 'Взаимодействие с руководителем', 'прекрасное')}
+            {StrTablProp(7, 'Заработная плата, бонусы', 'хорошая')}
+            {StrTablProp(7, 'Нагрузка, режим работы', 'сильная')}
           </Grid>
-          <Grid item xs={6} sx={{  padding: "0px 0px 0px 2px" }}>
-            {StrTablProp(6, "Подразделение", "ООО Рога и капыта")}
-            {StrTablProp(6, "За период", "21.12.2023")}
-            {StrTablProp(6, "Информированность", "высокая")}
-            {StrTablProp(6, "Развитие", "непрерывное")}
-            {StrTablProp(6, "Текущие задачи", "сложные")}
-            {StrTablProp(6, "Взаимодействие в команде", "хорошее")}
+          <Grid item xs={6} sx={{ padding: '0px 0px 0px 2px' }}>
+            {StrTablProp(6, 'Подразделение', 'ООО Рога и капыта')}
+            {StrTablProp(6, 'За период', '21.12.2023')}
+            {StrTablProp(6, 'Информированность', 'высокая')}
+            {StrTablProp(6, 'Развитие', 'непрерывное')}
+            {StrTablProp(6, 'Текущие задачи', 'сложные')}
+            {StrTablProp(6, 'Взаимодействие в команде', 'хорошее')}
           </Grid>
         </Grid>
       </>
