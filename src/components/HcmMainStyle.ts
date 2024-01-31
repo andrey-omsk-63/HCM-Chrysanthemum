@@ -63,16 +63,16 @@ export const styleMain05 = {
 };
 
 export const styleModalEnd = {
-  position: 'absolute',
-  top: '0%',
-  left: 'auto',
-  right: '-0%',
-  height: '21px',
-  maxWidth: '2%',
-  minWidth: '2%',
+  position: "absolute",
+  top: "0%",
+  left: "auto",
+  right: "-0%",
+  height: "21px",
+  maxWidth: "2%",
+  minWidth: "2%",
   //color: 'black',
-  color: '#801F95',  // сиреневый
-  textShadow: '2px 2px 3px rgba(0,0,0,0.3)',
+  color: "#801F95", // сиреневый
+  textShadow: "2px 2px 3px rgba(0,0,0,0.3)",
 };
 //=== HcmBlock1 =======================================================
 export const styleBl1Form01 = {
@@ -148,12 +148,19 @@ export const styleBl5Form02 = {
   bgcolor: "#F1F5FB",
   border: "1px solid #d4d4d4",
   borderRadius: 1,
-  color: "black",
+  color: "#5B1080", // сиреневый
   boxShadow: 3,
-  margin: "3px 0 1px 0",
-  padding: "12px 5px 20px 5px",
+  //margin: "1px 0 1px 0",
+  padding: "0px 20px 20px 20px",
   textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
-  height: 380, //=====================================================
+  //height: 380, //=====================================================
+};
+
+export const styleBl5Form03 = {
+  fontSize: 15,
+  color: "#5B1080",
+  border: "1px dashed #5B1080",
+  padding: "0px 2px 1px 5px",
 };
 //=====================================================================
 //=== InputObject =====================================================

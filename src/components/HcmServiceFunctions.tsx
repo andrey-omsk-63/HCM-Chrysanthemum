@@ -2,6 +2,7 @@ import * as React from "react";
 
 import Box from "@mui/material/Box";
 
+import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -252,8 +253,8 @@ export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
     //backgroundColor: '#E6F5D6', // светло салатовый
     bgcolor: "#EBD6F8", // светло-сиреневый
     //color: "black",
-    //color: "#801F95", // сиреневый
-    color: "#7620a2", // сиреневый
+    color: "#5B1080", // сиреневый
+    //color: "#7620a2", // сиреневый
     textTransform: "unset !important",
     textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
     boxShadow: 6,
@@ -294,7 +295,7 @@ export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
         >
           Предупреждение
         </Typography>
-        <Box sx={{ marginTop: 0.5, color: "#7620a2" }}>
+        <Box sx={{ marginTop: 0.5, color: "#5B1080" }}>
           <Box sx={{ marginBottom: 1.2 }}>
             <b>
               Будет произведён выход без сохранения введённых данных.
@@ -334,8 +335,8 @@ export const FooterContent = (SaveForm: Function) => {
     boxShadow: 6,
     textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
     //color: "black",
-    //color: "#801F95", // сиреневый
-    color: "#7620a2", // сиреневый
+    color: "#5B1080", // сиреневый
+    //color: "#7620a2", // сиреневый
   };
 
   return (
@@ -353,6 +354,28 @@ export const FooterContent = (SaveForm: Function) => {
     </Box>
   );
 };
+
+export const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
+  return (
+    <>
+      <Grid container sx={{ marginTop: 2 }}>
+        <Grid item xs={xss} sx={{ border: 0 }}>
+          {recLeft}
+        </Grid>
+        {typeof recRight === "object" ? (
+          <Grid item xs>
+            {recRight}
+          </Grid>
+        ) : (
+          <Grid item xs sx={{ fontSize: 15, color: "#5B1080", border: 0 }}>
+            <b>{recRight}</b>
+          </Grid>
+        )}
+      </Grid>
+    </>
+  );
+};
+
 //===========================================================
 
 export const CenterCoord = (aY: number, aX: number, bY: number, bX: number) => {

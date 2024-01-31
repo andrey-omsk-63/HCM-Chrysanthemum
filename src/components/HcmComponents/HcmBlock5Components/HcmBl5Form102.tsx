@@ -1,12 +1,12 @@
 import * as React from "react";
 //import { useSelector } from "react-redux";
 
-//import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 
-import { FooterContent, BadExit } from "../../HcmServiceFunctions";
+import { FooterContent, BadExit, StrTablProp } from "../../HcmServiceFunctions";
 
 // import { FooterContent, BadExit, WaysInput } from "./../MapServiceFunctions";
 // import { StrTablVert, ShiftOptimal } from "./../MapServiceFunctions";
@@ -17,6 +17,7 @@ import { FooterContent, BadExit } from "../../HcmServiceFunctions";
 
 import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
 import { styleBl5Form01, styleBl5Form02 } from "../../HcmMainStyle";
+import { styleBl5Form03 } from "../../HcmMainStyle";
 
 //let massForm: any = null;
 let flagInput = true;
@@ -130,86 +131,44 @@ const HcmBl5Form102 = (props: { close: Function }) => {
   //   //setCurrencyFaza(event.target.value);
   // };
   //========================================================
-  // const VertexContent = () => {
-  //   return (
-  //     <>
-  //       <Box sx={{ fontSize: 12 }}>Параметры перекрёстка</Box>
-  //       {StrTablVert(
-  //         9,
-  //         "Количество фаз",
-  //         InputFromList(handleChangeFaza, currencyFaza, currenciesFaza)
-  //       )}
-  //       {StrTablVert(
-  //         9,
-  //         "Минимальная длительность фазы",
-  //         WaysInput(0, massForm.minDuration, SetMinDuration, 0, 10000)
-  //       )}
-  //       {StrTablVert(
-  //         9,
-  //         "Участвует в автоматической оптимизации",
-  //         ShiftOptimal(massForm.optimal, ChangeOptimal, -0.1)
-  //       )}
-  //     </>
-  //   );
-  // };
-
-  // const DirectContent = () => {
-  //   return (
-  //     <>
-  //       <Box sx={{ fontSize: 12, marginTop: 0.5 }}>Параметры направлений</Box>
-  //       {StrTablVert(
-  //         9,
-  //         "Насыщение(т.е./ч.)",
-  //         WaysInput(0, massForm.satur, SetSatur, 0, 10000)
-  //       )}
-  //       {StrTablVert(
-  //         9,
-  //         "Средняя интенсивность(т.е./ч.)",
-  //         WaysInput(0, massForm.intens, SetIntens, 0, 10000)
-  //       )}
-  //       {StrTablVert(
-  //         9,
-  //         "Дисперсия пачки(%)",
-  //         WaysInput(0, massForm.dispers, SetDispers, 0, 100)
-  //       )}
-  //       {StrTablVert(
-  //         9,
-  //         "Смещ.начала зелёного(сек)",
-  //         WaysInput(0, massForm.offsetBeginGreen, SetOffsetBeginGreen, 0, 20)
-  //       )}
-  //       {StrTablVert(
-  //         9,
-  //         "Смещ.конца зелёного(сек)",
-  //         WaysInput(0, massForm.offsetEndGreen, SetOffsetEndGreen, 0, 20)
-  //       )}
-  //       {StrTablVert(
-  //         9,
-  //         "Вес остановки",
-  //         WaysInput(0, massForm.wtStop, SetWtStop, 0, 10)
-  //       )}
-  //       {StrTablVert(
-  //         9,
-  //         "Вес задержки",
-  //         WaysInput(0, massForm.wtDelay, SetWtDelay, 0, 10)
-  //       )}
-  //     </>
-  //   );
-  // };
+  const TableContent = () => {
+    return (
+      <>
+        {StrTablProp(4, "Сотрудник*", "Пупкин Иван")}
+        {StrTablProp(4, "Тип ИПР*", "Бупкин Фёдор")}
+        {StrTablProp(4, "Дата начала*", "12.12.2021")}
+        {StrTablProp(4, "Дата окончания*", "21.12.2023")}
+        {StrTablProp(4, "Автор", "Ник Фантомас")}
+        {StrTablProp(
+          4,
+          "Ссылка на план ИПР",
+          "https://e.mail.ru/newsletters/0:17066793751836945566"
+        )}
+        <Grid container sx={{ marginTop: 2 }}>
+          <Grid item xs={4} sx={{ height: 100, border: 0 }}>
+            Коментарий
+          </Grid>
+          <Grid item xs sx={styleBl5Form03}>
+            В Антарктиде зарегистрировали первые случаи смерти пингвинов после
+            заражения высокопатогенным штаммом (HPAIV) птичьего гриппа, сообщает
+            The New York Times.
+          </Grid>
+        </Grid>
+      </>
+    );
+  };
 
   return (
     <>
       <Modal open={open} onClose={CloseEnd} hideBackdrop={false}>
-        <Box sx={styleBl5Form00(500, 505)}>
+        <Box sx={styleBl5Form00(650, 446)}>
           <Button sx={styleModalEnd} onClick={() => handleCloseBad()}>
             <b>&#10006;</b>
           </Button>
           <Box sx={styleBl5Form01}>
             <b>Добавить данные по ИПР</b>
           </Box>
-          <Box sx={styleBl5Form02}>
-            {/* {VertexContent()}
-            {DirectContent()} */}
-          </Box>
+          <Box sx={styleBl5Form02}>{TableContent()}</Box>
           {HAVE > 0 && <>{FooterContent(SaveForm)}</>}
         </Box>
       </Modal>
