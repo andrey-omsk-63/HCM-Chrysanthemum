@@ -22,7 +22,7 @@ import { styleBl5Form01, styleBl5Form02 } from "../../HcmMainStyle";
 let flagInput = true;
 let HAVE = 0;
 
-const HcmBl5Form101 = (props: { close: Function }) => {
+const HcmBl5Form104 = (props: { close: Function }) => {
   //== Piece of Redux =======================================
   // let massplan = useSelector((state: any) => {
   //   const { massplanReducer } = state;
@@ -204,7 +204,7 @@ const HcmBl5Form101 = (props: { close: Function }) => {
             <b>&#10006;</b>
           </Button>
           <Box sx={styleBl5Form01}>
-            <b>Добавить данные по адаптации</b>
+            <b>Добавить Healt Check</b>
           </Box>
           <Box sx={styleBl5Form02}>
             {/* {VertexContent()}
@@ -218,4 +218,4 @@ const HcmBl5Form101 = (props: { close: Function }) => {
   );
 };
 
-export default HcmBl5Form101;
+export default HcmBl5Form104;

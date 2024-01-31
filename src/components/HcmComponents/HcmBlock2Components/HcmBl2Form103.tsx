@@ -30,8 +30,8 @@ const HcmBl2Form103 = (props: { idx: number }) => {
     <Grid container>
       <Grid item xs={12} sx={{ marginTop: 2 }}>
         <Grid container>
-          <Grid item xs={2.0}>
-            <Button sx={styleMain04(2.0, Illum, 1)} onClick={() => ClickKnop()}>
+          <Grid item xs={1.8}>
+            <Button sx={styleMain04(1.8, Illum, 1)} onClick={() => ClickKnop()}>
               {soobButt}
             </Button>
           </Grid>

@@ -2,10 +2,9 @@ import * as React from 'react';
 
 import HcmErrorMessage from '../HcmErrorMessage';
 import HcmBl5Form101 from './HcmBl5Form101';
-// import MapFormPK02 from './MapFormPK02';
-// import MapFormPK03 from './MapFormPK03';
-// import MapFormPK04 from './MapFormPK04';
-// import MapFormPK05 from './MapFormPK05';
+import HcmBl5Form102 from './HcmBl5Form102';
+import HcmBl5Form103 from './HcmBl5Form103';
+import HcmBl5Form104 from './HcmBl5Form104';
 
 import { FORM5 } from '../../HcmMain';
 
@@ -33,11 +32,10 @@ const HcmBlock5Disp = (props: { setOpen: any }) => {
   return (
     <>
       {FORM5 === '1' && <HcmBl5Form101 close={props.setOpen} />}
-      {/* {FORM === '2' && <MapFormPK02 view={true} handleClose={props.setOpen} />}
-      {FORM === '3' && <MapFormPK03 view={true} handleClose={props.setOpen} />}
-      {FORM === '4' && <MapFormPK04 view={true} handleClose={props.setOpen} />}
-      {FORM === '5' && <MapFormPK05 view={true} handleClose={props.setOpen} />} */}
-      {Number(FORM5) > 1 && <HcmErrorMessage sErr={soob} setOpen={props.setOpen} />}
+      {FORM5 === '2' && <HcmBl5Form102 close={props.setOpen} />}
+      {FORM5 === '3' && <HcmBl5Form103 close={props.setOpen} />}
+      {FORM5 === '4' && <HcmBl5Form104 close={props.setOpen} />}
+      {Number(FORM5) > 4 && <HcmErrorMessage sErr={soob} setOpen={props.setOpen} />}
     </>
   );
 };

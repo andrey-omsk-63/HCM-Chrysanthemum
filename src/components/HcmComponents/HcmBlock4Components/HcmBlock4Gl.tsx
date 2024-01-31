@@ -55,11 +55,11 @@ const HcmBlock4Gl = (props: { idx: number }) => {
 
   const ClickKnop2 = () => {
     Illum = 2;
-    setBl4Form101(false);
-    setBl4Form201(true);
-    setBl4Form301(false);
-    setBl4Form401(false);
-    setBl4Form501(false);
+    bl4Form101 && setBl4Form101(false);
+    bl4Form102 && setBl4Form201(true);
+    bl4Form103 && setBl4Form301(false);
+    bl4Form104 && setBl4Form401(false);
+    bl4Form105 && setBl4Form501(false);
   };
 
   const ClickKnop3 = () => {
