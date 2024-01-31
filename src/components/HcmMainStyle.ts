@@ -5,7 +5,7 @@ export const styleMain01 = {
   // этюд в зелёных тонах:
   //background: 'linear-gradient(135deg, #e2e5b9 25%,#a8c6a4 52%, #dadec3 85%)',
   // этюд в сиреневых тонах:
-  background: "linear-gradient(125deg, #e3d8f7 36%,#dcbaf1 52%, #f8d7f7 75%)",
+  background: "linear-gradient(140deg, #e3d8f7 26%,#dcbaf1 57%, #f8d7f7 85%)",
   padding: "2px 1px 0px 1px",
   //opacity: 0.99,
 };
