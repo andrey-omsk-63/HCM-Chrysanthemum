@@ -252,7 +252,8 @@ export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
     //backgroundColor: '#E6F5D6', // светло салатовый
     bgcolor: "#EBD6F8", // светло-сиреневый
     //color: "black",
-    color: "#801F95", // сиреневый
+    //color: "#801F95", // сиреневый
+    color: "#7620a2", // сиреневый
     textTransform: "unset !important",
     textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
     boxShadow: 6,
@@ -268,7 +269,8 @@ export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
     maxWidth: "2%",
     minWidth: "2%",
     //color: "red",
-    color: "#801F95", // сиреневый
+    //color: "#801F95", // сиреневый
+    color: "#7620a2", // сиреневый
     textShadow: "2px 2px 3px rgba(0,0,0,0.3)",
   };
 
@@ -288,11 +290,11 @@ export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
         </Button>
         <Typography
           variant="h6"
-          sx={{ color: "red", textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}
+          sx={{ color: "red", textShadow: "1px 1px 2px rgba(0,0,0,0.25)" }}
         >
           Предупреждение
         </Typography>
-        <Box sx={{ marginTop: 0.5, color: "#801F95" }}>
+        <Box sx={{ marginTop: 0.5, color: "#7620a2" }}>
           <Box sx={{ marginBottom: 1.2 }}>
             <b>
               Будет произведён выход без сохранения введённых данных.
@@ -328,11 +330,12 @@ export const FooterContent = (SaveForm: Function) => {
     borderRadius: 1,
     borderColor: "#d4d4d4", // серый
     textTransform: "unset !important",
-    padding: "4px 6px 1px 6px",
+    //padding: "6px 6px 6px 6px",
     boxShadow: 6,
-    textShadow: "2px 2px 3px rgba(0,0,0,0.3)",
+    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
     //color: "black",
-    color: "#801F95", // сиреневый
+    //color: "#801F95", // сиреневый
+    color: "#7620a2", // сиреневый
   };
 
   return (
@@ -342,7 +345,7 @@ export const FooterContent = (SaveForm: Function) => {
           Выйти без сохранения
         </Button>
       </Box>
-      <Box sx={{ display: "inline-block", margin: "0px 5px 0px 5px" }}>
+      <Box sx={{ display: "inline-block", margin: "0px 6px 0px 6px" }}>
         <Button sx={styleFormPK03} onClick={() => SaveForm(1)}>
           Сохранить изменения
         </Button>

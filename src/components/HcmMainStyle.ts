@@ -14,10 +14,10 @@ export const styleMain02 = {
   fontSize: 17,
   //bgcolor: '#BDE6FB', // голубой
   //bgcolor: '#EFDE7E', // светло оранжевый
-  bgcolor: "#e67aef", // сиреневый
+  bgcolor: "#7620a2", // сиреневый
   textAlign: "center",
   //border: '3px solid #EFDE7E', // светло оранжевый
-  border: "3px solid #e67aef", // сиреневый
+  border: "3px solid #7620a2", // сиреневый
   borderRadius: 1,
   color: "background.paper",
   padding: "0px 0px 1px 0px",
@@ -136,7 +136,8 @@ export const styleBl5Form01 = {
   fontSize: 20,
   textAlign: "center",
   //color: '#5B1080',
-  color: "#801F95", // сиреневый
+  //color: "#801F95", // сиреневый
+  color: "#7620a2", // сиреневый
   margin: "15px 0 10px 0",
   textShadow: "2px 2px 3px rgba(0,0,0,0.3)",
 };
