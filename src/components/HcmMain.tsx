@@ -27,14 +27,13 @@ import { styleMain04, styleMain05 } from './HcmMainStyle';
 export let ILLUM = -1; // номер активной кнопки меню
 export let FORM3 = '0'; // какую форму Справочная информация выдать через диспетчер
 export let FORM5 = '0'; // какую форму Ввода данных выдать через диспетчер
+export let widthGl = window.innerWidth - 3; // ширина окна браузера
 
 //let currencies01: any = []; // Личный кабинет
 //let currencies02: any = [];
 let currencies03: any = [];
 //let currencies04: any = [];
 let currencies05: any = [];
-
-let widthGl = window.innerWidth - 3; // ширина окна браузера
 
 let flagOpen = false;
 let soob = '';
@@ -207,7 +206,7 @@ const HcmMain = (props: { trigger: boolean }) => {
   function removePlayerFromGame() {
     throw new Error('Function not implemented.');
   }
-  //========================================================
+  //=== Компоненты =========================================
   const StrokaMenuGlob = (mode: number, wdth: number, currency: any, currencies: any) => {
     let widthBlok = (widthGl / 12) * wdth - 0;
 

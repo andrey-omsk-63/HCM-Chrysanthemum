@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import Grid from "@mui/material/Grid";
-//import Box from "@mui/material/Box";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import HcmBl1Form101 from "./HcmBl1Form101";
@@ -11,9 +11,11 @@ import HcmBl1Form104 from "./HcmBl1Form104";
 import HcmBl1Form106 from "./HcmBl1Form106";
 import HcmBl1Form108 from "./HcmBl1Form108";
 
-import { RandomNumber } from '../../HcmServiceFunctions';
+import { RandomNumber } from "../../HcmServiceFunctions";
 
 import { styleMain04, styleBl2Gl01, styleBl1Form01 } from "../../HcmMainStyle";
+import { styleBl1Form03, styleBl1Form04 } from "../../HcmMainStyle";
+import { styleBl1Form05 } from "../../HcmMainStyle";
 
 let Illum = 1;
 let oldIdx = -1;
@@ -57,8 +59,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
         setBl1Form801(true);
     }
   }
-  //========================================================
-
+  //=== Функции - обработчики ==============================
   const ClickKnop1 = () => {
     Illum = 1;
     setBl1Form101(true);
@@ -80,7 +81,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     bl1Form105 && setBl1Form501(false);
     bl1Form106 && setBl1Form601(false);
     bl1Form107 && setBl1Form701(false);
-    bl1Form108 && setBl1Form801(false)
+    bl1Form108 && setBl1Form801(false);
   };
 
   const ClickKnop3 = () => {
@@ -104,7 +105,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     bl1Form105 && setBl1Form501(false);
     bl1Form106 && setBl1Form601(false);
     bl1Form107 && setBl1Form701(false);
-    bl1Form108 && setBl1Form801(false)
+    bl1Form108 && setBl1Form801(false);
   };
 
   const ClickKnop5 = () => {
@@ -154,87 +155,90 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     bl1Form107 && setBl1Form701(false);
     setBl1Form801(true);
   };
+  //=== Компоненты =========================================
+  const MenuBatton = (
+    xss: number,
+    wt: number,
+    ill: number,
+    name: string,
+    func: Function
+  ) => {
+    return (
+      <Grid item xs={xss} sx={{ height: "30px" }}>
+        <Button sx={styleMain04(wt, Illum, ill)} onClick={() => func()}>
+          {name}
+        </Button>
+      </Grid>
+    );
+  };
+
+  const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
+    return (
+      <Grid container sx={{ marginTop: 1 }}>
+        <Grid item xs={xss} sx={{ border: 0 }}>
+          {recLeft}
+        </Grid>
+        <Grid item xs sx={{ fontSize: 14, color: "#5B1080", border: 0 }}>
+          <b>{recRight}</b>
+        </Grid>
+      </Grid>
+    );
+  };
+
+  const CardContent = () => {
+    return (
+      <Grid container>
+        <Grid item xs={12} sx={styleBl1Form01}>
+          <Grid container>
+            <Grid item xs={2} sx={{ height: "180px" }}>
+              <Grid container>
+                <Grid item xs={12} sx={styleBl1Form03}>
+                  Личная карточка <b>Доцент</b>
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={12} sx={styleBl1Form04}>
+                  <Box sx={styleBl1Form05}></Box>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={4} sx={{ height: "214px",fontSize: 14.5 }}>
+              {StrTablProp(2, "Имя:", "Пупкин Иван")}
+              {StrTablProp(2, "Ник:", "Доцент")}
+              {StrTablProp(4, "Дата рождения:", "12.12.1989")}
+              {StrTablProp(4, "В компании с:", "21.12.2021")}
+              {StrTablProp(4, "Должность:", "Гранатомётчик")}
+              {StrTablProp(4, "Подразделение:", "Пехота")}
+              {StrTablProp(4, "Руководитель:", "Бугор")}
+            </Grid>
+            <Grid item xs sx={{ height: "214px" }}>
+              {StrTablProp(0.1, "", "Россия, Омск UTC+6 (MSK+3)")}
+              {StrTablProp(0.1, "", "💊 больничный")}
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  };
 
   return (
     <Grid container sx={styleBl2Gl01}>
       <Grid item xs={12}>
-        <Grid container sx={{ marginTop: 0 }}>
-          <Grid item xs={12} sx={styleBl1Form01}>
-            <em>установочные данные</em>
-          </Grid>
-        </Grid>
+        {CardContent()}
         <Grid container sx={{ marginTop: 2, border: 0 }}>
           <Grid item xs={12}>
             <Grid container>
-              <Grid item xs={1.5} sx={{ border: 0, height: "30px" }}>
-                <Button
-                  sx={styleMain04(1.5, Illum, 1)}
-                  onClick={() => ClickKnop1()}
-                >
-                  Отсутствия
-                </Button>
-              </Grid>
-              <Grid item xs={1.5} sx={{ border: 0, height: "30px" }}>
-                <Button
-                  sx={styleMain04(1.5, Illum, 2)}
-                  onClick={() => ClickKnop2()}
-                >
-                  Оборудование
-                </Button>
-              </Grid>
-              <Grid item xs={1.75} sx={{ border: 0, height: "30px" }}>
-                <Button
-                  sx={styleMain04(1.75, Illum, 3)}
-                  onClick={() => ClickKnop3()}
-                >
-                  В структуре компании
-                </Button>
-              </Grid>
-              <Grid item xs={1.25} sx={{ border: 0, height: "30px" }}>
-                <Button
-                  sx={styleMain04(1.25, Illum, 4)}
-                  onClick={() => ClickKnop4()}
-                >
-                  ИПР
-                </Button>
-              </Grid>
-              <Grid item xs={1.75} sx={{ border: 0, height: "30px" }}>
-
-                <Button
-                  sx={styleMain04(1.75, Illum, 5)}
-                  onClick={() => ClickKnop5()}
-                >
-                  Оценка компетенций
-                </Button>
-              </Grid>
-              <Grid item xs={1.5} sx={{ border: 0, height: "30px" }}>
-                <Button
-                  sx={styleMain04(1.5, Illum, 6)}
-                  onClick={() => ClickKnop6()}
-                >
-                  Адаптация
-                </Button>
-              </Grid>
-              <Grid item xs={1.25} sx={{ border: 0, height: "30px" }}>
-                <Button
-                  sx={styleMain04(1.25, Illum, 7)}
-                  onClick={() => ClickKnop7()}
-                >
-                  Цели
-                </Button>
-              </Grid>
-              <Grid item xs={1.5} sx={{ border: 0, height: "30px" }}>
-                <Button
-                  sx={styleMain04(1.525, Illum, 8)}
-                  onClick={() => ClickKnop8()}
-                >
-                  Задачи
-                </Button>
-              </Grid>
+              {MenuBatton(1.5, 1.5, 1, "Отсутствия", ClickKnop1)}
+              {MenuBatton(1.5, 1.5, 2, "Оборудование", ClickKnop2)}
+              {MenuBatton(1.75, 1.75, 3, "В структуре компании", ClickKnop3)}
+              {MenuBatton(1.25, 1.25, 4, "ИПР", ClickKnop4)}
+              {MenuBatton(1.75, 1.75, 5, "Оценка компетенций", ClickKnop5)}
+              {MenuBatton(1.5, 1.5, 6, "Оценка компетенций", ClickKnop6)}
+              {MenuBatton(1.25, 1.25, 7, "Цели", ClickKnop7)}
+              {MenuBatton(1.5, 1.5, 8, "Задачи", ClickKnop8)}
             </Grid>
           </Grid>
         </Grid>
-        
         {bl1Form101 && <HcmBl1Form101 />}
         {bl1Form102 && <HcmBl1Form102 />}
         {bl1Form103 && <HcmBl1Form103 />}

@@ -97,14 +97,15 @@ export const PreparCurrencies03 = () => {
   return currencies;
 };
 
-export const PreparCurrencies04 = () => {
+export const PreparCurrencies05 = () => {
   const currencies: any = [];
   let dat = [
-    "Аналитика по подразделениям:",
-    "Первый пункт меню",
-    "Второй пункт меню",
-    "Третий пункт меню",
-    "Настройки",
+    "Ввод данных:",
+    "Адаптация",
+    "Добавить ИПР",
+    "Создать задачу",
+    //'Добавить Risk&Value',
+    "Добавить Healt Check",
   ];
   let massKey: any = [];
   let massDat: any = [];
@@ -124,16 +125,61 @@ export const PreparCurrencies04 = () => {
   return currencies;
 };
 
-export const PreparCurrencies05 = () => {
+export const PreparCurrencies041 = () => {
   const currencies: any = [];
   let dat = [
-    "Ввод данных:",
-    "Адаптация",
-    "Добавить ИПР",
-    "Создать задачу",
-    //'Добавить Risk&Value',
-    "Добавить Healt Check",
+    "Первое подразделение",
+    "Второе подразделение",
+    "Третье подразделение",
+    "Четвёртое подразделение",
   ];
+  let massKey: any = [];
+  let massDat: any = [];
+  for (let key in dat) {
+    massKey.push(key);
+    massDat.push(dat[key]);
+  }
+  let maskCurrencies = {
+    value: "0",
+    label: "Все режимы",
+  };
+  for (let i = 0; i < massKey.length; i++) {
+    maskCurrencies.value = massKey[i];
+    maskCurrencies.label = massDat[i];
+    currencies.push({ ...maskCurrencies });
+  }
+  return currencies;
+};
+
+export const PreparCurrencies042 = () => {
+  const currencies: any = [];
+  let dat = [
+    "Первый период",
+    "Второй период",
+    "Третий период",
+    "Четвёртый период",
+  ];
+  let massKey: any = [];
+  let massDat: any = [];
+  for (let key in dat) {
+    massKey.push(key);
+    massDat.push(dat[key]);
+  }
+  let maskCurrencies = {
+    value: "0",
+    label: "Все режимы",
+  };
+  for (let i = 0; i < massKey.length; i++) {
+    maskCurrencies.value = massKey[i];
+    maskCurrencies.label = massDat[i];
+    currencies.push({ ...maskCurrencies });
+  }
+  return currencies;
+};
+
+export const PreparCurrencies043 = () => {
+  const currencies: any = [];
+  let dat = ["Аналитика №1", "Аналитика №2", "Аналитика №3", "Аналитика №4"];
   let massKey: any = [];
   let massDat: any = [];
   for (let key in dat) {
@@ -216,6 +262,79 @@ export const InputDirect = (
                   option.label === currencies[0].label ? "#7c31ab" : "black",
                 cursor:
                   option.label === currencies[0].label ? "none" : "pointer",
+              }}
+            >
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Box>
+    </Box>
+  );
+};
+
+export const InputDirectA = (
+  mode: number,
+  handleChange: any,
+  widthBlok: number,
+  currency: any,
+  currencies: any
+) => {
+  const styleSetNapr = {
+    width: widthBlok - 27,
+    maxHeight: "2px",
+    minHeight: "2px",
+    fontSize: mode === ILLUM ? 14 : 12.5,
+    bgcolor: "#F4E8FB", // светло-сиреневый
+    border: "1px solid #d4d4d4", // серый
+    borderRadius: 1,
+    padding: "15px 10px 11px 12px",
+    textAlign: "center",
+    boxShadow: 3,
+  };
+
+  const styleBoxFormNapr = {
+    "& > :not(style)": {
+      border: 0,
+      marginTop: "-11px",
+      marginLeft: "-8px",
+      width: widthBlok - 7,
+    },
+  };
+  const handleKey = (event: any) => {
+    if (event.key === "Enter") event.preventDefault();
+  };
+
+  return (
+    <Box sx={styleSetNapr}>
+      <Box component="form" sx={styleBoxFormNapr}>
+        <TextField
+          select
+          size="small"
+          onKeyPress={handleKey} //отключение Enter
+          value={currency}
+          onChange={handleChange}
+          InputProps={{
+            disableUnderline: true,
+            style: {
+              fontSize:  12.5,
+              fontWeight: 700,
+            },
+          }}
+          variant="standard"
+          color="secondary"
+        >
+          {currencies.map((option: any) => (
+            <MenuItem
+              key={option.value}
+              value={option.value}
+              sx={{
+                fontSize: 13.5 ,
+                //fontWeight: option.label === currencies[0].label ? 700 : 400,
+                // color:
+                //   option.label === currencies[0].label ? "#7c31ab" : "black",
+                // cursor:
+                //   option.label === currencies[0].label ? "none" : "pointer",
               }}
             >
               {option.label}
@@ -375,7 +494,6 @@ export const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
     </>
   );
 };
-
 //===========================================================
 
 export const CenterCoord = (aY: number, aX: number, bY: number, bX: number) => {

@@ -4,15 +4,17 @@ import Grid from "@mui/material/Grid";
 //import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-// import HcmBl4Form101 from "./HcmBl4Form101";
-// import HcmBl4Form102 from "./HcmBl4Form102";
-// import HcmBl4Form103 from "./HcmBl4Form103";
+import HcmBl4Form101 from "./HcmBl4Form101";
+import HcmBl4Form102 from "./HcmBl4Form102";
+import HcmBl4Form103 from "./HcmBl4Form103";
+import HcmBl4Form104 from "./HcmBl4Form104";
+import HcmBl4Form105 from "./HcmBl4Form105";
 
 //import { RandomNumber } from '../../HcmServiceFunctions';
 
-import { styleMain04, styleBl2Gl01, styleBl2Gl02 } from "../../HcmMainStyle";
+import { styleMain04, styleBl2Gl01 } from "../../HcmMainStyle";
 
-let Illum = -1;
+let Illum = 1;
 let oldIdx = -1;
 
 const HcmBlock4Gl = (props: { idx: number }) => {
@@ -38,12 +40,11 @@ const HcmBlock4Gl = (props: { idx: number }) => {
       case 4: // ИПР
         setBl4Form401(true);
         break;
-      case 5: // Оценка компетенций
+      case 5: // Оценки компетенций
         setBl4Form501(true);
     }
   }
-  //========================================================
-
+  //=== Функции - обработчики ==============================
   const ClickKnop1 = () => {
     Illum = 1;
     setBl4Form101(true);
@@ -56,7 +57,7 @@ const HcmBlock4Gl = (props: { idx: number }) => {
   const ClickKnop2 = () => {
     Illum = 2;
     bl4Form101 && setBl4Form101(false);
-    bl4Form102 && setBl4Form201(true);
+    setBl4Form201(true);
     bl4Form103 && setBl4Form301(false);
     bl4Form104 && setBl4Form401(false);
     bl4Form105 && setBl4Form501(false);
@@ -64,32 +65,46 @@ const HcmBlock4Gl = (props: { idx: number }) => {
 
   const ClickKnop3 = () => {
     Illum = 3;
-    setBl4Form101(false);
-    setBl4Form201(false);
+    bl4Form101 && setBl4Form101(false);
+    bl4Form102 && setBl4Form201(false);
     setBl4Form301(true);
-    setBl4Form401(false);
-    setBl4Form501(false);
+    bl4Form104 && setBl4Form401(false);
+    bl4Form105 && setBl4Form501(false);
   };
 
   const ClickKnop4 = () => {
     Illum = 4;
-    setBl4Form101(false);
-    setBl4Form201(false);
-    setBl4Form301(false);
+    bl4Form101 && setBl4Form101(false);
+    bl4Form102 && setBl4Form201(false);
+    bl4Form103 && setBl4Form301(false);
     setBl4Form401(true);
-    setBl4Form501(false);
+    bl4Form105 && setBl4Form501(false);
   };
 
   const ClickKnop5 = () => {
     Illum = 5;
-    setBl4Form101(false);
-    setBl4Form201(false);
-    setBl4Form301(false);
-    setBl4Form401(false);
+    bl4Form101 && setBl4Form101(false);
+    bl4Form102 && setBl4Form201(false);
+    bl4Form103 && setBl4Form301(false);
+    bl4Form104 && setBl4Form401(false);
     setBl4Form501(true);
   };
-
-  console.log('###:',Illum)
+  //=== Компоненты =========================================
+  const MenuBatton = (
+    xss: number,
+    wt: number,
+    ill: number,
+    name: string,
+    func: Function
+  ) => {
+    return (
+      <Grid item xs={xss} sx={{ height: "30px" }}>
+        <Button sx={styleMain04(wt, Illum, ill)} onClick={() => func()}>
+          {name}
+        </Button>
+      </Grid>
+    );
+  };
 
   return (
     <Grid container sx={styleBl2Gl01}>
@@ -97,62 +112,19 @@ const HcmBlock4Gl = (props: { idx: number }) => {
         <Grid container>
           <Grid item xs={8}>
             <Grid container>
-              <Grid item xs={2} sx={{ border: 0, height: "30px" }}>
-                {/* Адаптация */}
-                <Button
-                  sx={styleMain04(1.33, Illum, 1)}
-                  onClick={() => ClickKnop1()}
-                >
-                  Адаптация
-                </Button>
-              </Grid>
-              <Grid item xs={2} sx={{ border: 0, height: "30px" }}>
-                {/* HealtH Check */}
-                <Button
-                  sx={styleMain04(1.33, Illum, 2)}
-                  onClick={() => ClickKnop2()}
-                >
-                  HealtH Check
-                </Button>
-              </Grid>
-              <Grid item xs={2} sx={{ border: 0, height: "30px" }}>
-                {/* Задачи */}
-                <Button
-                  sx={styleMain04(1.33, Illum, 3)}
-                  onClick={() => ClickKnop3()}
-                >
-                  Задачи
-                </Button>
-              </Grid>
-              <Grid item xs={1.5} sx={{ border: 0, height: "30px" }}>
-                {/* ИПР */}
-                <Button
-                  sx={styleMain04(1.0, Illum, 4)}
-                  onClick={() => ClickKnop4()}
-                >
-                  ИПР
-                </Button>
-              </Grid>
-              <Grid item xs={2.5} sx={{ border: 0, height: "30px" }}>
-                {/* Оценка компетенций */}
-                <Button
-                  sx={styleMain04(1.67, Illum, 5)}
-                  onClick={() => ClickKnop5()}
-                >
-                  Оценка компетенций
-                </Button>
-              </Grid>
+              {MenuBatton(2, 1.33, 1, "Адаптация", ClickKnop1)}
+              {MenuBatton(2, 1.33, 2, "HealtH Check", ClickKnop2)}
+              {MenuBatton(2, 1.33, 3, "Задачи", ClickKnop3)}
+              {MenuBatton(1.5, 1.0, 4, "ИПР", ClickKnop4)}
+              {MenuBatton(2.5, 1.67, 5, "Оценки компетенций", ClickKnop5)}
             </Grid>
           </Grid>
         </Grid>
-        <Grid container sx={{ marginTop: 2 }}>
-          <Grid item xs={12} sx={styleBl2Gl02}>
-            <em>это сервисная строка</em>
-          </Grid>
-        </Grid>
-        {/* {bl4Form101 && <HcmBl4Form101 />}
+        {bl4Form101 && <HcmBl4Form101 />}
         {bl4Form102 && <HcmBl4Form102 />}
-        {bl4Form103 && <HcmBl4Form103 idx={RandomNumber(1, 10000)} />} */}
+        {bl4Form103 && <HcmBl4Form103 />}
+        {bl4Form104 && <HcmBl4Form104 />}
+        {bl4Form105 && <HcmBl4Form105 />}
       </Grid>
     </Grid>
   );
