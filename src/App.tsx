@@ -5,7 +5,7 @@ import { coordinatesCreate, massfazCreate } from './redux/actions';
 
 import Grid from '@mui/material/Grid';
 
-//import axios from "axios";
+import axios from 'axios';
 
 import HcmMain from './components/HcmMain';
 import AppSocketError from './AppSocketError';
@@ -24,6 +24,7 @@ export let dateAddObjectsGl: any;
 export interface Stater {
   ws: any;
   debug: boolean;
+  picture: any;
   finish: boolean;
   demo: boolean;
   readyFaza: boolean;
@@ -46,6 +47,7 @@ export interface Stater {
 export let dateStat: Stater = {
   ws: null,
   debug: false,
+  picture: null,
   finish: false,
   demo: false,
   readyFaza: true,
@@ -223,6 +225,10 @@ const App = () => {
 
   if (WS.url === 'wss://localhost:3000/W' && flagOpenDebug) {
     console.log('РЕЖИМ ОТЛАДКИ!!!');
+    axios.get('http://localhost:3000/portrait.jpg').then(({ data }) => {
+      dateStat.picture = data;
+      dispatch(statsaveCreate(dateStat));
+    });
     dateMapGl = JSON.parse(JSON.stringify(dataMap));
     dispatch(mapCreate(dateMapGl));
     let massRegion = [];
