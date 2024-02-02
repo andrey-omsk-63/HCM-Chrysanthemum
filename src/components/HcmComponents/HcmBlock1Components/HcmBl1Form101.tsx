@@ -2,7 +2,6 @@ import * as React from "react";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-//import Button from '@mui/material/Button';
 
 import { TablStr } from "../../HcmServiceFunctions";
 
@@ -11,35 +10,7 @@ import { styleBl1Form07, styleBl1Form08 } from "../../HcmMainStyle";
 import { styleBl1Form09, styleBl1Form099 } from "../../HcmMainStyle";
 
 const HcmBl1Form101 = () => {
-  // const TablStr = (mode: number, xss: number, arg: any, style: any) => {
-  //   return (
-  //     <>
-  //       {xss ? (
-  //         <Grid item xs={xss} sx={style}>
-  //           {mode ? (
-  //             <Box>
-  //               <b>{arg}</b>
-  //             </Box>
-  //           ) : (
-  //             <Box>{arg}</Box>
-  //           )}
-  //         </Grid>
-  //       ) : (
-  //         <Grid item xs sx={style}>
-  //           {mode ? (
-  //             <Box>
-  //               <b>{arg}</b>
-  //             </Box>
-  //           ) : (
-  //             <Box>{arg}</Box>
-  //           )}
-  //         </Grid>
-  //       )}
-  //     </>
-  //   );
-  // };
-
-  const StrokaFormPK01 = () => {
+  const StrokaForm101 = () => {
     let resStr = [];
     let masStr: any = [];
     for (let i = 0; i < 5; i++) {
@@ -112,7 +83,7 @@ const HcmBl1Form101 = () => {
     <Grid container sx={styleBl3Form01(340)}>
       <Grid item xs={12}>
         {HeaderTabl()}
-        <Box sx={styleBl1Form06}>{StrokaFormPK01()}</Box>
+        <Box sx={styleBl1Form06}>{StrokaForm101()}</Box>
       </Grid>
     </Grid>
   );

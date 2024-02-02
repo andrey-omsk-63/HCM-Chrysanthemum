@@ -49,7 +49,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     const { statsaveReducer } = state;
     return statsaveReducer.datestat;
   });
-  console.log("datestat:", datestat);
+  //console.log("datestat:", datestat);
   //const debug = datestat.debug;
   //const ws = datestat.ws;
   //const dispatch = useDispatch();
