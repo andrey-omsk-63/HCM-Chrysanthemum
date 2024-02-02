@@ -139,7 +139,7 @@ const HcmBl5Form102 = (props: { close: Function }) => {
         )}
         <Grid container sx={{ marginTop: 2 }}>
           <Grid item xs={4} sx={{ height: 100, border: 0 }}>
-            Коментарий
+            Комментарий
           </Grid>
           <Grid item xs sx={styleBl5Form03}>
             В Антарктиде зарегистрировали первые случаи смерти пингвинов после заражения

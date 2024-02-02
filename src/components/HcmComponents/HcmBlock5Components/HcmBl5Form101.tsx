@@ -5,8 +5,10 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+//mport TextField from '@mui/material/TextField';
 
 import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
+import { InputStrField, InputStrFieldMult } from '../../HcmServiceFunctions';
 
 import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
 import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
@@ -30,7 +32,7 @@ const HcmBl5Form101 = (props: { close: Function }) => {
   //const [trigger, setTrigger] = React.useState(false);
   //=== инициализация ======================================
   if (flagInput) {
-    HAVE = 1;
+    HAVE = 0;
     // currenciesFaza = PreparCurrenciesFaza(MaxFaz);
     // massForm = JSON.parse(JSON.stringify(massplan.setup));
     flagInput = false;
@@ -57,6 +59,10 @@ const HcmBl5Form101 = (props: { close: Function }) => {
     setBadExit(false);
     mode && handleClose(); // выход без сохранения
   };
+
+  // const handleKey = (event: any) => {
+  //   if (event.key === 'Enter') event.preventDefault();
+  // };
   //=== Функции - обработчики ==============================
   const SaveForm = (mode: number) => {
     if (mode) {
@@ -65,85 +71,76 @@ const HcmBl5Form101 = (props: { close: Function }) => {
       handleClose();
     } else handleCloseBad();
   };
-  // const SetMinDuration = (valueInp: number) => {
-  //   massForm.minDuration = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
+  const hdlChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueName(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.name = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
 
-  // const ChangeOptimal = () => {
-  //   massForm.optimal = !massForm.optimal;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
+  const hdlChangeMent = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueMent(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.ment = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
 
-  // const SetSatur = (valueInp: number) => {
-  //   massForm.satur = valueInp; // поток насыщения(т.е./ч.)
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
+  const hdlChangeAvtor = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueAvtor(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.avtor = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
 
-  // const SetIntens = (valueInp: number) => {
-  //   massForm.intens = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
+  const hdlChangeLink = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueLink(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.link = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
 
-  // const SetDispers = (valueInp: number) => {
-  //   massForm.dispers = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const SetOffsetBeginGreen = (valueInp: number) => {
-  //   massForm.offsetBeginGreen = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const SetOffsetEndGreen = (valueInp: number) => {
-  //   massForm.offsetEndGreen = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const SetWtStop = (valueInp: number) => {
-  //   massForm.wtStop = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const SetWtDelay = (valueInp: number) => {
-  //   massForm.wtDelay = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const handleChangeFaza = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   massForm.sumPhases = Number(event.target.value) + 2;
-  //   //setCurrencyFaza(event.target.value);
-  // };
+  const hdlChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueComment(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.comment = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
   //========================================================
+  let maskForm = {
+    name: 'Пупкин Иван',
+    ment: 'Тяпкин Фёдор',
+    avtor: 'Фантомас',
+    link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
+    comment:
+      'Политик напомнил, что согласно референдуму, проведенному в 1991 году, Закарпатье должно существовать как автономия с широким кругом прав.',
+  };
+
+  const [valueName, setValueName] = React.useState(maskForm.name);
+  const [valueMent, setValueMent] = React.useState(maskForm.ment);
+  const [valueAvtor, setValueAvtor] = React.useState(maskForm.avtor);
+  const [valueLink, setValueLink] = React.useState(maskForm.link);
+  const [valueComment, setValueComment] = React.useState(maskForm.comment);
+
   const TableContent = () => {
     return (
       <>
-        {StrTablProp(4, 'Сотрудник*', 'Пупкин Иван')}
-        {StrTablProp(4, 'Ментор*', 'Бупкин Фёдор')}
+        {StrTablProp(4, 'Сотрудник*', InputStrField(212, hdlChangeName, valueName))}
+        {StrTablProp(4, 'Ментор*', InputStrField(212, hdlChangeMent, valueMent))}
         {StrTablProp(4, 'Дата начала*', '12.12.2021')}
         {StrTablProp(4, 'Дата окончания*', '21.12.2023')}
-        {StrTablProp(4, 'Автор', 'Ник Фантомас')}
-        {StrTablProp(
-          4,
-          'Ссылка на план адаптации',
-          'https://e.mail.ru/newsletters/0:17066793751836945566',
-        )}
+        {StrTablProp(4, 'Автор (Ник)', InputStrField(212, hdlChangeAvtor, valueAvtor))}
+        {StrTablProp(4, 'Ссылка на план адаптации', InputStrField(386, hdlChangeLink, valueLink))}
         <Grid container sx={{ marginTop: 2 }}>
           <Grid item xs={4} sx={{ height: 100, border: 0 }}>
-            Коментарий
+            Комментарий
           </Grid>
           <Grid item xs sx={styleBl5Form03}>
-            Политик напомнил, что согласно референдуму, проведенному в 1991 году, Закарпатье должно
-            существовать как автономия с широким кругом прав.
+            {InputStrFieldMult(386, hdlChangeComment, valueComment)}
           </Grid>
         </Grid>
       </>
@@ -153,7 +150,7 @@ const HcmBl5Form101 = (props: { close: Function }) => {
   return (
     <>
       <Modal open={open} onClose={CloseEnd} hideBackdrop={false}>
-        <Box sx={styleBl5Form00(650, 445)}>
+        <Box sx={styleBl5Form00(650, 452)}>
           <Button sx={styleModalEnd} onClick={() => handleCloseBad()}>
             <b>&#10006;</b>
           </Button>

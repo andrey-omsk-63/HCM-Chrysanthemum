@@ -11,9 +11,61 @@ import Typography from '@mui/material/Typography';
 
 import { ILLUM } from './HcmMain';
 
+const handleKey = (event: any) => {
+  if (event.key === 'Enter') event.preventDefault();
+};
+
 export const RandomNumber = (min: number, max: number) => {
   let rand = Math.random() * (max - min) + min;
   return Math.floor(rand);
+};
+
+export const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
+  return (
+    <>
+      <Grid container sx={{ marginTop: 2 }}>
+        <Grid item xs={xss} sx={{ border: 0 }}>
+          {recLeft}
+        </Grid>
+        {typeof recRight === 'object' ? (
+          <Grid item xs>
+            {recRight}
+          </Grid>
+        ) : (
+          <Grid item xs sx={{ fontSize: 15, color: '#5B1080', border: 0 }}>
+            <b>{recRight}</b>
+          </Grid>
+        )}
+      </Grid>
+    </>
+  );
+};
+
+export const TablStr = (mode: number, xss: number, arg: any, style: any) => {
+  return (
+    <>
+      {xss > 0 && (
+        <Grid item xs={xss} sx={style}>
+          {mode > 0 && (
+            <Box>
+              <b>{arg}</b>
+            </Box>
+          )}
+          {mode === 0 && <Box>{arg}</Box>}
+        </Grid>
+      )}
+      {xss === 0 && (
+        <Grid item xs sx={style}>
+          {mode > 0 && (
+            <Box>
+              <b>{arg}</b>
+            </Box>
+          )}
+          {mode === 0 && <Box>{arg}</Box>}
+        </Grid>
+      )}
+    </>
+  );
 };
 
 export const PreparCurrencies01 = () => {
@@ -223,9 +275,9 @@ export const InputDirect = (
       width: widthBlok - 7,
     },
   };
-  const handleKey = (event: any) => {
-    if (event.key === 'Enter') event.preventDefault();
-  };
+  // const handleKey = (event: any) => {
+  //   if (event.key === 'Enter') event.preventDefault();
+  // };
 
   return (
     <Box sx={styleSetNapr}>
@@ -293,9 +345,9 @@ export const InputDirectA = (
       width: widthBlok - 7,
     },
   };
-  const handleKey = (event: any) => {
-    if (event.key === 'Enter') event.preventDefault();
-  };
+  // const handleKey = (event: any) => {
+  //   if (event.key === 'Enter') event.preventDefault();
+  // };
 
   return (
     <Box sx={styleSetNapr}>
@@ -331,6 +383,88 @@ export const InputDirectA = (
             </MenuItem>
           ))}
         </TextField>
+      </Box>
+    </Box>
+  );
+};
+
+export const InputStrField = (wdth: number, handleChangeName: any, valuen: string) => {
+  const styleFormPK05 = {
+    width: wdth + 'px',
+    height: '10px',
+    marginTop: -0.2,
+    bgcolor: '#FFFBE5', // топлёное молоко
+    border: '1px solid #d4d4d4', // серый
+    borderRadius: 1,
+    boxShadow: 6,
+    textAlign: 'center',
+    p: 0.95,
+  };
+
+  const styleFormPK055 = {
+    '& > :not(style)': {
+      marginTop: '-7px',
+      marginLeft: '-5px',
+      width: wdth + 12 + 'px',
+    },
+  };
+
+  return (
+    <Box sx={styleFormPK05}>
+      <Box component="form" sx={styleFormPK055}>
+        <TextField
+          size="small"
+          onKeyPress={handleKey} //отключение Enter
+          InputProps={{
+            disableUnderline: true,
+            style: { fontSize: 15 },
+          }}
+          value={valuen}
+          onChange={handleChangeName}
+          variant="standard"
+        />
+      </Box>
+    </Box>
+  );
+};
+
+export const InputStrFieldMult = (wdth: number, handleChangeName: any, valuen: string) => {
+  const styleFormPK05 = {
+    width: wdth + 15 + 'px',
+    height: '96px',
+    marginTop: -0.2,
+    bgcolor: '#FFFBE5', // топлёное молоко
+    border: '1px solid #d4d4d4', // серый
+    borderRadius: 1,
+    boxShadow: 6,
+    textAlign: 'center',
+  };
+
+  const styleFormPK055 = {
+    '& > :not(style)': {
+      //marginTop: '-7px',
+      marginLeft: '2px',
+      width: wdth + 15 + 'px',
+    },
+  };
+
+  return (
+    <Box sx={styleFormPK05}>
+      <Box component="form" sx={styleFormPK055}>
+        <TextField
+          size="small"
+          onKeyPress={handleKey} //отключение Enter
+          InputProps={{
+            disableUnderline: true,
+            style: { fontSize: 15 },
+          }}
+          value={valuen}
+          onChange={handleChangeName}
+          variant="standard"
+          id="outlined-multiline-static"
+          multiline
+          rows={4}
+        />
       </Box>
     </Box>
   );
@@ -455,55 +589,6 @@ export const FooterContent = (SaveForm: Function) => {
         </Button>
       </Box>
     </Box>
-  );
-};
-
-export const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
-  return (
-    <>
-      <Grid container sx={{ marginTop: 2 }}>
-        <Grid item xs={xss} sx={{ border: 0 }}>
-          {recLeft}
-        </Grid>
-        {typeof recRight === 'object' ? (
-          <Grid item xs>
-            {recRight}
-          </Grid>
-        ) : (
-          <Grid item xs sx={{ fontSize: 15, color: '#5B1080', border: 0 }}>
-            <b>{recRight}</b>
-          </Grid>
-        )}
-      </Grid>
-    </>
-  );
-};
-
-export const TablStr = (mode: number, xss: number, arg: any, style: any) => {
-  return (
-    <>
-      {xss ? (
-        <Grid item xs={xss} sx={style}>
-          {mode ? (
-            <Box>
-              <b>{arg}</b>
-            </Box>
-          ) : (
-            <Box>{arg}</Box>
-          )}
-        </Grid>
-      ) : (
-        <Grid item xs sx={style}>
-          {mode ? (
-            <Box>
-              <b>{arg}</b>
-            </Box>
-          ) : (
-            <Box>{arg}</Box>
-          )}
-        </Grid>
-      )}
-    </>
   );
 };
 
