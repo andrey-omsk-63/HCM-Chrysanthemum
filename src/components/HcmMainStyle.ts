@@ -106,6 +106,7 @@ export const styleBl1Form05 = {
   height: '180px',
   width: '180px',
   textAlign: 'center',
+  cursor: 'pointer',
   boxShadow: 9,
 };
 //=== HcmBlock2 =======================================================
