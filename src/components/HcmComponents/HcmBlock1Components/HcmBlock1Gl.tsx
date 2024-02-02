@@ -6,6 +6,9 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import HcmBl1Form101 from "./HcmBl1Form101";
 import HcmBl1Form102 from "./HcmBl1Form102";
 import HcmBl1Form103 from "./HcmBl1Form103";
@@ -60,7 +63,8 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   const [bl1Form107, setBl1Form701] = React.useState(false);
   const [bl1Form108, setBl1Form801] = React.useState(false);
   const [openImg, setOpenImg] = React.useState(false);
-  const [trigger, setTrigger] = React.useState(false);
+  //const [trigger, setTrigger] = React.useState(false);
+  const [openLoader, setOpenLoader] = React.useState(true);
 
   const b64toBlob = (b64Data: any, contentType: any, sliceSize: number) => {
     contentType = contentType || "";
@@ -69,9 +73,6 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     let byteCharacters2 = byteCharacters1.toString("base64");
     //let byteCharacters = atob(b64Data);
     let byteCharacters = atob(byteCharacters2);
-    //console.log('0:',byteCharacters)
-    //console.log('1:',byteCharacters1)
-    //console.log('2:',byteCharacters2)
     let byteArrays = [];
     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
       let slice = byteCharacters.slice(offset, offset + sliceSize);
@@ -111,23 +112,24 @@ const HcmBlock1Gl = (props: { idx: number }) => {
 
   //=== инициализация ======================================
   if (props.idx !== oldIdx) {
-    blob = MakeNewBlob(datestat.picture);
-    reader = new FileReader();
-    compressedFile = null;
-    handleImageUpload();
-    const handleMake = () => {
-      if (reader.result !== null) {
-        PICT = reader.result; // если длина спрессованной картинки < 200байт - косячная картинка
-        setTrigger(!trigger);
-        //StateEntry(mess);
-        //MakeArchiveMess(data); // незапрессованные картинки
-      } else {
-        setTimeout(() => {
-          handleMake();
-        }, 100);
-      }
-    };
-    handleMake();
+    if (!PICT) {
+      blob = MakeNewBlob(datestat.picture);
+      reader = new FileReader();
+      compressedFile = null;
+      handleImageUpload();
+      const handleMake = () => {
+        if (reader.result !== null) {
+          PICT = reader.result; // если длина спрессованной картинки < 200байт - косячная картинка
+          setOpenLoader(false);
+          // setTrigger(!trigger);
+        } else {
+          setTimeout(() => {
+            handleMake();
+          }, 100);
+        }
+      };
+      handleMake();
+    } else setOpenLoader(false);
 
     oldIdx = props.idx;
     switch (Illum) {
@@ -271,11 +273,11 @@ const HcmBlock1Gl = (props: { idx: number }) => {
 
   const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
     return (
-      <Grid container sx={{ marginTop: 1 }}>
-        <Grid item xs={xss} sx={{ border: 0 }}>
+      <Grid container sx={{ marginTop: 1, color: "#5B1080" }}>
+        <Grid item xs={xss} sx={{ textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}>
           {recLeft}
         </Grid>
-        <Grid item xs sx={{ fontSize: 14, color: "#5B1080", border: 0 }}>
+        <Grid item xs sx={{ fontSize: 14, border: 0 }}>
           <b>{recRight}</b>
         </Grid>
       </Grid>
@@ -285,6 +287,32 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   const ClickImg = () => {
     setOpenImg(true);
   };
+
+  //============ Dinama =====================================================
+  const handleClose = () => {
+    setOpenLoader(false);
+  };
+
+  const styleBackdropBaza = {
+    color: "#fff",
+    marginLeft: "12px",
+    //marginRight: "90vh",
+    width: "180px",
+    marginTop: "63px",
+    marginBottom: "73.5vh",
+    zIndex: (theme: any) => theme.zIndex.drawer + 1,
+  };
+
+  const Dinama = () => {
+    return (
+      <Backdrop sx={styleBackdropBaza} open={openLoader} onClick={handleClose}>
+        <CircularProgress color="inherit" size={69} />
+      </Backdrop>
+    );
+  };
+
+  //if (openLoader) Output();
+  //=========================================================================
 
   const CardContent = () => {
     return (
@@ -306,7 +334,12 @@ const HcmBlock1Gl = (props: { idx: number }) => {
                       height={180}
                       alt="PICT"
                     /> */}
-                    {PICT && <img src={PICT} height={180} alt="PICT" />}
+                    {openLoader && <Dinama />}
+                    {!openLoader && (
+                      <>
+                        <img src={PICT} height={180} alt="PICT" />
+                      </>
+                    )}
                   </Box>
                 </Grid>
               </Grid>
@@ -318,7 +351,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
               {StrTablProp(4, "В компании с:", maskForm.beginDate)}
               {StrTablProp(4, "Должность:", maskForm.post)}
               {StrTablProp(4, "Подразделение:", maskForm.department)}
-              {StrTablProp(4, "Руководитель:", maskForm.chief)}
+              {StrTablProp(4, "Руководитель(Ник):", maskForm.chief)}
             </Grid>
             <Grid item xs sx={{ height: "214px" }}>
               {StrTablProp(0.1, "", maskForm.location)}
