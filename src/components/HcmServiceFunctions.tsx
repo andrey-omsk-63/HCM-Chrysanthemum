@@ -478,6 +478,35 @@ export const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
     </>
   );
 };
+
+export const TablStr = (mode: number, xss: number, arg: any, style: any) => {
+  return (
+    <>
+      {xss ? (
+        <Grid item xs={xss} sx={style}>
+          {mode ? (
+            <Box>
+              <b>{arg}</b>
+            </Box>
+          ) : (
+            <Box>{arg}</Box>
+          )}
+        </Grid>
+      ) : (
+        <Grid item xs sx={style}>
+          {mode ? (
+            <Box>
+              <b>{arg}</b>
+            </Box>
+          ) : (
+            <Box>{arg}</Box>
+          )}
+        </Grid>
+      )}
+    </>
+  );
+};
+
 //===========================================================
 
 export const CenterCoord = (aY: number, aX: number, bY: number, bX: number) => {

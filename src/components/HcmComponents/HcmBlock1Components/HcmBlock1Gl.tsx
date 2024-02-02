@@ -322,7 +322,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
             <Grid item xs={2} sx={{ height: "180px" }}>
               <Grid container>
                 <Grid item xs={12} sx={styleBl1Form03}>
-                  Личная карточка <b>Доцент</b>
+                  <em>Личная карточка <b>Доцент</b></em>
                 </Grid>
               </Grid>
               <Grid container>
