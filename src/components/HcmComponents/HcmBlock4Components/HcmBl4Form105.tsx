@@ -1,16 +1,16 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 //import Button from '@mui/material/Button';
 
-import { InputDirectA, PreparCurrencies041 } from "../../HcmServiceFunctions";
-import { PreparCurrencies042 } from "../../HcmServiceFunctions";
-import { PreparCurrencies043 } from "../../HcmServiceFunctions";
+import { InputDirectA, PreparCurrencies041 } from '../../HcmServiceFunctions';
+import { PreparCurrencies042 } from '../../HcmServiceFunctions';
+import { PreparCurrencies043 } from '../../HcmServiceFunctions';
 
-import { styleBl3Form01 } from "../../HcmMainStyle";
+import { styleBl3Form01 } from '../../HcmMainStyle';
 
-import { widthGl } from "../../HcmMain";
+import { widthGl } from '../../HcmMain';
 
 let currencies01: any = []; // Подразделение
 let currencies02: any = []; // Период
@@ -19,9 +19,9 @@ let currencies03: any = []; // Аналитика
 let flagOpen = false;
 
 const HcmBl4Form105 = () => {
-  const [currency01, setCurrency01] = React.useState("0");
-  const [currency02, setCurrency02] = React.useState("0");
-  const [currency03, setCurrency03] = React.useState("0");
+  const [currency01, setCurrency01] = React.useState('0');
+  const [currency02, setCurrency02] = React.useState('0');
+  const [currency03, setCurrency03] = React.useState('0');
 
   //=== инициализация ======================================
   if (!flagOpen) {
@@ -32,12 +32,7 @@ const HcmBl4Form105 = () => {
   }
   //========================================================
 
-  const StrokaMenuGlob = (
-    mode: number,
-    wdth: number,
-    currency: any,
-    currencies: any
-  ) => {
+  const StrokaMenuGlob = (mode: number, wdth: number, currency: any, currencies: any) => {
     let widthBlok = (widthGl / 12) * wdth - 0;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,23 +60,25 @@ const HcmBl4Form105 = () => {
       <Grid container sx={{ marginTop: 2 }}>
         <Grid item xs={6} sx={{}}>
           <Grid container>
-            <Grid item xs={4} sx={{ height: "30px", border: 0 }}>
+            <Grid item xs={4} sx={{ height: '30px', border: 0 }}>
               {/* Подразделение */}
               <Box>{StrokaMenuGlob(1, 2, currency01, currencies01)}</Box>
             </Grid>
-            <Grid item xs={4} sx={{ height: "30px", border: 0 }}>
+            <Grid item xs={4} sx={{ height: '30px', border: 0 }}>
               {/* Период */}
               <Box>{StrokaMenuGlob(2, 2, currency02, currencies02)}</Box>
             </Grid>
-            <Grid item xs={4} sx={{ height: "30px", border: 0 }}>
-              <Box>{StrokaMenuGlob(3, 2, currency03, currencies03)}</Box>
+            <Grid item xs={4} sx={{ height: '30px', border: 0 }}>
               {/* Аналитика */}
+              <Box>{StrokaMenuGlob(3, 2, currency03, currencies03)}</Box>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
       <Grid container sx={styleBl3Form01(152)}>
-        <Grid item xs={12}>Здесь будет аналитика по Оценки компетенций</Grid>
+        <Grid item xs={12}>
+          Здесь будет аналитика по Оценки компетенций
+        </Grid>
       </Grid>
     </>
   );
