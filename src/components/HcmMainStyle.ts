@@ -240,6 +240,46 @@ export const styleBl5Form03 = {
   //border: '1px dashed #5B1080',
   //padding: "0px 2px 1px 5px",
 };
+
+export const styleBl5Form04 = {
+  fontSize: 15,
+  marginTop: "-5px",
+  height: "27px",
+  width: "190px",
+};
+
+export const styleBl5Form05 = {
+  height: "27px",
+  maxWidth: "124px",
+  minWidth: "124px",
+};
+
+export const styleBl5Form06 = {
+  bgcolor: "#FFFBE5", // топлёное молоко
+  height: "27px",
+  width: "150px",
+};
+//=== Разное ==========================================================
+export const styleInpOk = {
+  fontSize: 15,
+  height: "27px",
+  width: "15px",
+};
+
+export const styleButOk = {
+  fontSize: 12,
+  marginRight: 1,
+  height: "27px",
+  maxWidth: "30px",
+  minWidth: "30px",
+  bgcolor: "#E9F5D8", // светло салатовый
+  color: "black",
+  border: "1px solid #000",
+  borderColor: "#d4d4d4", // серый
+  borderRadius: 1,
+  boxShadow: 4,
+  textTransform: "unset !important",
+};
 //=====================================================================
 
 //=== InputObject =====================================================
