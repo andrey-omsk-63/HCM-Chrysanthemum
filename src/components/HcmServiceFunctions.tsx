@@ -147,7 +147,7 @@ export const PreparCurrencies03 = () => {
     'Справочная информация:',
     'Регламенты',
     'Структура компании',
-    'Структура компании copy',
+    //'Структура компании copy',
     'Профили компетенций',
   ];
   let massKey: any = [];
@@ -176,7 +176,7 @@ export const PreparCurrencies05 = () => {
     'Добавить ИПР',
     'Создать задачу',
     //'Добавить Risk&Value',
-    'Добавить Healt Check',
+    'Добавить Health Check',
   ];
   let massKey: any = [];
   let massDat: any = [];

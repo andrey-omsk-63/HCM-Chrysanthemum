@@ -1,18 +1,18 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Grid from "@mui/material/Grid";
+import Grid from '@mui/material/Grid';
 //import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Button from '@mui/material/Button';
 
-import HcmBl4Form101 from "./HcmBl4Form101";
-import HcmBl4Form102 from "./HcmBl4Form102";
-import HcmBl4Form103 from "./HcmBl4Form103";
-import HcmBl4Form104 from "./HcmBl4Form104";
-import HcmBl4Form105 from "./HcmBl4Form105";
+import HcmBl4Form101 from './HcmBl4Form101';
+import HcmBl4Form102 from './HcmBl4Form102';
+import HcmBl4Form103 from './HcmBl4Form103';
+import HcmBl4Form104 from './HcmBl4Form104';
+import HcmBl4Form105 from './HcmBl4Form105';
 
 //import { RandomNumber } from '../../HcmServiceFunctions';
 
-import { styleMain04, styleBl2Gl01 } from "../../HcmMainStyle";
+import { styleMain04, styleBl2Gl01 } from '../../HcmMainStyle';
 
 let Illum = 1;
 let oldIdx = -1;
@@ -90,15 +90,9 @@ const HcmBlock4Gl = (props: { idx: number }) => {
     setBl4Form501(true);
   };
   //=== Компоненты =========================================
-  const MenuBatton = (
-    xss: number,
-    wt: number,
-    ill: number,
-    name: string,
-    func: Function
-  ) => {
+  const MenuBatton = (xss: number, wt: number, ill: number, name: string, func: Function) => {
     return (
-      <Grid item xs={xss} sx={{ height: "30px" }}>
+      <Grid item xs={xss} sx={{ height: '30px' }}>
         <Button sx={styleMain04(wt, Illum, ill)} onClick={() => func()}>
           {name}
         </Button>
@@ -112,11 +106,11 @@ const HcmBlock4Gl = (props: { idx: number }) => {
         <Grid container>
           <Grid item xs={8}>
             <Grid container>
-              {MenuBatton(2, 1.33, 1, "Адаптация", ClickKnop1)}
-              {MenuBatton(2, 1.33, 2, "HealtH Check", ClickKnop2)}
-              {MenuBatton(2, 1.33, 3, "Задачи", ClickKnop3)}
-              {MenuBatton(1.5, 1.0, 4, "ИПР", ClickKnop4)}
-              {MenuBatton(2.5, 1.67, 5, "Оценки компетенций", ClickKnop5)}
+              {MenuBatton(2, 1.33, 1, 'Адаптация', ClickKnop1)}
+              {MenuBatton(2, 1.33, 2, 'Health Check', ClickKnop2)}
+              {MenuBatton(2, 1.33, 3, 'Задачи', ClickKnop3)}
+              {MenuBatton(1.5, 1.0, 4, 'ИПР', ClickKnop4)}
+              {MenuBatton(2.5, 1.67, 5, 'Оценки компетенций', ClickKnop5)}
             </Grid>
           </Grid>
         </Grid>

@@ -278,7 +278,7 @@ const HcmBl5Form104 = (props: { close: Function }) => {
             <b>&#10006;</b>
           </Button>
           <Box sx={styleBl5Form01}>
-            <b>Добавить Healt Check</b>
+            <b>Добавить Health Check</b>
           </Box>
           <Box sx={styleBl5Form02}>{TableContent()}</Box>
           {HAVE > 0 && <>{FooterContent(SaveForm)}</>}
