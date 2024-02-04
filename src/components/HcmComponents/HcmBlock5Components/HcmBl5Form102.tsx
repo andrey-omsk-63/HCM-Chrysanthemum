@@ -170,30 +170,6 @@ const HcmBl5Form102 = (props: { close: Function }) => {
     return <>{InputerDate(valueDate2, handleChangeDP, massGoodDate)}</>;
   };
 
-  // const InputOk1 = () => {
-  //   inpDate1 = false;
-  //   setValueDate1(eventInp1);
-  //   setTrigger(!trigger);
-  // };
-
-  // const InputOk2 = () => {
-  //   inpDate2 = false;
-  //   setValueDate2(eventInp2);
-  //   setTrigger(!trigger);
-  // };
-
-  // const InputerOk = (inpDate: boolean, InputOk: Function) => {
-  //   return (
-  //     <Grid item xs={2.3} sx={styleInpOk}>
-  //       {inpDate && (
-  //         <Button sx={styleButOk} onClick={() => InputOk()}>
-  //           Да
-  //         </Button>
-  //       )}
-  //     </Grid>
-  //   );
-  // };
-
   const ContentDate1 = () => {
     return (
       <Grid item container sx={styleBl5Form04}>

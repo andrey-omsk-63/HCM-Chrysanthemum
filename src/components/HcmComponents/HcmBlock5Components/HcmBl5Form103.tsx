@@ -6,15 +6,50 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
+import 'dayjs/locale/ru';
+import dayjs, { Dayjs } from 'dayjs';
+
 import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
+import { InputStrField, InputStrFieldMult } from '../../HcmServiceFunctions';
+import { MakeDate, InputerDate, InputDirectRec } from '../../HcmServiceFunctions';
+import { PreparCurrenciesCommon } from '../../HcmServiceFunctions';
 
 import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
 import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
-import { styleBl5Form03 } from '../../HcmMainStyle';
+import { styleBl5Form03, styleBl5Form06 } from '../../HcmMainStyle';
+import { styleBl5Form04, styleBl5Form05 } from '../../HcmMainStyle';
 
 //let massForm: any = null;
 let flagInput = true;
 let HAVE = 0;
+
+const date = new Date();
+let formSett = MakeDate(date);
+let eventInp1 = dayjs(formSett);
+
+let massGoodDate: Array<string> = [];
+
+let maskForm = {
+  item: 'Стадион',
+  base: 'Так себе основание',
+  tema: 'Суд вынес приговор',
+  player: 'Фантомас',
+  link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
+  comment:
+    'Центральный районный суд города Омска вынес приговор 37-летнему жителю города Омска, обвиняемому в хулиганстве.',
+};
+let currencies01: any = []; // Сотрудники
+let currencies02: any = []; // Менторы
+let currencies03: any = []; // Авторы
+
+let dat1 = ['Стадион', 'Коровник', 'Загородная база отдыха'];
+let dat2 = [
+  'Очень важное основание',
+  'Так себе основание',
+  'Необходимая необходимость',
+  'Фигня какая-та',
+];
+let dat3 = ['Фантомас', 'Лишенец', 'Бугор', 'Ляля'];
 
 const HcmBl5Form103 = (props: { close: Function }) => {
   //== Piece of Redux =======================================
@@ -25,19 +60,28 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   //const dispatch = useDispatch();
   //console.log("Setup_massplan:", massplan);
   //========================================================
+  //const [valueName, setValueName] = React.useState(maskForm.name);
+  const [valueTema, setValueTema] = React.useState(maskForm.tema);
+  const [valueLink, setValueLink] = React.useState(maskForm.link);
+  const [valueComment, setValueComment] = React.useState(maskForm.comment);
+  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
+  const [currency01, setCurrency01] = React.useState('0');
+  const [currency02, setCurrency02] = React.useState('0');
+  const [currency03, setCurrency03] = React.useState('0');
   const [open, setOpen] = React.useState(true);
   const [badExit, setBadExit] = React.useState(false);
   //const [trigger, setTrigger] = React.useState(false);
   //=== инициализация ======================================
   if (flagInput) {
-    HAVE = 1;
-    // currenciesFaza = PreparCurrenciesFaza(MaxFaz);
+    HAVE = 0;
+    setValueDate1(dayjs(formSett));
+    currencies01 = PreparCurrenciesCommon(dat1); // Сотрудники
+    currencies02 = PreparCurrenciesCommon(dat2); // Менторы
+    currencies03 = PreparCurrenciesCommon(dat3); // Авторы
     // massForm = JSON.parse(JSON.stringify(massplan.setup));
     flagInput = false;
   }
   //========================================================
-  //const [currencyFaza, setCurrencyFaza] = React.useState((massForm.sumPhases - 2).toString());
-
   const handleClose = () => {
     flagInput = true;
     setOpen(false);
@@ -60,85 +104,98 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   //=== Функции - обработчики ==============================
   const SaveForm = (mode: number) => {
     if (mode) {
-      //massplan.setup = massForm;
-      //dispatch(massplanCreate(massplan));
       handleClose();
     } else handleCloseBad();
   };
-  // const SetMinDuration = (valueInp: number) => {
-  //   massForm.minDuration = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
 
-  // const ChangeOptimal = () => {
-  //   massForm.optimal = !massForm.optimal;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
+  const hdlChangeTema = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueTema(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.tema = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
 
-  // const SetSatur = (valueInp: number) => {
-  //   massForm.satur = valueInp; // поток насыщения(т.е./ч.)
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
+  const hdlChangeLink = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueLink(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.link = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
 
-  // const SetIntens = (valueInp: number) => {
-  //   massForm.intens = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
+  const hdlChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueComment(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.comment = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
 
-  // const SetDispers = (valueInp: number) => {
-  //   massForm.dispers = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const SetOffsetBeginGreen = (valueInp: number) => {
-  //   massForm.offsetBeginGreen = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const SetOffsetEndGreen = (valueInp: number) => {
-  //   massForm.offsetEndGreen = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const SetWtStop = (valueInp: number) => {
-  //   massForm.wtStop = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const SetWtDelay = (valueInp: number) => {
-  //   massForm.wtDelay = valueInp;
-  //   HAVE++;
-  //   setTrigger(!trigger); // ререндер
-  // };
-
-  // const handleChangeFaza = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   massForm.sumPhases = Number(event.target.value) + 2;
-  //   //setCurrencyFaza(event.target.value);
-  // };
   //========================================================
+  const InputDate1 = () => {
+    const handleChangeDP = (event: any) => {
+      if (event.toString() === 'Invalid Date') {
+        setValueDate1(dayjs(eventInp1));
+      } else {
+        setValueDate1((eventInp1 = event));
+      }
+    };
+    return <>{InputerDate(valueDate1, handleChangeDP, massGoodDate)}</>;
+  };
+
+  const ContentDate1 = () => {
+    return (
+      <Grid item container sx={styleBl5Form04}>
+        <Grid item xs sx={styleBl5Form05}>
+          <Box sx={styleBl5Form06}>{InputDate1()}</Box>
+        </Grid>
+      </Grid>
+    );
+  };
+
+  const StrokaMenuGlob = (mode: number, currency: any, currencies: any) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      switch (mode) {
+        case 1: // Подразделение
+          setCurrency01(event.target.value);
+          maskForm.item = dat1[Number(event.target.value)];
+          HAVE++;
+          break;
+        case 2: // Оснвание
+          setCurrency02(event.target.value);
+          maskForm.base = dat2[Number(event.target.value)];
+          HAVE++;
+          break;
+        case 3: // Исполнитель (Ник)
+          setCurrency03(event.target.value);
+          maskForm.player = dat3[Number(event.target.value)];
+          HAVE++;
+      }
+    };
+
+    return (
+      <Box sx={{ marginTop: '-5px' }}>
+        {InputDirectRec(handleChange, 232, currency, currencies)}
+      </Box>
+    );
+  };
+
   const TableContent = () => {
     return (
       <>
-        {StrTablProp(4, 'Объект*', 'Пупкин Иван')}
-        {StrTablProp(4, 'Оснвание*', 'Очень важное основание')}
-        {StrTablProp(4, 'Тема*', 'Суд вынес приговор')}
-        {StrTablProp(4, 'Дата выполнения*', '21.12.2023')}
-        {StrTablProp(4, 'Исполнитель*', 'Ник Фантомас')}
+        {StrTablProp(4, 'Объект*', StrokaMenuGlob(1, currency01, currencies01))}
+        {StrTablProp(4, 'Оснвание*', StrokaMenuGlob(2, currency02, currencies02))}
+        {StrTablProp(4, 'Тема*', InputStrField(212, hdlChangeTema, valueTema))}
+        {StrTablProp(4, 'Дата выполнения*', ContentDate1())}
+        {StrTablProp(4, 'Исполнитель (Ник)', StrokaMenuGlob(3, currency03, currencies03))}
+        {StrTablProp(4, 'Ссылка на план адаптации', InputStrField(386, hdlChangeLink, valueLink))}
         <Grid container sx={{ marginTop: 2 }}>
-          <Grid item xs={4} sx={{ height: 100, border: 0 }}>
-            Описание
+          <Grid item xs={4} sx={{ height: 100 }}>
+            Комментарий
           </Grid>
           <Grid item xs sx={styleBl5Form03}>
-            Центральный районный суд города Омска вынес приговор 37-летнему жителю города Омска,
-            обвиняемому в хулиганстве.
+            {InputStrFieldMult(386, hdlChangeComment, valueComment)}
           </Grid>
         </Grid>
       </>
@@ -148,7 +205,7 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   return (
     <>
       <Modal open={open} onClose={CloseEnd} hideBackdrop={false}>
-        <Box sx={styleBl5Form00(650, 408)}>
+        <Box sx={styleBl5Form00(650, 455)}>
           <Button sx={styleModalEnd} onClick={() => handleCloseBad()}>
             <b>&#10006;</b>
           </Button>
