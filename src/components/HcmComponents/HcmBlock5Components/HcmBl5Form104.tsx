@@ -10,13 +10,13 @@ import 'dayjs/locale/ru';
 import dayjs, { Dayjs } from 'dayjs';
 
 import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
-import { InputStrField, InputStrFieldMult } from '../../HcmServiceFunctions';
+import { InputStrField } from '../../HcmServiceFunctions';
 import { MakeDate, InputerDate, InputDirectRec } from '../../HcmServiceFunctions';
 import { PreparCurrenciesCommon } from '../../HcmServiceFunctions';
 
 import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
 import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
-import { styleBl5Form03, styleBl5Form06 } from '../../HcmMainStyle';
+import { styleBl5Form06 } from '../../HcmMainStyle';
 import { styleBl5Form04, styleBl5Form05 } from '../../HcmMainStyle';
 
 //let massForm: any = null;
@@ -30,17 +30,18 @@ let eventInp1 = dayjs(formSett);
 let massGoodDate: Array<string> = [];
 
 let maskForm = {
-  avtor: 'Доцент',
-  base: 'Так себе основание',
-  state: 'Хорошее',
-  coop: 'Не очень хорошее',
-  wages: 'Хорошая',
-  load: 'Сильная',
-
-  unit: 'ООО Рога и капыта',
-  link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
-  comment:
-    'Центральный районный суд города Омска вынес приговор 37-летнему жителю города Омска, обвиняемому в хулиганстве.',
+  avtor: 'Доцент', // 'Автор
+  base: 'Так себе основание', // Причина проведения
+  state: 'Хорошее', // Общее состояние команды
+  coop: 'Не очень хорошее', // Взаимодействие с руководителем
+  wages: 'Хорошая', // Заработная плата, бонусы
+  load: 'Сильная', // Нагрузка, режим работы
+  //============
+  unit: 'ООО Рога и капыта', // Подразделение
+  know: 'Высокая', // Информированность
+  develop: 'Непрерывное', // Развитие
+  task: 'Сложные', // Текущие задачи
+  connect: 'Хорошее', // Взаимодействие в команде
 };
 let currencies01: any = []; // Авторы
 let currencies02: any = []; // Причины проведения
@@ -64,12 +65,16 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   //const dispatch = useDispatch();
   //console.log("Setup_massplan:", massplan);
   //========================================================
-  //const [valueName, setValueName] = React.useState(maskForm.name);
   const [valueState, setValueState] = React.useState(maskForm.state);
   const [valueCoop, setValueCoop] = React.useState(maskForm.coop);
   const [valueWages, setValueWages] = React.useState(maskForm.wages);
   const [valueLoad, setValueLoad] = React.useState(maskForm.load);
   const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
+  const [valueKnow, setValueKnow] = React.useState(maskForm.know);
+  const [valueDevelop, setValueDevelop] = React.useState(maskForm.develop);
+  const [valueTask, setValueTask] = React.useState(maskForm.task);
+  const [valueConnect, setValueConnect] = React.useState(maskForm.connect);
+
   const [currency01, setCurrency01] = React.useState('0');
   const [currency02, setCurrency02] = React.useState('0');
   const [currency03, setCurrency03] = React.useState('0');
@@ -145,6 +150,37 @@ const HcmBl5Form104 = (props: { close: Function }) => {
     }
   };
 
+  const hdlChangeKnow = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueKnow(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.know = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
+
+  const hdlChangeDevelop = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueDevelop(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.develop = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
+
+  const hdlChangeTask = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueTask(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.task = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
+
+  const hdlChangeConnect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      setValueConnect(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.connect = event.target.value.trimStart();
+      HAVE++;
+    }
+  };
   //========================================================
   const InputDate1 = () => {
     const handleChangeDP = (event: any) => {
@@ -217,14 +253,18 @@ const HcmBl5Form104 = (props: { close: Function }) => {
               InputStrField(212, hdlChangeWages, valueWages),
             )}
             {StrTablProp(6, 'Нагрузка, режим работы', InputStrField(212, hdlChangeLoad, valueLoad))}
-          </Grid>
+          </Grid>{' '}
           <Grid item xs={6} sx={{ padding: '0px 0px 0px 2px' }}>
             {StrTablProp(4.5, 'Подразделение', StrokaMenuGlob(3, currency03, currencies03))}
-            {StrTablProp(6, 'За период', '21.12.2023')}
-            {StrTablProp(6, 'Информированность', 'высокая')}
-            {StrTablProp(6, 'Развитие', 'непрерывное')}
-            {StrTablProp(6, 'Текущие задачи', 'сложные')}
-            {StrTablProp(6, 'Взаимодействие в команде', 'хорошее')}
+            {StrTablProp(4.5, 'За период', ContentDate1())}
+            {StrTablProp(6, 'Информированность', InputStrField(212, hdlChangeKnow, valueKnow))}
+            {StrTablProp(6, 'Развитие', InputStrField(212, hdlChangeDevelop, valueDevelop))}
+            {StrTablProp(6, 'Текущие задачи', InputStrField(212, hdlChangeTask, valueTask))}
+            {StrTablProp(
+              6,
+              'Взаимодействие в команде',
+              InputStrField(212, hdlChangeConnect, valueConnect),
+            )}
           </Grid>
         </Grid>
       </>

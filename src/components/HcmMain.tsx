@@ -38,7 +38,7 @@ let currencies05: any = [];
 let flagOpen = false;
 let soob = '';
 
-const HcmMain = (props: { trigger: boolean }) => {
+const HcmMain = (props: {}) => {
   //== Piece of Redux =======================================
   // const map = useSelector((state: any) => {
   //   const { mapReducer } = state;

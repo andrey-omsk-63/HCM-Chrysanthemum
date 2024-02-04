@@ -462,7 +462,8 @@ export const InputDirectRec = (
             disableUnderline: true,
             style: {
               fontSize: 15,
-              fontWeight: 300,
+              fontWeight: 400,
+              color: '#5B1080', // сиреневый
             },
           }}
           variant="standard"
@@ -473,6 +474,7 @@ export const InputDirectRec = (
               value={option.value}
               sx={{
                 fontSize: 15,
+                color: '#5B1080', // сиреневый
               }}>
               {option.label}
             </MenuItem>
@@ -512,7 +514,7 @@ export const InputStrField = (wdth: number, handleChangeName: any, valuen: strin
           onKeyPress={handleKey} //отключение Enter
           InputProps={{
             disableUnderline: true,
-            style: { fontSize: 15 },
+            style: { fontSize: 15, color: '#5B1080' }, // сиреневый
           }}
           value={valuen}
           onChange={handleChangeName}
@@ -551,7 +553,7 @@ export const InputStrFieldMult = (wdth: number, handleChangeName: any, valuen: s
           onKeyPress={handleKey} //отключение Enter
           InputProps={{
             disableUnderline: true,
-            style: { fontSize: 15 },
+            style: { fontSize: 15, color: '#5B1080' }, // сиреневый
           }}
           value={valuen}
           onChange={handleChangeName}
@@ -708,10 +710,8 @@ export const InputerDate = (valueDate: any, handleChangeDP: any, massGoodDate: a
           views={['day']}
           value={valueDate}
           inputFormat="DD-MM-YYYY"
-          InputProps={{ style: { fontSize: 15 } }}
+          InputProps={{ style: { fontSize: 15, color: '#5B1080' } }} // сиреневый
           onChange={handleChangeDP}
-          // //onBlur={(e) => BlurId(e, valueAr, valueId, funcAr)}
-          // onBlur={BlurId}
           renderInput={(params: any) => <TextField {...params} />}
           renderLoading={() => <CalendarPickerSkeleton />}
           renderDay={(day, _value, DayComponentProps) => {
