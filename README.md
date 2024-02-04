@@ -10,6 +10,7 @@ https://www.npackd.org/p/org.nodejs.NodeJS/16.17
 cd <путь к директории>
 
 например:
+
 cd D:
 
 cd D:\HCM\HCM-Chrysanthemum
