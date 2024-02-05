@@ -375,7 +375,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
               {MenuBatton(1.75, 1.75, 3, 'В структуре компании', ClickKnop3)}
               {MenuBatton(1.25, 1.25, 4, 'ИПР', ClickKnop4)}
               {MenuBatton(1.75, 1.75, 5, 'Оценка компетенций', ClickKnop5)}
-              {MenuBatton(1.5, 1.5, 6, 'Оценка компетенций', ClickKnop6)}
+              {MenuBatton(1.5, 1.5, 6, 'Адаптация', ClickKnop6)}
               {MenuBatton(1.25, 1.25, 7, 'Цели', ClickKnop7)}
               {MenuBatton(1.5, 1.5, 8, 'Задачи', ClickKnop8)}
             </Grid>

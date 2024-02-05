@@ -40,18 +40,6 @@ let soob = '';
 
 const HcmMain = (props: {}) => {
   //== Piece of Redux =======================================
-  // const map = useSelector((state: any) => {
-  //   const { mapReducer } = state;
-  //   return mapReducer.map.dateMap;
-  // });
-  // let coordinates = useSelector((state: any) => {
-  //   const { coordinatesReducer } = state;
-  //   return coordinatesReducer.coordinates;
-  // });
-  // let massfaz = useSelector((state: any) => {
-  //   const { massfazReducer } = state;
-  //   return massfazReducer.massfaz;
-  // });
   // let datestat = useSelector((state: any) => {
   //   const { statsaveReducer } = state;
   //   return statsaveReducer.datestat;

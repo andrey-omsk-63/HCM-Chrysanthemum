@@ -315,9 +315,6 @@ export const InputDirect = (
       width: widthBlok - 7,
     },
   };
-  // const handleKey = (event: any) => {
-  //   if (event.key === 'Enter') event.preventDefault();
-  // };
 
   return (
     <Box sx={styleSetNapr}>

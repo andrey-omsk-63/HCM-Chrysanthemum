@@ -1,14 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { mapCreate, statsaveCreate } from './redux/actions';
+import { statsaveCreate } from './redux/actions';
 //import { massfazCreate } from './redux/actions';
 
 import Grid from '@mui/material/Grid';
 
 import axios from 'axios';
-// import { Axios } from "axios";
-
-// const axios = new Axios({});
 
 import HcmMain from './components/HcmMain';
 import AppSocketError from './AppSocketError';
@@ -17,7 +14,7 @@ import AppSocketError from './AppSocketError';
 
 //import { SendSocketGetPhases } from "./components/MapSocketFunctions";
 
-import { dataMap } from './otladkaMaps';
+//import { dataMap } from './otladkaMaps';
 //import { imgFaza } from "./otladkaPicFaza";
 
 export let dateMapGl: any;
@@ -93,14 +90,6 @@ export interface Fazer {
 }
 
 export let massFaz: Fazer[] = [];
-//   idx: 0,
-//   area: 0,
-//   id: 0,
-//   faza: 0,
-//   fazaSist: -1,
-//   phases: [],
-//   idevice: 0,
-// };
 
 export interface NameMode {
   name: string;
@@ -132,8 +121,6 @@ const App = () => {
     'wss://' + window.location.host + window.location.pathname + 'W' + window.location.search;
 
   const [openSetErr, setOpenSetErr] = React.useState(false);
-  //const [openMapInfo, setOpenMapInfo] = React.useState(true);
-  //const [trigger, setTrigger] = React.useState(false);
   //=== инициализация ======================================
   if (flagOpenWS) {
     WS = new WebSocket(host);
@@ -218,7 +205,7 @@ const App = () => {
 
   if (WS.url === 'wss://localhost:3000/W' && flagOpenDebug) {
     console.log('РЕЖИМ ОТЛАДКИ!!!');
-
+    // чтение и перевод в двоичный вид файла с картинкой
     axios
       .get('http://localhost:3000/portrait.jpg', {
         responseType: 'arraybuffer',
@@ -234,8 +221,8 @@ const App = () => {
         dispatch(statsaveCreate(dateStat));
       });
 
-    dateMapGl = JSON.parse(JSON.stringify(dataMap));
-    dispatch(mapCreate(dateMapGl));
+    // dateMapGl = JSON.parse(JSON.stringify(dataMap));
+    // dispatch(mapCreate(dateMapGl));
     flagOpenDebug = false;
   }
 

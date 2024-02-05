@@ -178,6 +178,12 @@ export const styleBl2Form00 = (part: number, mt: number) => {
   };
   return styleBl2Form;
 };
+
+export const styleBl2Form01 = {
+  overflowX: 'auto',
+  height: window.innerHeight - 190,
+  textAlign: 'center',
+};
 //=== HcmBlock3 =======================================================
 export const styleBl3Form01 = (part: number) => {
   const styleBl3Form = {
@@ -196,30 +202,30 @@ export const styleBl4Form01 = (part: number) => {
     //height: (window.innerHeight - part) / 2,
     height: part,
     border: 0,
-    padding: "0px 5px 5px 5px",
+    padding: '0px 5px 5px 5px',
   };
   return styleBl4Form;
 };
 
 export const styleBl4Form02 = {
   fontSize: 15,
-  textAlign: "center",
-  color: "#7620a2", // сиреневый
-  margin: "5px 0 10px 0",
-  textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+  textAlign: 'center',
+  color: '#7620a2', // сиреневый
+  margin: '5px 0 10px 0',
+  textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
 };
 
 export const styleBl4Form03 = (part: number) => {
   const styleBl4Form = {
     fontSize: 15,
-    textAlign: "left",
-    bgcolor: "#F1F5FB", // светло серый
-    border: "1px solid #d4d4d4",
+    textAlign: 'left',
+    bgcolor: '#F1F5FB', // светло серый
+    border: '1px solid #d4d4d4',
     borderRadius: 1,
-    color: "#5B1080", // сиреневый
+    color: '#5B1080', // сиреневый
     boxShadow: 6,
-    padding: "0px 20px 14px 20px",
-    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+    padding: '0px 20px 14px 20px',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
     // height: (window.innerHeight - part) / 2 - 60,
     height: part,
   };
@@ -278,42 +284,42 @@ export const styleBl5Form03 = {
 
 export const styleBl5Form04 = {
   fontSize: 15,
-  marginTop: "-5px",
-  height: "27px",
-  width: "190px",
+  marginTop: '-5px',
+  height: '27px',
+  width: '190px',
 };
 
 export const styleBl5Form05 = {
-  height: "27px",
-  maxWidth: "124px",
-  minWidth: "124px",
+  height: '27px',
+  maxWidth: '124px',
+  minWidth: '124px',
 };
 
 export const styleBl5Form06 = {
-  bgcolor: "#FFFBE5", // топлёное молоко
-  height: "27px",
-  width: "150px",
+  bgcolor: '#FFFBE5', // топлёное молоко
+  height: '27px',
+  width: '150px',
 };
 //=== Разное ==========================================================
 export const styleInpOk = {
   fontSize: 15,
-  height: "27px",
-  width: "15px",
+  height: '27px',
+  width: '15px',
 };
 
 export const styleButOk = {
   fontSize: 12,
   marginRight: 1,
-  height: "27px",
-  maxWidth: "30px",
-  minWidth: "30px",
-  bgcolor: "#E9F5D8", // светло салатовый
-  color: "black",
-  border: "1px solid #000",
-  borderColor: "#d4d4d4", // серый
+  height: '27px',
+  maxWidth: '30px',
+  minWidth: '30px',
+  bgcolor: '#E9F5D8', // светло салатовый
+  color: 'black',
+  border: '1px solid #000',
+  borderColor: '#d4d4d4', // серый
   borderRadius: 1,
   boxShadow: 4,
-  textTransform: "unset !important",
+  textTransform: 'unset !important',
 };
 //=====================================================================
 

@@ -1,26 +1,24 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-//import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
-import { InputDirectA, PreparCurrencies041 } from "../../HcmServiceFunctions";
-import { PreparCurrencies042 } from "../../HcmServiceFunctions";
-//import { PreparCurrencies043 } from "../../HcmServiceFunctions";
+import { InputDirectA, PreparCurrencies041 } from '../../HcmServiceFunctions';
+import { PreparCurrencies042 } from '../../HcmServiceFunctions';
 
-import { styleBl3Form01, styleBl4Form01 } from "../../HcmMainStyle";
-import { styleBl4Form02, styleBl4Form03 } from "../../HcmMainStyle";
+import { styleBl3Form01, styleBl4Form01 } from '../../HcmMainStyle';
+import { styleBl4Form02, styleBl4Form03 } from '../../HcmMainStyle';
 
-import { widthGl } from "../../HcmMain";
+import { widthGl } from '../../HcmMain';
 
-import { Chart as ChartJS, CategoryScale } from "chart.js";
-import { LinearScale, PointElement } from "chart.js";
-import { LineElement, Title, Tooltip, Legend } from "chart.js";
-import { BarElement, ArcElement } from "chart.js";
+import { Chart as ChartJS, CategoryScale } from 'chart.js';
+import { LinearScale, PointElement } from 'chart.js';
+import { LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { BarElement, ArcElement } from 'chart.js';
 //import { Line } from "react-chartjs-2"; // график
 //import { Doughnut } from "react-chartjs-2"; // бублик
-import { Bar } from "react-chartjs-2"; // Гистограмма
-import { Pie } from "react-chartjs-2"; // круговая диограмма
+import { Bar } from 'react-chartjs-2'; // Гистограмма
+import { Pie } from 'react-chartjs-2'; // круговая диограмма
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -30,22 +28,17 @@ ChartJS.register(
   ArcElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
-let labelsGist = [
-  "ИТ Отдел",
-  "1С автоматизация",
-  "Тренер",
-  "Поддержка пользователей",
-];
+let labelsGist = ['ИТ Отдел', '1С автоматизация', 'Тренер', 'Поддержка пользователей'];
 
 const options = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: "top" as const,
+      position: 'top' as const,
     },
     title: {
       display: false,
@@ -53,20 +46,17 @@ const options = {
   },
 };
 
-
 let currencies01: any = []; // Подразделение
 let currencies02: any = []; // Период
 
-let partHeight = 152;
-let heightBlock = (window.innerHeight - partHeight)/2;
+let partHeight = 0;
+let heightBlock = (window.innerHeight - partHeight) / 1.6;
 
 let flagOpen = false;
 
 const HcmBl4Form103 = () => {
-  const [currency01, setCurrency01] = React.useState("0");
-  const [currency02, setCurrency02] = React.useState("0");
-  //const [currency03, setCurrency03] = React.useState("0");
-
+  const [currency01, setCurrency01] = React.useState('0');
+  const [currency02, setCurrency02] = React.useState('0');
   //=== инициализация ======================================
   if (!flagOpen) {
     currencies01 = PreparCurrencies041(); // Подразделение
@@ -75,12 +65,7 @@ const HcmBl4Form103 = () => {
   }
   //========================================================
 
-  const StrokaMenuGlob = (
-    mode: number,
-    wdth: number,
-    currency: any,
-    currencies: any
-  ) => {
+  const StrokaMenuGlob = (mode: number, wdth: number, currency: any, currencies: any) => {
     let widthBlok = (widthGl / 12) * wdth - 0;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,21 +90,20 @@ const HcmBl4Form103 = () => {
       labels: labelsGist,
       datasets: [
         {
-          label: "Вовремя",
+          label: 'Вовремя',
           data: [3, 1, 3, 2],
-          backgroundColor: "#80C3F1", // голубой
+          backgroundColor: '#80C3F1', // голубой
         },
         {
-          label: "Просрочены",
+          label: 'Просрочены',
           data: [1, 0, 1, 0],
-          backgroundColor: "#636367", // тёмно-серый
+          backgroundColor: '#636367', // тёмно-серый
         },
-        
       ],
     };
 
     return (
-      <Box sx={{ width: "99%", height: "99%" }}>
+      <Box sx={{ width: '99%', height: '99%' }}>
         <Bar options={options} data={data} />
       </Box>
     );
@@ -127,22 +111,21 @@ const HcmBl4Form103 = () => {
 
   const PieChart = () => {
     const data = {
-      labels: ["Выполнены", "Просрочены"],
+      labels: ['Выполнены', 'Просрочены'],
       datasets: [
         {
           data: [81.8, 18.2],
-          backgroundColor: ["#80C3F1", "#636367",],
+          backgroundColor: ['#80C3F1', '#636367'],
         },
       ],
     };
     return (
-      <Box sx={{ width: "99%", height: "99%" }}>
+      <Box sx={{ width: '99%', height: '99%' }}>
         <Pie data={data} options={options} />
         {/* <Doughnut data={data} options={options} />; */}
       </Box>
     );
   };
-
 
   return (
     <>
@@ -150,31 +133,17 @@ const HcmBl4Form103 = () => {
         <Grid item xs={6} sx={{}}>
           <Grid container>
             {/* Подразделение */}
-            <Grid item xs={4} sx={{ height: "30px", border: 0 }}>
+            <Grid item xs={4} sx={{ height: '30px', border: 0 }}>
               <Box>{StrokaMenuGlob(1, 2, currency01, currencies01)}</Box>
             </Grid>
             {/* Период */}
-            <Grid item xs={4} sx={{ height: "30px", border: 0 }}>
+            <Grid item xs={4} sx={{ height: '30px', border: 0 }}>
               <Box>{StrokaMenuGlob(2, 2, currency02, currencies02)}</Box>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
       <Grid container sx={styleBl3Form01(partHeight)}>
-        {/* <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
-          <Box sx={styleBl4Form02}>
-            <b>На адаптации на текущий момент</b>
-          </Box>
-          <Box sx={styleBl4Form03(heightBlock - 55)}>{BarChart01()}</Box>
-        </Grid>
-
-        <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
-          <Box sx={styleBl4Form02}>
-            <b>На адаптации / без плана</b>
-          </Box>
-          <Box sx={styleBl4Form03(heightBlock - 55)}>{BarChart02()}</Box>
-        </Grid> */}
-
         <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
           <Box sx={styleBl4Form02}>
             <b>Задачи по запуску процесса Onboarding</b>

@@ -24,25 +24,25 @@ const HcmBl1Form101 = () => {
         };
 
         switch (j) {
-          case 0:
-            maskStr.period = '01.01.2023 - 09.012.2023';
+          case 1:
+            maskStr.period = '01.01.2023 - 09.12.2023';
             maskStr.why = 'больничный';
             maskStr.status = 'Предоставлено';
             maskStr.quo = true;
             break;
-          case 1:
+          case 2:
             maskStr.period = '15.08.2023 - 27.08.2023';
             maskStr.why = 'Отпуск';
             maskStr.status = 'Предоставлено';
             maskStr.quo = true;
             break;
-          case 2:
+          case 3:
             maskStr.period = '18.12.2023 - 27.12.2023';
             maskStr.why = 'Компенсация отпуска';
             maskStr.status = 'Согласовано';
             maskStr.quo = false;
             break;
-          case 3:
+          case 4:
             maskStr.period = '29.12.2023 - 30.12.2023';
             maskStr.why = 'Отгул';
             maskStr.status = 'Согласовано';
