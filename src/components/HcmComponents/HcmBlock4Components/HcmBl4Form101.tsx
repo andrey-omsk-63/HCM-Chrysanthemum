@@ -4,8 +4,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 //import Button from '@mui/material/Button';
 
-//import { Bar } from "react-chartjs-2";
-
 //import { Chart as ChartJS } from "chart.js";
 //import { Chart } from "react-chartjs-2";
 
@@ -23,28 +21,6 @@ import Box from "@mui/material/Box";
 //   Legend
 // );
 
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from 'chart.js'
-// import { Chart } from 'react-chartjs-2'
-
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// )
-
 import { InputDirectA, PreparCurrencies041 } from "../../HcmServiceFunctions";
 import { PreparCurrencies042 } from "../../HcmServiceFunctions";
 //import { PreparCurrencies043 } from "../../HcmServiceFunctions";
@@ -53,6 +29,23 @@ import { styleBl3Form01, styleBl4Form01 } from "../../HcmMainStyle";
 import { styleBl4Form02, styleBl4Form03 } from "../../HcmMainStyle";
 
 import { widthGl } from "../../HcmMain";
+
+import { Chart as ChartJS, CategoryScale } from "chart.js";
+import { LinearScale, PointElement } from "chart.js";
+import { LineElement, Title, Tooltip, Legend } from "chart.js";
+import { BarElement } from "chart.js";
+//import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 let currencies01: any = []; // Подразделение
 let currencies02: any = []; // Период
@@ -101,34 +94,47 @@ const HcmBl4Form101 = () => {
     );
   };
 
-  // const data = {
-  //   labels: [
-  //     "Category A",
-  //     "Category B",
-  //     "Category C",
-  //     "Category D",
-  //     "Category E",
-  //   ],
-  //   datasets: [
-  //     {
-  //       label: "Dataset 1",
-  //       data: [10, 20, 30, 40, 50],
-  //       backgroundColor: "rgba(255, 99, 132, 0.6)", // Customize bar color
-  //     },
-  //     {
-  //       label: "Dataset 2",
-  //       data: [5, 15, 25, 35, 45],
-  //       backgroundColor: "rgba(54, 162, 235, 0.6)", // Customize bar color
-  //     },
-  //     // Add more datasets as needed
-  //   ],
-  // };
+  const BarChart01 = () => {
+    const data = {
+      labels: [
+        "ИТ Отдел",
+        "1С автоматизация",
+        "Тренер",
+        "Поддержка пользователей",
+        "Арм",
+      ],
+      datasets: [
+        // {
+        //   label: "Dataset 1",
+        //   data: [10, 20, 30, 40, 50],
+        //   backgroundColor: "rgba(255, 99, 132, 0.6)", // Customize bar color
+        // },
+        {
+          label: "На адаптации",
+          data: [45, 25, 40, 15, 30],
+          backgroundColor: "rgba(54, 162, 235, 0.6)", // Customize bar color
+        },
+        // Add more datasets as needed
+      ],
+    };
 
-  const BarChart = () => {
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "top" as const,
+        },
+        title: {
+          display: false,
+        },
+      },
+    };
+
     return (
-      <div>
-        {/* <Bar data={data} /> */}
-      </div>
+      <Box sx={{ width: "99%", height: "99%" }}>
+        <Bar options={options} data={data} />
+      </Box>
     );
   };
 
@@ -153,7 +159,7 @@ const HcmBl4Form101 = () => {
           <Box sx={styleBl4Form02}>
             <b>На адаптации на текущий момент</b>
           </Box>
-          <Box sx={styleBl4Form03(heightBlock - 55)}>{BarChart()}</Box>
+          <Box sx={styleBl4Form03(heightBlock - 55)}>{BarChart01()}</Box>
         </Grid>
 
         <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
