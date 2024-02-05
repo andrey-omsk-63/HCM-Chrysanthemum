@@ -4,23 +4,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 //import Button from '@mui/material/Button';
 
-//import { Chart as ChartJS } from "chart.js";
-//import { Chart } from "react-chartjs-2";
-
-// import { Chart as ChartJS, CategoryScale } from "chart.js";
-// import { LinearScale, PointElement } from "chart.js";
-// import { LineElement, Title, Tooltip, Legend } from "chart.js";
-// import { Line } from "react-chartjs-2";
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// );
-
 import { InputDirectA, PreparCurrencies041 } from "../../HcmServiceFunctions";
 import { PreparCurrencies042 } from "../../HcmServiceFunctions";
 //import { PreparCurrencies043 } from "../../HcmServiceFunctions";
@@ -33,23 +16,46 @@ import { widthGl } from "../../HcmMain";
 import { Chart as ChartJS, CategoryScale } from "chart.js";
 import { LinearScale, PointElement } from "chart.js";
 import { LineElement, Title, Tooltip, Legend } from "chart.js";
-import { BarElement } from "chart.js";
-//import { Line } from "react-chartjs-2";
-import { Bar } from "react-chartjs-2";
+import { BarElement, ArcElement } from "chart.js";
+//import { Line } from "react-chartjs-2"; // график
+//import { Doughnut } from "react-chartjs-2"; // бублик
+import { Bar } from "react-chartjs-2"; // Гистограмма
+import { Pie } from "react-chartjs-2"; // круговая диограмма
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend
 );
 
+let labelsGist = [
+  "ИТ Отдел",
+  "1С автоматизация",
+  "Тренер",
+  "Поддержка пользователей",
+  "Арм",
+];
+
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "top" as const,
+    },
+    title: {
+      display: false,
+    },
+  },
+};
+
 let currencies01: any = []; // Подразделение
 let currencies02: any = []; // Период
-//let currencies03: any = []; // Аналитика
 
 let partHeight = 152;
 let heightBlock = (window.innerHeight - partHeight) / 2;
@@ -96,44 +102,90 @@ const HcmBl4Form101 = () => {
 
   const BarChart01 = () => {
     const data = {
-      labels: [
-        "ИТ Отдел",
-        "1С автоматизация",
-        "Тренер",
-        "Поддержка пользователей",
-        "Арм",
-      ],
+      labels: labelsGist,
       datasets: [
-        // {
-        //   label: "Dataset 1",
-        //   data: [10, 20, 30, 40, 50],
-        //   backgroundColor: "rgba(255, 99, 132, 0.6)", // Customize bar color
-        // },
         {
           label: "На адаптации",
           data: [45, 25, 40, 15, 30],
           backgroundColor: "rgba(54, 162, 235, 0.6)", // Customize bar color
         },
-        // Add more datasets as needed
       ],
-    };
-
-    const options = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: "top" as const,
-        },
-        title: {
-          display: false,
-        },
-      },
     };
 
     return (
       <Box sx={{ width: "99%", height: "99%" }}>
         <Bar options={options} data={data} />
+      </Box>
+    );
+  };
+
+  const BarChart02 = () => {
+    const data = {
+      labels: labelsGist,
+      datasets: [
+        {
+          label: "На адаптации",
+          data: [45, 25, 40, 15, 30],
+          backgroundColor: "#80C3F1", // голубой
+        },
+        {
+          label: "Нет плана",
+          data: [0, 0, 5, 0, 0],
+          backgroundColor: "#636367", // тёмно-серый
+        },
+      ],
+    };
+
+    return (
+      <Box sx={{ width: "99%", height: "99%" }}>
+        <Bar options={options} data={data} />
+      </Box>
+    );
+  };
+
+  const BarChart03 = () => {
+    const data = {
+      labels: labelsGist,
+      datasets: [
+        {
+          label: "2021",
+          data: [89, 78, 90, 92, 93],
+          backgroundColor: "#80C3F1", // голубой
+        },
+        {
+          label: "2022",
+          data: [87, 90, 70, 88, 90],
+          backgroundColor: "#636367", // тёмно-серый
+        },
+        {
+          label: "2023",
+          data: [90, 87, 83, 78, 86],
+          backgroundColor: "#90ED7B", // ярко-салатовый
+        },
+      ],
+    };
+
+    return (
+      <Box sx={{ width: "99%", height: "99%" }}>
+        <Bar options={options} data={data} />
+      </Box>
+    );
+  };
+
+  const PieChart = () => {
+    const data = {
+      labels: ["Продлённые", "Досрочно завершённые", "Закрытые в срок"],
+      datasets: [
+        {
+          data: [21.6, 20.5, 57.9],
+          backgroundColor: ["#80C3F1", "#636367", "#90ED7B"],
+        },
+      ],
+    };
+    return (
+      <Box sx={{ width: "99%", height: "99%" }}>
+        <Pie data={data} options={options} />
+        {/* <Doughnut data={data} options={options} />; */}
       </Box>
     );
   };
@@ -154,6 +206,7 @@ const HcmBl4Form101 = () => {
           </Grid>
         </Grid>
       </Grid>
+      
       <Grid container sx={styleBl3Form01(partHeight)}>
         <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
           <Box sx={styleBl4Form02}>
@@ -166,21 +219,21 @@ const HcmBl4Form101 = () => {
           <Box sx={styleBl4Form02}>
             <b>На адаптации / без плана</b>
           </Box>
-          <Box sx={styleBl4Form03(heightBlock - 55)}></Box>
+          <Box sx={styleBl4Form03(heightBlock - 55)}>{BarChart02()}</Box>
         </Grid>
 
         <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
           <Box sx={styleBl4Form02}>
             <b>Средняя продолжительность Адаптации</b>
           </Box>
-          <Box sx={styleBl4Form03(heightBlock - 60)}></Box>
+          <Box sx={styleBl4Form03(heightBlock - 60)}>{BarChart03()}</Box>
         </Grid>
 
         <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
           <Box sx={styleBl4Form02}>
-            <b>Адаптационные планы 2021 - 2024</b>
+            <b>Адаптационные планы 2021 - 2023</b>
           </Box>
-          <Box sx={styleBl4Form03(heightBlock - 60)}></Box>
+          <Box sx={styleBl4Form03(heightBlock - 60)}>{PieChart()}</Box>
         </Grid>
       </Grid>
     </>
