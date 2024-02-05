@@ -4,17 +4,62 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 //import Button from '@mui/material/Button';
 
+//import { Bar } from "react-chartjs-2";
+
+//import { Chart as ChartJS } from "chart.js";
+//import { Chart } from "react-chartjs-2";
+
+// import { Chart as ChartJS, CategoryScale } from "chart.js";
+// import { LinearScale, PointElement } from "chart.js";
+// import { LineElement, Title, Tooltip, Legend } from "chart.js";
+// import { Line } from "react-chartjs-2";
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   Legend
+// );
+
+// import {
+//   Chart as ChartJS,
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   Legend,
+// } from 'chart.js'
+// import { Chart } from 'react-chartjs-2'
+
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   Legend
+// )
+
 import { InputDirectA, PreparCurrencies041 } from "../../HcmServiceFunctions";
 import { PreparCurrencies042 } from "../../HcmServiceFunctions";
 //import { PreparCurrencies043 } from "../../HcmServiceFunctions";
 
-import { styleBl3Form01 } from "../../HcmMainStyle";
+import { styleBl3Form01, styleBl4Form01 } from "../../HcmMainStyle";
+import { styleBl4Form02, styleBl4Form03 } from "../../HcmMainStyle";
 
 import { widthGl } from "../../HcmMain";
 
 let currencies01: any = []; // Подразделение
 let currencies02: any = []; // Период
 //let currencies03: any = []; // Аналитика
+
+let partHeight = 152;
+let heightBlock = (window.innerHeight - partHeight) / 2;
 
 let flagOpen = false;
 
@@ -27,7 +72,6 @@ const HcmBl4Form101 = () => {
   if (!flagOpen) {
     currencies01 = PreparCurrencies041(); // Подразделение
     currencies02 = PreparCurrencies042(); // Период
-    //currencies03 = PreparCurrencies043(); // Аналитика
     flagOpen = true;
   }
   //========================================================
@@ -47,9 +91,6 @@ const HcmBl4Form101 = () => {
           break;
         case 2: // Период
           setCurrency02(event.target.value);
-          break;
-        case 3: // Аналитика
-          //setCurrency03(event.target.value);
       }
     };
 
@@ -57,6 +98,37 @@ const HcmBl4Form101 = () => {
       <Box sx={{ fontSize: 12.9, width: widthBlok }}>
         {InputDirectA(mode, handleChange, widthBlok, currency, currencies)}
       </Box>
+    );
+  };
+
+  // const data = {
+  //   labels: [
+  //     "Category A",
+  //     "Category B",
+  //     "Category C",
+  //     "Category D",
+  //     "Category E",
+  //   ],
+  //   datasets: [
+  //     {
+  //       label: "Dataset 1",
+  //       data: [10, 20, 30, 40, 50],
+  //       backgroundColor: "rgba(255, 99, 132, 0.6)", // Customize bar color
+  //     },
+  //     {
+  //       label: "Dataset 2",
+  //       data: [5, 15, 25, 35, 45],
+  //       backgroundColor: "rgba(54, 162, 235, 0.6)", // Customize bar color
+  //     },
+  //     // Add more datasets as needed
+  //   ],
+  // };
+
+  const BarChart = () => {
+    return (
+      <div>
+        {/* <Bar data={data} /> */}
+      </div>
     );
   };
 
@@ -73,16 +145,36 @@ const HcmBl4Form101 = () => {
             <Grid item xs={4} sx={{ height: "30px", border: 0 }}>
               <Box>{StrokaMenuGlob(2, 2, currency02, currencies02)}</Box>
             </Grid>
-            {/* Аналитика */}
-            {/* <Grid item xs={4} sx={{ height: "30px", border: 0 }}>
-              <Box>{StrokaMenuGlob(3, 2, currency03, currencies03)}</Box>
-            </Grid> */}
           </Grid>
         </Grid>
       </Grid>
-      <Grid container sx={styleBl3Form01(152)}>
-        <Grid item xs={12}>
-          Здесь будет аналитика по адаптации
+      <Grid container sx={styleBl3Form01(partHeight)}>
+        <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
+          <Box sx={styleBl4Form02}>
+            <b>На адаптации на текущий момент</b>
+          </Box>
+          <Box sx={styleBl4Form03(heightBlock - 55)}>{BarChart()}</Box>
+        </Grid>
+
+        <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
+          <Box sx={styleBl4Form02}>
+            <b>На адаптации / без плана</b>
+          </Box>
+          <Box sx={styleBl4Form03(heightBlock - 55)}></Box>
+        </Grid>
+
+        <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
+          <Box sx={styleBl4Form02}>
+            <b>Средняя продолжительность Адаптации</b>
+          </Box>
+          <Box sx={styleBl4Form03(heightBlock - 60)}></Box>
+        </Grid>
+
+        <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
+          <Box sx={styleBl4Form02}>
+            <b>Адаптационные планы 2021 - 2024</b>
+          </Box>
+          <Box sx={styleBl4Form03(heightBlock - 60)}></Box>
         </Grid>
       </Grid>
     </>

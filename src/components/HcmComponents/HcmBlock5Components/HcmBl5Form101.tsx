@@ -146,6 +146,7 @@ const HcmBl5Form101 = (props: { close: Function }) => {
         //inpDate1 = true;
         setValueDate1((eventInp1 = event));
         if (event > eventInp2) setValueDate2((eventInp2 = event));
+        HAVE++
       }
     };
     return <>{InputerDate(valueDate1, handleChangeDP, massGoodDate)}</>;
@@ -163,6 +164,7 @@ const HcmBl5Form101 = (props: { close: Function }) => {
       ) {
         // inpDate2 = false;
         setValueDate2(dayjs(eventInp2));
+        HAVE++
       } else {
         //inpDate2 = true;
         setValueDate2((eventInp2 = event));

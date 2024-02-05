@@ -139,6 +139,7 @@ const HcmBl5Form103 = (props: { close: Function }) => {
         setValueDate1(dayjs(eventInp1));
       } else {
         setValueDate1((eventInp1 = event));
+        HAVE++
       }
     };
     return <>{InputerDate(valueDate1, handleChangeDP, massGoodDate)}</>;

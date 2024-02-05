@@ -190,6 +190,41 @@ export const styleBl3Form01 = (part: number) => {
   };
   return styleBl3Form;
 };
+//=== HcmBlock4 =======================================================
+export const styleBl4Form01 = (part: number) => {
+  const styleBl4Form = {
+    //height: (window.innerHeight - part) / 2,
+    height: part,
+    border: 0,
+    padding: "0px 5px 5px 5px",
+  };
+  return styleBl4Form;
+};
+
+export const styleBl4Form02 = {
+  fontSize: 15,
+  textAlign: "center",
+  color: "#7620a2", // сиреневый
+  margin: "5px 0 10px 0",
+  textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+};
+
+export const styleBl4Form03 = (part: number) => {
+  const styleBl4Form = {
+    fontSize: 15,
+    textAlign: "left",
+    bgcolor: "#F1F5FB", // светло серый
+    border: "1px solid #d4d4d4",
+    borderRadius: 1,
+    color: "#5B1080", // сиреневый
+    boxShadow: 6,
+    padding: "0px 20px 14px 20px",
+    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+    // height: (window.innerHeight - part) / 2 - 60,
+    height: part,
+  };
+  return styleBl4Form;
+};
 //=== HcmBlock5 =======================================================
 export const styleBl5Form00 = (wdth: number, hdth: number) => {
   const styleSetPK01 = {
@@ -223,7 +258,7 @@ export const styleBl5Form01 = {
 export const styleBl5Form02 = {
   fontSize: 15,
   textAlign: 'left',
-  bgcolor: '#F1F5FB',
+  bgcolor: '#F1F5FB', // светло серый
   border: '1px solid #d4d4d4',
   borderRadius: 1,
   color: '#5B1080', // сиреневый
