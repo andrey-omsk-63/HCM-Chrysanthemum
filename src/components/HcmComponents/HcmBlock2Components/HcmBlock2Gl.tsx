@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 //import Box from "@mui/material/Box";
 import Button from '@mui/material/Button';
 
+import HcmBl2Form100 from './HcmBl2Form100';
 import HcmBl2Form101 from './HcmBl2Form101';
 import HcmBl2Form102 from './HcmBl2Form102';
 import HcmBl2Form103 from './HcmBl2Form103';
@@ -16,6 +17,7 @@ let Illum = 1;
 let oldIdx = -1;
 
 const HcmBlock2Gl = (props: { idx: number }) => {
+  const [bl2Form100, setBl2Form001] = React.useState(false);
   const [bl2Form101, setBl2Form101] = React.useState(false);
   const [bl2Form102, setBl2Form201] = React.useState(false);
   const [bl2Form103, setBl2Form301] = React.useState(false);
@@ -56,6 +58,10 @@ const HcmBlock2Gl = (props: { idx: number }) => {
     setBl2Form301(true);
   };
 
+  const ClickFilter = () => {
+    setBl2Form001(true);
+  };
+
   return (
     <Grid container sx={styleBl2Gl01}>
       <Grid item xs={12}>
@@ -84,10 +90,17 @@ const HcmBlock2Gl = (props: { idx: number }) => {
           </Grid>
         </Grid>
         <Grid container sx={{ marginTop: 2 }}>
-          <Grid item xs={12} sx={styleBl2Gl02}>
+          <Grid item xs={10.2} sx={styleBl2Gl02}>
             <em>это сервисная строка</em>
           </Grid>
+          {/* <Grid item xs={1.8} sx={styleBl2Gl02}> */}
+          <Grid item xs={1.8} sx={{ marginLeft: '0px' }}>
+            <Button sx={styleMain04(1.8, Illum, 9)} onClick={() => ClickFilter()}>
+              Фильтр подразделений
+            </Button>
+          </Grid>
         </Grid>
+        {bl2Form100 && <HcmBl2Form100 close={setBl2Form001} />}
         {bl2Form101 && <HcmBl2Form101 />}
         {bl2Form102 && <HcmBl2Form102 />}
         {bl2Form103 && <HcmBl2Form103 idx={RandomNumber(1, 10000)} />}
