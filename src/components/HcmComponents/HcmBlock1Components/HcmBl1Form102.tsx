@@ -76,7 +76,7 @@ const HcmBl1Form102 = () => {
     <Grid container sx={styleBl3Form01(340)}>
       <Grid item xs={12}>
         {HeaderTabl()}
-        <Box sx={styleBl1Form06}>{StrokaForm102()}</Box>
+        <Box sx={styleBl1Form06(375)}>{StrokaForm102()}</Box>
       </Grid>
     </Grid>
   );

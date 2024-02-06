@@ -4,13 +4,16 @@ import Grid from "@mui/material/Grid";
 //import Box from "@mui/material/Box";
 //import Button from '@mui/material/Button';
 
-import { styleBl2Form00 } from "../../HcmMainStyle";
+import { styleBl3Form01 } from "../../HcmMainStyle";
 
 const HcmBl1Form103 = () => {
   return (
-    <Grid container sx={styleBl2Form00(window.innerHeight * 0.45, 2)}>
-      <Grid item xs={12}></Grid>
+    <Grid container sx={styleBl3Form01(340)}>
+    <Grid item xs={12}>
+      {/* {HeaderTabl()}
+      <Box sx={styleBl1Form06(375)}>{StrokaForm102()}</Box> */}
     </Grid>
+  </Grid>
   );
 };
 

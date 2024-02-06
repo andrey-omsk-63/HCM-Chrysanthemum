@@ -8,7 +8,7 @@ import { InputDirectA, PreparCurrencies041 } from "../../HcmServiceFunctions";
 import { PreparCurrencies042 } from "../../HcmServiceFunctions";
 import { PreparCurrencies043 } from "../../HcmServiceFunctions";
 
-import { styleBl3Form01 } from "../../HcmMainStyle";
+import { styleBl1Form011 } from "../../HcmMainStyle";
 
 import { widthGl } from "../../HcmMain";
 
@@ -80,7 +80,8 @@ const HcmBl4Form102 = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container sx={styleBl3Form01(152)}>
+      {/* <Grid container sx={styleBl3Form01(152)}> */}
+      <Grid container sx={styleBl1Form011(140)}>
         <Grid item xs={12}>Здесь будет аналитика по HealtH Check</Grid>
       </Grid>
     </>

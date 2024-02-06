@@ -14,6 +14,8 @@ import HcmBl1Form102 from './HcmBl1Form102';
 import HcmBl1Form103 from './HcmBl1Form103';
 import HcmBl1Form104 from './HcmBl1Form104';
 import HcmBl1Form106 from './HcmBl1Form106';
+import HcmBl1Form105 from './HcmBl1Form105';
+import HcmBl1Form107 from './HcmBl1Form107';
 import HcmBl1Form108 from './HcmBl1Form108';
 import HcmBlock1ViewImg from './HcmBlock1ViewImg';
 
@@ -385,7 +387,9 @@ const HcmBlock1Gl = (props: { idx: number }) => {
         {bl1Form102 && <HcmBl1Form102 />}
         {bl1Form103 && <HcmBl1Form103 />}
         {bl1Form104 && <HcmBl1Form104 />}
+        {bl1Form105 && <HcmBl1Form105 />}
         {bl1Form106 && <HcmBl1Form106 />}
+        {bl1Form107 && <HcmBl1Form107 />}
         {bl1Form108 && <HcmBl1Form108 idx={RandomNumber(1, 10000)} />}
         {openImg && <HcmBlock1ViewImg close={setOpenImg} name={maskForm.name} nik={maskForm.nik} />}
       </Grid>

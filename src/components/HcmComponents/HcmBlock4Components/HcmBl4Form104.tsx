@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { InputDirectA, PreparCurrencies041 } from "../../HcmServiceFunctions";
 import { PreparCurrencies042 } from "../../HcmServiceFunctions";
 
-import { styleBl3Form01, styleBl4Form01 } from "../../HcmMainStyle";
+import { styleBl1Form011, styleBl4Form01 } from "../../HcmMainStyle";
 import { styleBl4Form02, styleBl4Form03 } from "../../HcmMainStyle";
 
 import { widthGl } from "../../HcmMain";
@@ -54,7 +54,7 @@ const options = {
 let currencies01: any = []; // Подразделение
 let currencies02: any = []; // Период
 
-let partHeight = 152;
+//let partHeight = 152;
 let heightBlock = window.innerHeight / 1.6;
 
 let flagOpen = false;
@@ -153,7 +153,8 @@ const HcmBl4Form104 = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container sx={styleBl3Form01(partHeight)}>
+      {/* <Grid container sx={styleBl3Form01(partHeight)}> */}
+      <Grid container sx={styleBl1Form011(140)}>
         <Grid item xs={6} sx={styleBl4Form01(heightBlock)}>
           <Box sx={styleBl4Form02}>
             <b>Сотрудники с ИПР</b>
