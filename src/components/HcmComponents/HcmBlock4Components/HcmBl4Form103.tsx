@@ -49,8 +49,8 @@ const options = {
 let currencies01: any = []; // Подразделение
 let currencies02: any = []; // Период
 
-let partHeight = 0;
-let heightBlock = (window.innerHeight - partHeight) / 1.6;
+let partHeight = 152;
+let heightBlock = window.innerHeight / 1.6;
 
 let flagOpen = false;
 

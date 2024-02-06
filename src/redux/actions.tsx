@@ -13,11 +13,11 @@ import {
 import { DateMAP } from './../interfaceMAP.d';
 import { DateBindings } from './../interfaceBindings.d';
 import { DateAddObjects } from './../interfaceAddObjects.d';
-import { Stater } from './../App';
+import { Stater } from '../App';
 
-import { Pointer } from './../App';
-import { Fazer } from './../App';
-import { NameMode } from './../App';
+import { Pointer } from '../App';
+import { Fazer } from '../App';
+import { NameMode } from '../App';
 
 export function massdkCreate(massDka: Pointer[] = []) {
   return {

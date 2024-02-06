@@ -1,5 +1,5 @@
 import { MASSMODE_CREATE } from './types';
-import { massMode } from './../App';
+import { massMode } from '../App';
 
 const intialState = {
   massmode: massMode,

@@ -1,5 +1,5 @@
 import { COORDINATES_CREATE } from './types';
-import { Coordinates } from './../App';
+import { Coordinates } from '../App';
 
 const intialState = {
   coordinates: Coordinates,

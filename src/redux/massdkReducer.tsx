@@ -1,5 +1,5 @@
 import { MASSDK_CREATE } from './types';
-import { massDk } from './../App';
+import { massDk } from '../App';
 
 const intialState = {
   massdk: massDk,

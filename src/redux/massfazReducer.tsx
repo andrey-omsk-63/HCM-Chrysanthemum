@@ -1,5 +1,5 @@
 import { MASSFAZ_CREATE } from "./types";
-import { massFaz } from "./../App";
+import { massFaz } from "../App";
 //import { Fazer } from './../App';
 
 const intialState = {

@@ -1,24 +1,24 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
-import { InputDirectA, PreparCurrencies041 } from '../../HcmServiceFunctions';
-import { PreparCurrencies042 } from '../../HcmServiceFunctions';
+import { InputDirectA, PreparCurrencies041 } from "../../HcmServiceFunctions";
+import { PreparCurrencies042 } from "../../HcmServiceFunctions";
 
-import { styleBl3Form01, styleBl4Form01 } from '../../HcmMainStyle';
-import { styleBl4Form02, styleBl4Form03 } from '../../HcmMainStyle';
+import { styleBl3Form01, styleBl4Form01 } from "../../HcmMainStyle";
+import { styleBl4Form02, styleBl4Form03 } from "../../HcmMainStyle";
 
-import { widthGl } from '../../HcmMain';
+import { widthGl } from "../../HcmMain";
 
-import { Chart as ChartJS, CategoryScale } from 'chart.js';
-import { LinearScale, PointElement } from 'chart.js';
-import { LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { BarElement, ArcElement } from 'chart.js';
+import { Chart as ChartJS, CategoryScale } from "chart.js";
+import { LinearScale, PointElement } from "chart.js";
+import { LineElement, Title, Tooltip, Legend } from "chart.js";
+import { BarElement, ArcElement } from "chart.js";
 //import { Line } from "react-chartjs-2"; // график
 //import { Doughnut } from "react-chartjs-2"; // бублик
-import { Bar } from 'react-chartjs-2'; // Гистограмма
-import { Pie } from 'react-chartjs-2'; // круговая диограмма
+import { Bar } from "react-chartjs-2"; // Гистограмма
+import { Pie } from "react-chartjs-2"; // круговая диограмма
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -28,17 +28,22 @@ ChartJS.register(
   ArcElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 );
 
-let labelsGist = ['ИТ Отдел', '1С автоматизация', 'Тренер', 'Поддержка пользователей'];
+let labelsGist = [
+  "ИТ Отдел",
+  "1С автоматизация",
+  "Тренер",
+  "Поддержка пользователей",
+];
 
 const options = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: 'top' as const,
+      position: "top" as const,
     },
     title: {
       display: false,
@@ -49,14 +54,14 @@ const options = {
 let currencies01: any = []; // Подразделение
 let currencies02: any = []; // Период
 
-let partHeight = 0;
-let heightBlock = (window.innerHeight - partHeight) / 1.6;
+let partHeight = 152;
+let heightBlock = window.innerHeight / 1.6;
 
 let flagOpen = false;
 
 const HcmBl4Form104 = () => {
-  const [currency01, setCurrency01] = React.useState('0');
-  const [currency02, setCurrency02] = React.useState('0');
+  const [currency01, setCurrency01] = React.useState("0");
+  const [currency02, setCurrency02] = React.useState("0");
   //=== инициализация ======================================
   if (!flagOpen) {
     currencies01 = PreparCurrencies041(); // Подразделение
@@ -65,7 +70,12 @@ const HcmBl4Form104 = () => {
   }
   //========================================================
 
-  const StrokaMenuGlob = (mode: number, wdth: number, currency: any, currencies: any) => {
+  const StrokaMenuGlob = (
+    mode: number,
+    wdth: number,
+    currency: any,
+    currencies: any
+  ) => {
     let widthBlok = (widthGl / 12) * wdth - 0;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,20 +100,20 @@ const HcmBl4Form104 = () => {
       labels: labelsGist,
       datasets: [
         {
-          label: 'С ИПР',
+          label: "С ИПР",
           data: [10, 4, 50, 60],
-          backgroundColor: '#80C3F1', // голубой
+          backgroundColor: "#80C3F1", // голубой
         },
         {
-          label: 'Без ИПР',
+          label: "Без ИПР",
           data: [12, 10, 100, 20],
-          backgroundColor: '#636367', // тёмно-серый
+          backgroundColor: "#636367", // тёмно-серый
         },
       ],
     };
 
     return (
-      <Box sx={{ width: '99%', height: '99%' }}>
+      <Box sx={{ width: "99%", height: "99%" }}>
         <Bar options={options} data={data} />
       </Box>
     );
@@ -111,16 +121,16 @@ const HcmBl4Form104 = () => {
 
   const PieChart = () => {
     const data = {
-      labels: ['С ИПР', 'Без ИПР'],
+      labels: ["С ИПР", "Без ИПР"],
       datasets: [
         {
           data: [52.4, 46.6],
-          backgroundColor: ['#80C3F1', '#636367'],
+          backgroundColor: ["#80C3F1", "#636367"],
         },
       ],
     };
     return (
-      <Box sx={{ width: '99%', height: '99%' }}>
+      <Box sx={{ width: "99%", height: "99%" }}>
         <Pie data={data} options={options} />
         {/* <Doughnut data={data} options={options} />; */}
       </Box>
@@ -133,11 +143,11 @@ const HcmBl4Form104 = () => {
         <Grid item xs={6} sx={{}}>
           <Grid container>
             {/* Подразделение */}
-            <Grid item xs={4} sx={{ height: '30px', border: 0 }}>
+            <Grid item xs={4} sx={{ height: "30px", border: 0 }}>
               <Box>{StrokaMenuGlob(1, 2, currency01, currencies01)}</Box>
             </Grid>
             {/* Период */}
-            <Grid item xs={4} sx={{ height: '30px', border: 0 }}>
+            <Grid item xs={4} sx={{ height: "30px", border: 0 }}>
               <Box>{StrokaMenuGlob(2, 2, currency02, currencies02)}</Box>
             </Grid>
           </Grid>

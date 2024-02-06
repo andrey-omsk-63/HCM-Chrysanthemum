@@ -1,5 +1,5 @@
 import { STATSAVE_CREATE } from './types';
-import { dateStat } from './../App';
+import { dateStat } from '../App';
 
 const intialState = {
   datestat: dateStat,

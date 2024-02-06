@@ -1,6 +1,6 @@
 import { BINDINGS_CREATE } from './types';
 
-import { dateBindingsGl } from './../App';
+import { dateBindingsGl } from '../App';
 
 const intialState = {
   bindings: dateBindingsGl,
