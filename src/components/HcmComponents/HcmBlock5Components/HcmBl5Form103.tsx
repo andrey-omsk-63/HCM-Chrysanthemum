@@ -62,7 +62,7 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   //========================================================
   //const [valueName, setValueName] = React.useState(maskForm.name);
   const [valueTema, setValueTema] = React.useState(maskForm.tema);
-  const [valueLink, setValueLink] = React.useState(maskForm.link);
+  //const [valueLink, setValueLink] = React.useState(maskForm.link);
   const [valueComment, setValueComment] = React.useState(maskForm.comment);
   const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
   const [currency01, setCurrency01] = React.useState('0');
@@ -116,13 +116,13 @@ const HcmBl5Form103 = (props: { close: Function }) => {
     }
   };
 
-  const hdlChangeLink = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      setValueLink(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.link = event.target.value.trimStart();
-      HAVE++;
-    }
-  };
+  // const hdlChangeLink = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.value) {
+  //     setValueLink(event.target.value.trimStart()); // удаление пробелов в начале строки
+  //     maskForm.link = event.target.value.trimStart();
+  //     HAVE++;
+  //   }
+  // };
 
   const hdlChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
@@ -186,14 +186,14 @@ const HcmBl5Form103 = (props: { close: Function }) => {
     return (
       <>
         {StrTablProp(4, 'Объект*', StrokaMenuGlob(1, currency01, currencies01))}
-        {StrTablProp(4, 'Оснвание*', StrokaMenuGlob(2, currency02, currencies02))}
+        {StrTablProp(4, 'Основание*', StrokaMenuGlob(2, currency02, currencies02))}
         {StrTablProp(4, 'Тема*', InputStrField(212, hdlChangeTema, valueTema))}
         {StrTablProp(4, 'Дата выполнения*', ContentDate1())}
-        {StrTablProp(4, 'Исполнитель (Ник)', StrokaMenuGlob(3, currency03, currencies03))}
-        {StrTablProp(4, 'Ссылка на план адаптации', InputStrField(386, hdlChangeLink, valueLink))}
+        {StrTablProp(4, 'Исполнитель (Ник)*', StrokaMenuGlob(3, currency03, currencies03))}
+        {/* {StrTablProp(4, 'Ссылка на план адаптации', InputStrField(386, hdlChangeLink, valueLink))} */}
         <Grid container sx={{ marginTop: 2 }}>
           <Grid item xs={4} sx={{ height: 100 }}>
-            Комментарий
+            Описание
           </Grid>
           <Grid item xs sx={styleBl5Form03}>
             {InputStrFieldMult(386, hdlChangeComment, valueComment)}
@@ -206,7 +206,7 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   return (
     <>
       <Modal open={open} onClose={CloseEnd} hideBackdrop={false}>
-        <Box sx={styleBl5Form00(650, 455)}>
+        <Box sx={styleBl5Form00(650, 414)}>
           <Button sx={styleModalEnd} onClick={() => handleCloseBad()}>
             <b>&#10006;</b>
           </Button>
