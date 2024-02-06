@@ -10,9 +10,9 @@ import {
   MASSDK_CREATE,
 } from './types';
 
-import { DateMAP } from './../interfaceMAP.d';
-import { DateBindings } from './../interfaceBindings.d';
-import { DateAddObjects } from './../interfaceAddObjects.d';
+import { DateMAP } from '../../basket/interfaceMAP';
+import { DateBindings } from '../../basket/interfaceBindings';
+import { DateAddObjects } from '../../basket/interfaceAddObjects';
 import { Stater } from '../App';
 
 import { Pointer } from '../App';
