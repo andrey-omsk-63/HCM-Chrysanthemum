@@ -173,13 +173,14 @@ export const styleBl2Gl01 = {
 };
 
 export const styleBl2Gl02 = {
+  fontSize: 12.9,
   height: '30px',
   bgcolor: 'background.paper',
   border: '1px solid #FFFFFF',
   borderRadius: 1,
+  color: "#5B1080", // сиреневый
   boxShadow: 6,
-  //textAlign: 'center',
-  padding: '0px 0px 0px 5px'
+  padding: '3px 0px 0px 5px'
 };
 
 export const styleBl2Form00 = (part: number, mt: number) => {

@@ -97,8 +97,6 @@ const HcmMain = (props: {}) => {
       treeMenu.push(maskk);
     }
 
-    console.log('treeMenu:',treeMenu)
-
     datestat.treeUnit = treeMenu;
     dispatch(statsaveCreate(datestat));
     flagOpen = true;

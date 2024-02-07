@@ -73,14 +73,9 @@ const HcmBlock2Gl = (props: { idx: number }) => {
 
   let rec = datestat.treeUnit[datestat.idxTreeUnit];
   let cluch = rec.lev1;
-  console.log("1:", cluch);
   if (rec.lev2) {
     cluch = cluch + " ➤ " + rec.lev2;
-    console.log("2:", cluch);
-    if (rec.lev3) {
-      cluch = cluch + " ➤ " + rec.lev3;
-      console.log("3:", cluch);
-    }
+    if (rec.lev3) cluch = cluch + " ➤ " + rec.lev3;
   }
 
   return (
@@ -121,9 +116,11 @@ const HcmBlock2Gl = (props: { idx: number }) => {
         </Grid>
         <Grid container sx={{ marginTop: 2 }}>
           <Grid item xs={10.2} sx={styleBl2Gl02}>
-            <em>{cluch}</em>
+            <em>
+              <b>{cluch}</b>
+            </em>
           </Grid>
-          {/* <Grid item xs={1.8} sx={styleBl2Gl02}> */}
+          {/* Фильтр подразделений */}
           <Grid item xs={1.8} sx={{ marginLeft: "0px" }}>
             <Button
               sx={styleMain04(1.8, Illum, 9)}

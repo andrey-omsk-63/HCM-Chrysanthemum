@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 
-//import { FooterContent, BadExit } from "../../HcmServiceFunctions";
+import { FooterContent, BadExit } from "../../HcmServiceFunctions";
 
 import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
 import { styleBl5Form01, styleBl2Form02 } from "../../HcmMainStyle";
@@ -16,6 +16,7 @@ let flagInput = true;
 let HAVE = 0;
 
 let treeMenu: any = [];
+let IDX = 0;
 
 const HcmBl2Form100 = (props: { close: Function }) => {
   //== Piece of Redux =======================================
@@ -27,11 +28,12 @@ const HcmBl2Form100 = (props: { close: Function }) => {
   //console.log("Setup_massplan:", massplan);
   //========================================================
   const [open, setOpen] = React.useState(true);
-  //const [badExit, setBadExit] = React.useState(false);
+  const [badExit, setBadExit] = React.useState(false);
   const [trigger, setTrigger] = React.useState(false);
   //=== инициализация ======================================
   if (flagInput) {
     HAVE = 0;
+    IDX = datestat.idxTreeUnit;
     treeMenu = datestat.treeUnit;
     flagInput = false;
   }
@@ -43,7 +45,7 @@ const HcmBl2Form100 = (props: { close: Function }) => {
   };
 
   const handleCloseBad = () => {
-    //HAVE && setBadExit(true);
+    HAVE && setBadExit(true);
     !HAVE && handleClose();
   };
 
@@ -51,20 +53,24 @@ const HcmBl2Form100 = (props: { close: Function }) => {
     if (reason === "escapeKeyDown") handleCloseBad();
   };
 
-  // const handleCloseBadExit = (mode: boolean) => {
-  //   setBadExit(false);
-  //   mode && handleClose(); // выход без сохранения
-  // };
+  const handleCloseBadExit = (mode: boolean) => {
+    setBadExit(false);
+    mode && handleClose(); // выход без сохранения
+  };
   //=== Функции - обработчики ==============================
-  // const SaveForm = (mode: number) => {
-  //   if (mode) {
-  //     handleClose();
-  //   } else handleCloseBad();
-  // };
+  const SaveForm = (mode: number) => {
+    if (mode) {
+      datestat.idxTreeUnit = IDX;
+      dispatch(statsaveCreate(datestat));
+      handleClose();
+    } else handleCloseBad();
+  };
 
   const ClickTree = (idx: number) => {
-    datestat.idxTreeUnit = idx;
-    dispatch(statsaveCreate(datestat));
+    // datestat.idxTreeUnit = idx;
+    // dispatch(statsaveCreate(datestat));
+    IDX = idx;
+    HAVE++;
     setTrigger(!trigger);
   };
 
@@ -88,10 +94,10 @@ const HcmBl2Form100 = (props: { close: Function }) => {
   const TreeContent = () => {
     let resStr = [];
     for (let i = 0; i < treeMenu.length; i++) {
-      let xss = 1.0;
+      let xss = 3.0;
       let rec = treeMenu[i].lev3;
       if (!treeMenu[i].lev3) {
-        xss = 0.5;
+        xss = 1.0;
         rec = treeMenu[i].lev2;
         if (!treeMenu[i].lev2) {
           xss = 0.01;
@@ -103,17 +109,18 @@ const HcmBl2Form100 = (props: { close: Function }) => {
         <Grid key={i} container sx={{ marginBottom: 0 }}>
           <Grid item xs={xss}></Grid>
           <Grid item xs>
-            <Button
-              sx={styleMain04(datestat.idxTreeUnit, i)}
-              onClick={() => ClickTree(i)}
-            >
-              {xss === 1 ? (
+            <Button sx={styleMain04(IDX, i)} onClick={() => ClickTree(i)}>
+              {xss === 3 && (
                 <Box>
                   <em>{rec}</em>
                 </Box>
-              ) : (
-                <Box>{rec}</Box>
               )}
+              {xss === 0.01 && (
+                <Box>
+                  <b>{rec}</b>
+                </Box>
+              )}
+              {xss === 1 && <Box>{rec}</Box>}
             </Button>
           </Grid>
         </Grid>
@@ -123,23 +130,23 @@ const HcmBl2Form100 = (props: { close: Function }) => {
   };
 
   let heightBlock = window.innerHeight - 50;
-  let widthBlock = window.innerWidth - 50;
+  //let widthBlock = window.innerWidth - 50;
 
   return (
     <>
       <Modal open={open} onClose={CloseEnd} hideBackdrop={false}>
-        <Box sx={styleBl5Form00(widthBlock, heightBlock)}>
+        <Box sx={styleBl5Form00(548, heightBlock)}>
           <Button sx={styleModalEnd} onClick={() => handleCloseBad()}>
             <b>&#10006;</b>
           </Button>
           <Box sx={styleBl5Form01}>
             <b>Фильтр подразделений</b>
           </Box>
-          <Box sx={styleBl2Form02(115)}>{TreeContent()}</Box>
-          {/* {HAVE > 0 && <>{FooterContent(SaveForm)}</>} */}
+          <Box sx={styleBl2Form02(145)}>{TreeContent()}</Box>
+          {HAVE > 0 && <>{FooterContent(SaveForm)}</>}
         </Box>
       </Modal>
-      {/* {badExit && <>{BadExit(badExit, handleCloseBadExit)}</>} */}
+      {badExit && <>{BadExit(badExit, handleCloseBadExit)}</>}
     </>
   );
 };
