@@ -50,7 +50,7 @@ const HcmBl1Form102 = () => {
     for (let i = 0; i < masStr.length; i++) {
       let brb: any = i === masStr.length - 1 ? 0 : '1px solid #d4d4d4';
       resStr.push(
-        <Grid key={i} container sx={{ marginBottom: 0 }}>
+        <Grid key={i} container sx={{ color: '#5B1080' }}>
           {TablStr(0, 1.5, masStr[i].nom, styleBl1Form09(brb))}
           {TablStr(0, 3.5, masStr[i].nomenenkl, styleBl1Form099(brb))}
           {TablStr(0, 3.5, masStr[i].state, styleBl1Form09(brb))}

@@ -29,9 +29,10 @@ export const styleMain02 = {
 
 export const styleMain03 = {
   bgcolor: '#FFFEF7',
-  border: '3px solid #FFFEF7', // молоко
+  //border: '3px solid #FFFEF7', // молоко
+  //border: 1,
   borderRadius: 1,
-  padding: '0px 0px 0px 6px',
+  //padding: '0px 0px 0px 6px',
   boxShadow: 3,
 };
 
@@ -178,9 +179,9 @@ export const styleBl2Gl02 = {
   bgcolor: 'background.paper',
   border: '1px solid #FFFFFF',
   borderRadius: 1,
-  color: "#5B1080", // сиреневый
+  color: '#5B1080', // сиреневый
   boxShadow: 6,
-  padding: '3px 0px 0px 5px'
+  padding: '3px 0px 0px 5px',
 };
 
 export const styleBl2Form00 = (part: number, mt: number) => {
@@ -203,22 +204,22 @@ export const styleBl2Form01 = {
 };
 
 export const styleBl2Form02 = (part: number) => {
-const styleBl2Form = {
-  fontSize: 15,
-  textAlign: "left",
-  bgcolor: "#F1F5FB", // светло серый
-  border: "1px solid #d4d4d4",
-  borderRadius: 1,
-  color: "#5B1080", // сиреневый
-  boxShadow: 3,
-  padding: "0px 20px 14px 20px",
-  textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
-  //height: window.innerHeight - 145,
-  height: window.innerHeight - part,
-  overflowX: 'auto',
+  const styleBl2Form = {
+    fontSize: 15,
+    textAlign: 'left',
+    bgcolor: '#F1F5FB', // светло серый
+    border: '1px solid #d4d4d4',
+    borderRadius: 1,
+    color: '#5B1080', // сиреневый
+    boxShadow: 3,
+    padding: '0px 20px 14px 20px',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+    //height: window.innerHeight - 145,
+    height: window.innerHeight - part,
+    overflowX: 'auto',
+  };
+  return styleBl2Form;
 };
-return styleBl2Form;
-}
 
 //=== HcmBlock3 =======================================================
 export const styleBl3Form01 = (part: number) => {

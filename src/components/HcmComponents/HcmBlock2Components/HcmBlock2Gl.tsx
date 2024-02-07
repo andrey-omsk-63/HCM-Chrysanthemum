@@ -1,18 +1,18 @@
-import * as React from "react";
-import { useSelector } from "react-redux";
+import * as React from 'react';
+import { useSelector } from 'react-redux';
 
-import Grid from "@mui/material/Grid";
+import Grid from '@mui/material/Grid';
 //import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Button from '@mui/material/Button';
 
-import HcmBl2Form100 from "./HcmBl2Form100";
-import HcmBl2Form101 from "./HcmBl2Form101";
-import HcmBl2Form102 from "./HcmBl2Form102";
-import HcmBl2Form103 from "./HcmBl2Form103";
+import HcmBl2Form100 from './HcmBl2Form100';
+import HcmBl2Form101 from './HcmBl2Form101';
+import HcmBl2Form102 from './HcmBl2Form102';
+import HcmBl2Form103 from './HcmBl2Form103';
 
-import { RandomNumber } from "../../HcmServiceFunctions";
+import { RandomNumber } from '../../HcmServiceFunctions';
 
-import { styleMain04, styleBl2Gl01, styleBl2Gl02 } from "../../HcmMainStyle";
+import { styleMain04, styleBl2Gl01, styleBl2Gl02 } from '../../HcmMainStyle';
 
 let Illum = 1;
 let oldIdx = -1;
@@ -74,8 +74,8 @@ const HcmBlock2Gl = (props: { idx: number }) => {
   let rec = datestat.treeUnit[datestat.idxTreeUnit];
   let cluch = rec.lev1;
   if (rec.lev2) {
-    cluch = cluch + " ➤ " + rec.lev2;
-    if (rec.lev3) cluch = cluch + " ➤ " + rec.lev3;
+    cluch = cluch + ' ➤ ' + rec.lev2;
+    if (rec.lev3) cluch = cluch + ' ➤ ' + rec.lev3;
   }
 
   return (
@@ -84,30 +84,21 @@ const HcmBlock2Gl = (props: { idx: number }) => {
         <Grid container>
           <Grid item xs={4}>
             <Grid container>
-              <Grid item xs={4} sx={{ border: 0, height: "30px" }}>
+              <Grid item xs={4} sx={{ border: 0, height: '30px' }}>
                 {/* Сотрудники */}
-                <Button
-                  sx={styleMain04(1.33, Illum, 1)}
-                  onClick={() => ClickKnop1()}
-                >
+                <Button sx={styleMain04(1.33, Illum, 1)} onClick={() => ClickKnop1()}>
                   Сотрудники
                 </Button>
               </Grid>
-              <Grid item xs={4} sx={{ border: 0, height: "30px" }}>
+              <Grid item xs={4} sx={{ border: 0, height: '30px' }}>
                 {/* HealtH Check */}
-                <Button
-                  sx={styleMain04(1.33, Illum, 2)}
-                  onClick={() => ClickKnop2()}
-                >
+                <Button sx={styleMain04(1.33, Illum, 2)} onClick={() => ClickKnop2()}>
                   Health Check
                 </Button>
               </Grid>
-              <Grid item xs={4} sx={{ border: 0, height: "30px" }}>
+              <Grid item xs={4} sx={{ border: 0, height: '30px' }}>
                 {/* Задачи */}
-                <Button
-                  sx={styleMain04(1.33, Illum, 3)}
-                  onClick={() => ClickKnop3()}
-                >
+                <Button sx={styleMain04(1.33, Illum, 3)} onClick={() => ClickKnop3()}>
                   Задачи
                 </Button>
               </Grid>
@@ -121,11 +112,8 @@ const HcmBlock2Gl = (props: { idx: number }) => {
             </em>
           </Grid>
           {/* Фильтр подразделений */}
-          <Grid item xs={1.8} sx={{ marginLeft: "0px" }}>
-            <Button
-              sx={styleMain04(1.8, Illum, 9)}
-              onClick={() => ClickFilter()}
-            >
+          <Grid item xs={1.8} sx={{ marginLeft: '0px' }}>
+            <Button sx={styleMain04(1.8, Illum, 9)} onClick={() => ClickFilter()}>
               Фильтр подразделений
             </Button>
           </Grid>

@@ -522,6 +522,47 @@ export const InputStrField = (wdth: number, handleChangeName: any, valuen: strin
   );
 };
 
+export const InputStrFieldSearch = (wdth: number, handleChangeName: any, valuen: string) => {
+  const styleFormPK05 = {
+    width: wdth + 'px',
+    height: '12px',
+    //marginTop: -0.2,
+    bgcolor: '#FFFBE5', // топлёное молоко
+    border: '1px solid #d4d4d4', // серый
+    borderRadius: 1,
+    boxShadow: 6,
+    textAlign: 'center',
+    p: 0.95,
+  };
+
+  const styleFormPK055 = {
+    '& > :not(style)': {
+      marginTop: '-7px',
+      marginLeft: '-0px',
+      width: wdth + 12 + 'px',
+    },
+  };
+
+  return (
+    <Box sx={styleFormPK05}>
+      <Box component="form" sx={styleFormPK055}>
+        <TextField
+          size="small"
+          onKeyPress={handleKey} //отключение Enter
+          placeholder="🔍 Поиск"
+          InputProps={{
+            disableUnderline: true,
+            style: { fontSize: 15, color: '#5B1080' }, // сиреневый
+          }}
+          value={valuen}
+          onChange={handleChangeName}
+          variant="standard"
+        />
+      </Box>
+    </Box>
+  );
+};
+
 export const InputStrFieldMult = (wdth: number, handleChangeName: any, valuen: string) => {
   const styleFormPK05 = {
     width: wdth + 15 + 'px',

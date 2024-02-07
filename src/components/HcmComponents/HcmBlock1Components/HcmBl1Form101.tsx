@@ -55,7 +55,7 @@ const HcmBl1Form101 = () => {
       let brb: any = i === masStr.length - 1 ? 0 : '1px solid #d4d4d4';
       let quo = masStr[i].quo ? '✔' : '';
       resStr.push(
-        <Grid key={i} container sx={{ marginBottom: 0 }}>
+        <Grid key={i} container sx={{ color: '#5B1080' }}>
           {TablStr(0, 1, masStr[i].nom, styleBl1Form09(brb))}
           {TablStr(0, 4, masStr[i].period, styleBl1Form09(brb))}
           {TablStr(0, 4, masStr[i].why, styleBl1Form099(brb))}

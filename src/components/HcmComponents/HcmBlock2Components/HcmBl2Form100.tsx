@@ -1,16 +1,16 @@
-import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { statsaveCreate } from "./../../../redux/actions";
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { statsaveCreate } from './../../../redux/actions';
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 
-import { FooterContent, BadExit } from "../../HcmServiceFunctions";
+import { FooterContent, BadExit } from '../../HcmServiceFunctions';
 
-import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
-import { styleBl5Form01, styleBl2Form02 } from "../../HcmMainStyle";
+import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
+import { styleBl5Form01, styleBl2Form02 } from '../../HcmMainStyle';
 
 let flagInput = true;
 let HAVE = 0;
@@ -50,7 +50,7 @@ const HcmBl2Form100 = (props: { close: Function }) => {
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === "escapeKeyDown") handleCloseBad();
+    if (reason === 'escapeKeyDown') handleCloseBad();
   };
 
   const handleCloseBadExit = (mode: boolean) => {
@@ -76,16 +76,16 @@ const HcmBl2Form100 = (props: { close: Function }) => {
 
   //========================================================
 
-  const styleMain04 = (ILLUM: number, mode: number) => {
+  const styleMain04 = (ILLUM: number, mode: number, xss: number) => {
     const styleMain040 = {
-      marginTop: "5px",
+      marginTop: '5px',
       fontSize: ILLUM === mode ? 13.5 : 12.5,
-      height: "24px",
-      bgcolor: ILLUM === mode ? "#82e94a" : "#E6F5D6", // ярко-салатовый/светло-салатовый
-      border: "1px solid #d4d4d4", // серый
+      height: '24px',
+      bgcolor: ILLUM === mode ? '#82e94a' : '#E6F5D6', // ярко-салатовый/светло-салатовый
+      border: '1px solid #d4d4d4', // серый
       borderRadius: 1,
-      color: "black",
-      textTransform: "unset !important",
+      color: xss === 0.01 ? '#7620a2' : 'black', // сиреневый / чёрный
+      textTransform: 'unset !important',
       boxShadow: ILLUM === mode ? 9 : 3,
     };
     return styleMain040;
@@ -94,10 +94,10 @@ const HcmBl2Form100 = (props: { close: Function }) => {
   const TreeContent = () => {
     let resStr = [];
     for (let i = 0; i < treeMenu.length; i++) {
-      let xss = 3.0;
+      let xss = 4.0;
       let rec = treeMenu[i].lev3;
       if (!treeMenu[i].lev3) {
-        xss = 1.0;
+        xss = 2.0;
         rec = treeMenu[i].lev2;
         if (!treeMenu[i].lev2) {
           xss = 0.01;
@@ -109,21 +109,21 @@ const HcmBl2Form100 = (props: { close: Function }) => {
         <Grid key={i} container sx={{ marginBottom: 0 }}>
           <Grid item xs={xss}></Grid>
           <Grid item xs>
-            <Button sx={styleMain04(IDX, i)} onClick={() => ClickTree(i)}>
-              {xss === 3 && (
+            <Button sx={styleMain04(IDX, i, xss)} onClick={() => ClickTree(i)}>
+              {xss === 4 && (
                 <Box>
                   <em>{rec}</em>
                 </Box>
               )}
               {xss === 0.01 && (
-                <Box>
+                <Box sx={{ fontWeight: 900, fontSize: IDX === i ? 14.0 : 13.5 }}>
                   <b>{rec}</b>
                 </Box>
               )}
-              {xss === 1 && <Box>{rec}</Box>}
+              {xss === 2 && <Box>{rec}</Box>}
             </Button>
           </Grid>
-        </Grid>
+        </Grid>,
       );
     }
     return resStr;
