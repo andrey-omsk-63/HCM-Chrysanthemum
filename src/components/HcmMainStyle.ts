@@ -178,7 +178,8 @@ export const styleBl2Gl02 = {
   border: '1px solid #FFFFFF',
   borderRadius: 1,
   boxShadow: 6,
-  textAlign: 'center',
+  //textAlign: 'center',
+  padding: '0px 0px 0px 5px'
 };
 
 export const styleBl2Form00 = (part: number, mt: number) => {
@@ -199,6 +200,25 @@ export const styleBl2Form01 = {
   height: window.innerHeight - 190,
   textAlign: 'center',
 };
+
+export const styleBl2Form02 = (part: number) => {
+const styleBl2Form = {
+  fontSize: 15,
+  textAlign: "left",
+  bgcolor: "#F1F5FB", // светло серый
+  border: "1px solid #d4d4d4",
+  borderRadius: 1,
+  color: "#5B1080", // сиреневый
+  boxShadow: 3,
+  padding: "0px 20px 14px 20px",
+  textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+  //height: window.innerHeight - 145,
+  height: window.innerHeight - part,
+  overflowX: 'auto',
+};
+return styleBl2Form;
+}
+
 //=== HcmBlock3 =======================================================
 export const styleBl3Form01 = (part: number) => {
   const styleBl3Form = {

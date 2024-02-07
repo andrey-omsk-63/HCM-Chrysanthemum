@@ -728,6 +728,38 @@ export const InputerDate = (valueDate: any, handleChangeDP: any, massGoodDate: a
     </Box>
   );
 };
+//=== Разное ================================================
+export const SortingByTwoKeys = (arrProps: any) => {
+  let arr = arrProps;
+  arr.sort(function (a: any, b: any) {
+    let af = a.lev2;
+    let bf = b.lev2;
+    let as = a.lev3;
+    let bs = b.lev3;
+    // Если первое значение одинаково
+    if (af === bf) {
+      return as < bs ? -1 : as > bs ? 1 : 0;
+    } else {
+      return af < bf ? -1 : 1;
+    }
+  });
+  return arr;
+};
+
+export const SortingByThreeKeys = (UNIT: any) => {
+  let arr: any = [];
+  let masKluch: any = []; // создание массива организаций
+  for (let i = 0; i < UNIT.length; i++)
+    if (masKluch.indexOf(UNIT[i].lev1) < 0) masKluch.push(UNIT[i].lev1);
+  masKluch.sort(); // Сортирум элементы массива организаций
+  // Сортировка по трём ключам:
+  for (let j = 0; j < masKluch.length; j++) {
+    let arrMem = UNIT.filter((v: any) => v.lev1 === masKluch[j]);
+    let masSort = SortingByTwoKeys(arrMem);
+    for (let i = 0; i < masSort.length; i++) arr.push(masSort[i]);
+  }
+  return arr;
+};
 //===========================================================
 
 //=== Placemark =====================================

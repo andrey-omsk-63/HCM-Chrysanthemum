@@ -1,32 +1,32 @@
-import * as React from 'react';
-//import { useSelector } from "react-redux";
-//import { massfazCreate, statsaveCreate } from '../redux/actions';
+import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { statsaveCreate } from "../redux/actions";
 
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
-import HcmErrorMessage from './HcmComponents/HcmErrorMessage';
-import HcmBlock1Gl from './HcmComponents/HcmBlock1Components/HcmBlock1Gl';
-import HcmBlock2Gl from './HcmComponents/HcmBlock2Components/HcmBlock2Gl';
-import HcmBlock3Disp from './HcmComponents/HcmBlock3Components/HcmBlock3Disp';
-import HcmBlock4Gl from './HcmComponents/HcmBlock4Components/HcmBlock4Gl';
-import HcmBlock5Disp from './HcmComponents/HcmBlock5Components/HcmBlock5Disp';
+import HcmErrorMessage from "./HcmComponents/HcmErrorMessage";
+import HcmBlock1Gl from "./HcmComponents/HcmBlock1Components/HcmBlock1Gl";
+import HcmBlock2Gl from "./HcmComponents/HcmBlock2Components/HcmBlock2Gl";
+import HcmBlock3Disp from "./HcmComponents/HcmBlock3Components/HcmBlock3Disp";
+import HcmBlock4Gl from "./HcmComponents/HcmBlock4Components/HcmBlock4Gl";
+import HcmBlock5Disp from "./HcmComponents/HcmBlock5Components/HcmBlock5Disp";
 
-//import { PreparCurrencies01, PreparCurrencies02, PreparCurrencies04 } from './HcmServiceFunctions';
-import { PreparCurrencies05, PreparCurrencies03 } from './HcmServiceFunctions';
-import { InputDirect, RandomNumber } from './HcmServiceFunctions';
+import { SortingByThreeKeys } from "./HcmServiceFunctions";
+import { PreparCurrencies05, PreparCurrencies03 } from "./HcmServiceFunctions";
+import { InputDirect, RandomNumber } from "./HcmServiceFunctions";
 
 //import { SendSocketGetPhases } from './HcmSocketFunctions';
 
-//import { MyYandexKey } from './HcmMainConst';
+import { UNIT } from "./HcmMainConst"; // отл массив подразделений
 
-import { styleMain01, styleMain02, styleMain03 } from './HcmMainStyle';
-import { styleMain04, styleMain05 } from './HcmMainStyle';
+import { styleMain01, styleMain02, styleMain03 } from "./HcmMainStyle";
+import { styleMain04, styleMain05 } from "./HcmMainStyle";
 
 export let ILLUM = -1; // номер активной кнопки меню
-export let FORM3 = '0'; // какую форму Справочная информация выдать через диспетчер
-export let FORM5 = '0'; // какую форму Ввода данных выдать через диспетчер
+export let FORM3 = "0"; // какую форму Справочная информация выдать через диспетчер
+export let FORM5 = "0"; // какую форму Ввода данных выдать через диспетчер
 export let widthGl = window.innerWidth - 3; // ширина окна браузера
 
 //let currencies01: any = []; // Личный кабинет
@@ -36,17 +36,17 @@ let currencies03: any = [];
 let currencies05: any = [];
 
 let flagOpen = false;
-let soob = '';
+let soob = "";
 
 const HcmMain = (props: {}) => {
   //== Piece of Redux =======================================
-  // let datestat = useSelector((state: any) => {
-  //   const { statsaveReducer } = state;
-  //   return statsaveReducer.datestat;
-  // });
+  let datestat = useSelector((state: any) => {
+    const { statsaveReducer } = state;
+    return statsaveReducer.datestat;
+  });
   //const debug = datestat.debug;
   //const ws = datestat.ws;
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
   //===========================================================
   const [dispBlock1, setDispBlock1] = React.useState(false);
   const [dispBlock2, setDispBlock2] = React.useState(false);
@@ -56,27 +56,60 @@ const HcmMain = (props: {}) => {
   const [openSetErr, setOpenSetErr] = React.useState(false);
   //const [currency01, setCurrency01] = React.useState('0');
   //const [currency02, setCurrency02] = React.useState('0');
-  const [currency03, setCurrency03] = React.useState('0');
+  const [currency03, setCurrency03] = React.useState("0");
   //const [currency04, setCurrency04] = React.useState("0");
-  const [currency05, setCurrency05] = React.useState('0');
+  const [currency05, setCurrency05] = React.useState("0");
   const [trigger, setTrigger] = React.useState(false);
 
   //=== инициализация ======================================
   if (!flagOpen) {
-    //currencies01 = PreparCurrencies01(); // Личный кабинет
-    //currencies02 = PreparCurrencies02(); // Мои подразделения
     currencies03 = PreparCurrencies03(); // Справочная информация
-    //currencies04 = PreparCurrencies04(); // Аналитика по подразделениям
     currencies05 = PreparCurrencies05(); // Ввод данных
+
+    let mask = {
+      lev1: "",
+      lev2: "",
+      lev3: "",
+    };
+    let arr = SortingByThreeKeys(UNIT); // дерево подразделений
+    let treeMenu: any = [];
+    let mas1: any = [];
+    let mas2: any = [];
+
+    for (let i = 0; i < arr.length; i++) {
+      if (mas1.indexOf(arr[i].lev1) < 0) {
+        mas1.push(arr[i].lev1);
+        let maskk = JSON.parse(JSON.stringify(mask));
+        maskk.lev1 = arr[i].lev1;
+        treeMenu.push(maskk);
+      }
+      if (mas2.indexOf(arr[i].lev1 + arr[i].lev2) < 0) {
+        mas2.push(arr[i].lev1 + arr[i].lev2);
+        let maskk = JSON.parse(JSON.stringify(mask));
+        maskk.lev1 = arr[i].lev1;
+        maskk.lev2 = arr[i].lev2;
+        treeMenu.push(maskk);
+      }
+      let maskk = JSON.parse(JSON.stringify(mask));
+      maskk.lev1 = arr[i].lev1;
+      maskk.lev2 = arr[i].lev2;
+      maskk.lev3 = arr[i].lev3;
+      treeMenu.push(maskk);
+    }
+
+    console.log('treeMenu:',treeMenu)
+
+    datestat.treeUnit = treeMenu;
+    dispatch(statsaveCreate(datestat));
     flagOpen = true;
   }
   //========================================================
   const Turn00 = () => {
     //setCurrency01('0');
     //setCurrency02('0');
-    setCurrency03('0');
+    setCurrency03("0");
     //setCurrency04("0");
-    setCurrency05('0');
+    setCurrency05("0");
     setDispBlock1(false);
     setDispBlock2(false);
     setDispBlock3(false);
@@ -85,9 +118,9 @@ const HcmMain = (props: {}) => {
 
   const Turn01 = () => {
     //setCurrency02('0');
-    setCurrency03('0');
+    setCurrency03("0");
     //setCurrency04("0");
-    setCurrency05('0');
+    setCurrency05("0");
     setDispBlock2(false);
     setDispBlock3(false);
     setDispBlock4(false);
@@ -95,9 +128,9 @@ const HcmMain = (props: {}) => {
 
   const Turn02 = () => {
     //setCurrency01('0');
-    setCurrency03('0');
+    setCurrency03("0");
     //setCurrency04("0");
-    setCurrency05('0');
+    setCurrency05("0");
     setDispBlock1(false);
     setDispBlock3(false);
     setDispBlock4(false);
@@ -113,8 +146,8 @@ const HcmMain = (props: {}) => {
   const Turn04 = () => {
     //setCurrency01('0');
     //setCurrency02('0');
-    setCurrency03('0');
-    setCurrency05('0');
+    setCurrency03("0");
+    setCurrency05("0");
     setDispBlock1(false);
     setDispBlock3(false);
     setDispBlock2(false);
@@ -129,7 +162,7 @@ const HcmMain = (props: {}) => {
 
   //=== Функции - обработчики ==============================
   const ClickSearch = () => {
-    soob = 'Здесь будет поиск';
+    soob = "Здесь будет поиск";
     setOpenSetErr(true);
   };
 
@@ -152,7 +185,7 @@ const HcmMain = (props: {}) => {
   };
 
   const SetDispBlock3 = (mode: boolean) => {
-    setCurrency03((FORM3 = '0'));
+    setCurrency03((FORM3 = "0"));
     setDispBlock3(mode);
   };
 
@@ -163,28 +196,28 @@ const HcmMain = (props: {}) => {
   };
 
   const SetDispBlock5 = (mode: boolean) => {
-    setCurrency05((FORM5 = '0'));
-    setCurrency03((FORM3 = '0'));
+    setCurrency05((FORM5 = "0"));
+    setCurrency03((FORM3 = "0"));
     setDispBlock5(mode);
   };
   //=== Закрытие или перезапуск вкладки ====================
   React.useEffect(() => {
-    window.addEventListener('beforeunload', alertUser);
-    window.addEventListener('unload', handleTabClosing);
+    window.addEventListener("beforeunload", alertUser);
+    window.addEventListener("unload", handleTabClosing);
 
     return () => {
-      window.removeEventListener('beforeunload', alertUser);
-      window.removeEventListener('unload', handleTabClosing);
+      window.removeEventListener("beforeunload", alertUser);
+      window.removeEventListener("unload", handleTabClosing);
     };
   });
 
   const handleTabClosing = () => {
-    console.log('3пришло:');
+    console.log("3пришло:");
     removePlayerFromGame();
   };
 
   const alertUser = (event: any) => {
-    console.log('2пришло:', event);
+    console.log("2пришло:", event);
     // ev = JSON.parse(JSON.stringify(event));
     ////StatusQuo(false);
     //  event.preventDefault();
@@ -192,15 +225,20 @@ const HcmMain = (props: {}) => {
   };
 
   function removePlayerFromGame() {
-    throw new Error('Function not implemented.');
+    throw new Error("Function not implemented.");
   }
   //=== Компоненты =========================================
-  const StrokaMenuGlob = (mode: number, wdth: number, currency: any, currencies: any) => {
+  const StrokaMenuGlob = (
+    mode: number,
+    wdth: number,
+    currency: any,
+    currencies: any
+  ) => {
     let widthBlok = (widthGl / 12) * wdth - 0;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       ILLUM = mode;
-      let evTV = event.target.value === '0' ? '1' : event.target.value;
+      let evTV = event.target.value === "0" ? "1" : event.target.value;
       switch (mode) {
         case 3: // Справочная информация
           setCurrency03(evTV);
@@ -279,8 +317,8 @@ const HcmMain = (props: {}) => {
   return (
     <>
       <Grid container sx={styleMain01}>
-        <Grid item xs={12} sx={{ height: '30px' }}>
-          <Grid container sx={{ height: '30px', fontSize: 12.9 }}>
+        <Grid item xs={12} sx={{ height: "30px" }}>
+          <Grid container sx={{ height: "30px", fontSize: 12.9 }}>
             {/* Логотип */}
             {actionKnop0()}
             {/* Личный кабинет */}
@@ -302,7 +340,9 @@ const HcmMain = (props: {}) => {
               🔔👤
             </Grid>
             <Grid item xs={1.6} sx={styleMain03} onClick={() => ClickSearch()}>
-              <Box sx={{ cursor: 'pointer', padding: '3px 0px 0px 0px' }}>🔍 Поиск</Box>
+              <Box sx={{ cursor: "pointer", padding: "3px 0px 0px 0px" }}>
+                🔍 Поиск
+              </Box>
             </Grid>
           </Grid>
         </Grid>

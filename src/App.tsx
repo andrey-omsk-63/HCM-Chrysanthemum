@@ -1,14 +1,14 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { statsaveCreate } from './redux/actions';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { statsaveCreate } from "./redux/actions";
 //import { massfazCreate } from './redux/actions';
 
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 
-import axios from 'axios';
+import axios from "axios";
 
-import HcmMain from './components/HcmMain';
-import AppSocketError from './AppSocketError';
+import HcmMain from "./components/HcmMain";
+import AppSocketError from "./AppSocketError";
 
 //import { MasskPoint } from "./components/MapServiceFunctions";
 
@@ -24,47 +24,17 @@ export let dateAddObjectsGl: any;
 export interface Stater {
   ws: any;
   debug: boolean;
-  picture: any;
-  finish: boolean;
-  demo: boolean;
-  readyFaza: boolean;
-  region: string;
-  area: string;
-  id: string;
-  phSvg: Array<any>; // массив картинок фаз у светофора
-  first: boolean; // флаг начального запуска на данном режиме работы
-  working: boolean;
-  massMem: Array<number>; // массив "запущенных" светофоров
-  demoIdx: Array<number>;
-  demoTlsost: Array<number>;
-  demoLR: Array<boolean>;
-  timerId: Array<any>;
-  massInt: any[][];
-  stopSwitch: Array<boolean>;
-  tekDemoTlsost: Array<number>;
+  picture: any; // фото в личную карточу в двоичном коде
+  treeUnit: any; // дерево подразделений
+  idxTreeUnit: number; // индекс в дереве подразделений
 }
 
 export let dateStat: Stater = {
   ws: null,
   debug: false,
   picture: null,
-  finish: false,
-  demo: false,
-  readyFaza: true,
-  region: '0',
-  area: '0',
-  id: '0',
-  phSvg: [null, null, null, null, null, null, null, null],
-  first: true,
-  working: false,
-  massMem: [],
-  demoIdx: [],
-  demoTlsost: [],
-  demoLR: [],
-  timerId: [],
-  massInt: [],
-  stopSwitch: [],
-  tekDemoTlsost: [],
+  treeUnit: [],
+  idxTreeUnit: 0,
 };
 
 export interface Pointer {
@@ -102,7 +72,7 @@ export let Coordinates: Array<Array<number>> = []; // массив коорди�
 let flagOpenDebug = true;
 let flagOpenWS = true;
 let WS: any = null;
-let soob = '';
+let soob = "";
 
 const App = () => {
   //=== Piece of Redux =====================================
@@ -118,34 +88,38 @@ const App = () => {
   const dispatch = useDispatch();
   //========================================================
   const host =
-    'wss://' + window.location.host + window.location.pathname + 'W' + window.location.search;
+    "wss://" +
+    window.location.host +
+    window.location.pathname +
+    "W" +
+    window.location.search;
 
   const [openSetErr, setOpenSetErr] = React.useState(false);
   //=== инициализация ======================================
   if (flagOpenWS) {
     WS = new WebSocket(host);
     dateStat.ws = WS;
-    if (WS.url === 'wss://localhost:3000/W') dateStat.debug = true;
+    if (WS.url === "wss://localhost:3000/W") dateStat.debug = true;
     dispatch(statsaveCreate(dateStat));
     flagOpenWS = false;
   }
 
   React.useEffect(() => {
     WS.onopen = function (event: any) {
-      console.log('WS.current.onopen:', event);
+      console.log("WS.current.onopen:", event);
     };
     WS.onclose = function (event: any) {
-      console.log('WS.current.onclose:', event);
+      console.log("WS.current.onclose:", event);
     };
     WS.onerror = function (event: any) {
-      console.log('WS.current.onerror:', event);
+      console.log("WS.current.onerror:", event);
     };
     WS.onmessage = function (event: any) {
       let allData = JSON.parse(event.data);
       let data = allData.data;
       //console.log("пришло:", allData.type, data);
       switch (allData.type) {
-        case 'tflight':
+        case "tflight":
           //console.log("Tflight:", data, data.tflight);
           // for (let j = 0; j < data.tflight.length; j++) {
           //   for (let i = 0; i < dateMapGl.tflight.length; i++) {
@@ -157,7 +131,7 @@ const App = () => {
           // dispatch(mapCreate(dateMapGl));
           // setTrigger(!trigger);
           break;
-        case 'phases':
+        case "phases":
           // console.log("App пришло:", allData.type, data.phases[0].phase);
           // for (let i = 0; i < massfaz.length; i++) {
           //   if (
@@ -170,7 +144,7 @@ const App = () => {
           //   }
           // }
           break;
-        case 'mapInfo':
+        case "mapInfo":
           // dateMapGl = JSON.parse(JSON.stringify(data));
           // dispatch(mapCreate(dateMapGl));
           // let massRegion = [];
@@ -183,7 +157,7 @@ const App = () => {
           // //flagMap = true;
           // setTrigger(!trigger);
           break;
-        case 'getPhases':
+        case "getPhases":
           // console.log("getPhases:", data);
           // dateStat.area = data.pos.area;
           // dateStat.id = data.pos.id.toString();
@@ -198,24 +172,24 @@ const App = () => {
           // setTrigger(!trigger);
           break;
         default:
-          console.log('data_default:', data);
+          console.log("data_default:", data);
       }
     };
   }, [dispatch, massfaz]);
 
-  if (WS.url === 'wss://localhost:3000/W' && flagOpenDebug) {
-    console.log('РЕЖИМ ОТЛАДКИ!!!');
+  if (WS.url === "wss://localhost:3000/W" && flagOpenDebug) {
+    console.log("РЕЖИМ ОТЛАДКИ!!!");
     // чтение и перевод в двоичный вид файла с картинкой
     axios
-      .get('http://localhost:3000/portrait.jpg', {
-        responseType: 'arraybuffer',
+      .get("http://localhost:3000/portrait.jpg", {
+        responseType: "arraybuffer",
       })
       .then(function (response) {
         let image = btoa(
           new Uint8Array(response.data).reduce(
             (data, byte) => data + String.fromCharCode(byte),
-            '',
-          ),
+            ""
+          )
         );
         dateStat.picture = image;
         dispatch(statsaveCreate(dateStat));
@@ -232,7 +206,7 @@ const App = () => {
   // }
 
   return (
-    <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
+    <Grid container sx={{ height: "100vh", width: "100%", bgcolor: "#E9F5D8" }}>
       <Grid item xs>
         {openSetErr && <AppSocketError sErr={soob} setOpen={setOpenSetErr} />}
         <HcmMain />

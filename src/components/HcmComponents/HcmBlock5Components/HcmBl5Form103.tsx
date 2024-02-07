@@ -1,23 +1,27 @@
-import * as React from 'react';
+import * as React from "react";
 //import { useSelector } from "react-redux";
 
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
-import 'dayjs/locale/ru';
-import dayjs, { Dayjs } from 'dayjs';
+import "dayjs/locale/ru";
+import dayjs, { Dayjs } from "dayjs";
 
-import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
-import { InputStrField, InputStrFieldMult } from '../../HcmServiceFunctions';
-import { MakeDate, InputerDate, InputDirectRec } from '../../HcmServiceFunctions';
-import { PreparCurrenciesCommon } from '../../HcmServiceFunctions';
+import { FooterContent, BadExit, StrTablProp } from "../../HcmServiceFunctions";
+import { InputStrField, InputStrFieldMult } from "../../HcmServiceFunctions";
+import {
+  MakeDate,
+  InputerDate,
+  InputDirectRec,
+} from "../../HcmServiceFunctions";
+import { PreparCurrenciesCommon } from "../../HcmServiceFunctions";
 
-import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
-import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
-import { styleBl5Form03, styleBl5Form06 } from '../../HcmMainStyle';
-import { styleBl5Form04, styleBl5Form05 } from '../../HcmMainStyle';
+import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
+import { styleBl5Form01, styleBl5Form02 } from "../../HcmMainStyle";
+import { styleBl5Form03, styleBl5Form06 } from "../../HcmMainStyle";
+import { styleBl5Form04, styleBl5Form05 } from "../../HcmMainStyle";
 
 //let massForm: any = null;
 let flagInput = true;
@@ -30,26 +34,26 @@ let eventInp1 = dayjs(formSett);
 let massGoodDate: Array<string> = [];
 
 let maskForm = {
-  item: 'Стадион',
-  base: 'Так себе основание',
-  tema: 'Суд вынес приговор',
-  player: 'Фантомас',
-  link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
+  item: "Стадион",
+  base: "Так себе основание",
+  tema: "Суд вынес приговор",
+  player: "Фантомас",
+  link: "https://e.mail.ru/newsletters/0:17066793751836945566",
   comment:
-    'Центральный районный суд города Омска вынес приговор 37-летнему жителю города Омска, обвиняемому в хулиганстве.',
+    "Центральный районный суд города Омска вынес приговор 37-летнему жителю города Омска, обвиняемому в хулиганстве.",
 };
 let currencies01: any = []; // Сотрудники
 let currencies02: any = []; // Менторы
 let currencies03: any = []; // Авторы
 
-let dat1 = ['Стадион', 'Коровник', 'Загородная база отдыха'];
+let dat1 = ["Стадион", "Коровник", "Загородная база отдыха"];
 let dat2 = [
-  'Очень важное основание',
-  'Так себе основание',
-  'Необходимая необходимость',
-  'Фигня какая-та',
+  "Очень важное основание",
+  "Так себе основание",
+  "Необходимая необходимость",
+  "Фигня какая-та",
 ];
-let dat3 = ['Фантомас', 'Лишенец', 'Бугор', 'Ляля'];
+let dat3 = ["Фантомас", "Лишенец", "Бугор", "Ляля"];
 
 const HcmBl5Form103 = (props: { close: Function }) => {
   //== Piece of Redux =======================================
@@ -64,10 +68,12 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   const [valueTema, setValueTema] = React.useState(maskForm.tema);
   //const [valueLink, setValueLink] = React.useState(maskForm.link);
   const [valueComment, setValueComment] = React.useState(maskForm.comment);
-  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
-  const [currency01, setCurrency01] = React.useState('0');
-  const [currency02, setCurrency02] = React.useState('0');
-  const [currency03, setCurrency03] = React.useState('0');
+  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(
+    dayjs(formSett)
+  );
+  const [currency01, setCurrency01] = React.useState("0");
+  const [currency02, setCurrency02] = React.useState("0");
+  const [currency03, setCurrency03] = React.useState("0");
   const [open, setOpen] = React.useState(true);
   const [badExit, setBadExit] = React.useState(false);
   //const [trigger, setTrigger] = React.useState(false);
@@ -94,7 +100,7 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === 'escapeKeyDown') handleCloseBad();
+    if (reason === "escapeKeyDown") handleCloseBad();
   };
 
   const handleCloseBadExit = (mode: boolean) => {
@@ -116,14 +122,6 @@ const HcmBl5Form103 = (props: { close: Function }) => {
     }
   };
 
-  // const hdlChangeLink = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.value) {
-  //     setValueLink(event.target.value.trimStart()); // удаление пробелов в начале строки
-  //     maskForm.link = event.target.value.trimStart();
-  //     HAVE++;
-  //   }
-  // };
-
   const hdlChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
       setValueComment(event.target.value.trimStart()); // удаление пробелов в начале строки
@@ -135,11 +133,11 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   //========================================================
   const InputDate1 = () => {
     const handleChangeDP = (event: any) => {
-      if (event.toString() === 'Invalid Date') {
+      if (event.toString() === "Invalid Date") {
         setValueDate1(dayjs(eventInp1));
       } else {
         setValueDate1((eventInp1 = event));
-        HAVE++
+        HAVE++;
       }
     };
     return <>{InputerDate(valueDate1, handleChangeDP, massGoodDate)}</>;
@@ -176,7 +174,7 @@ const HcmBl5Form103 = (props: { close: Function }) => {
     };
 
     return (
-      <Box sx={{ marginTop: '-5px' }}>
+      <Box sx={{ marginTop: "-5px" }}>
         {InputDirectRec(handleChange, 232, currency, currencies)}
       </Box>
     );
@@ -185,11 +183,19 @@ const HcmBl5Form103 = (props: { close: Function }) => {
   const TableContent = () => {
     return (
       <>
-        {StrTablProp(4, 'Объект*', StrokaMenuGlob(1, currency01, currencies01))}
-        {StrTablProp(4, 'Основание*', StrokaMenuGlob(2, currency02, currencies02))}
-        {StrTablProp(4, 'Тема*', InputStrField(212, hdlChangeTema, valueTema))}
-        {StrTablProp(4, 'Дата выполнения*', ContentDate1())}
-        {StrTablProp(4, 'Исполнитель (Ник)*', StrokaMenuGlob(3, currency03, currencies03))}
+        {StrTablProp(4, "Объект*", StrokaMenuGlob(1, currency01, currencies01))}
+        {StrTablProp(
+          4,
+          "Основание*",
+          StrokaMenuGlob(2, currency02, currencies02)
+        )}
+        {StrTablProp(4, "Тема*", InputStrField(212, hdlChangeTema, valueTema))}
+        {StrTablProp(4, "Дата выполнения*", ContentDate1())}
+        {StrTablProp(
+          4,
+          "Исполнитель (Ник)*",
+          StrokaMenuGlob(3, currency03, currencies03)
+        )}
         {/* {StrTablProp(4, 'Ссылка на план адаптации', InputStrField(386, hdlChangeLink, valueLink))} */}
         <Grid container sx={{ marginTop: 2 }}>
           <Grid item xs={4} sx={{ height: 100 }}>
