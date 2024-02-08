@@ -138,8 +138,14 @@ export const styleBl1Form08 = {
   border: 0,
 };
 
+export const styleBl1Form088 = {
+  padding: '2px 0px 2px 0px',
+  border: 0,
+};
+
 export const styleBl1Form09 = (brb: number) => {
   const stylePKForm3 = {
+    textAlign: 'center',
     padding: '10px 0px 10px 0px',
     borderBottom: brb,
   };
@@ -168,25 +174,25 @@ export const styleBl1Form011 = (part: number) => {
 
 export const styleBl1Form12 = {
   fontSize: 12.9,
-  height: "20px",
-  width: "190px",
-  marginTop: "-5px",
-  color: "#5B1080", // сиреневый
-  textTransform: "unset !important",
+  height: '20px',
+  width: '190px',
+  marginTop: '-5px',
+  color: '#5B1080', // сиреневый
+  textTransform: 'unset !important',
 };
 
 export const styleBl1Form14 = {
   fontSize: 12.9,
-  height: "30px",
-  width: "230px",
-  bgcolor: "#E6F5D6", // светло-салатовый
-  border: "1px solid #d4d4d4", // серый
+  height: '30px',
+  width: '230px',
+  bgcolor: '#E6F5D6', // светло-салатовый
+  border: '1px solid #d4d4d4', // серый
   borderRadius: 1,
-  color: "#5B1080", // сиреневый
-  textTransform: "unset !important",
+  color: '#5B1080', // сиреневый
+  textTransform: 'unset !important',
   boxShadow: 3,
 };
-// 
+//
 //=== HcmBlock2 =======================================================
 export const styleBl2Gl01 = {
   border: 0,
