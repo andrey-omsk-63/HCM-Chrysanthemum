@@ -165,6 +165,28 @@ export const styleBl1Form011 = (part: number) => {
   };
   return styleBl1Form;
 };
+
+export const styleBl1Form12 = {
+  fontSize: 12.9,
+  height: "20px",
+  width: "190px",
+  marginTop: "-5px",
+  color: "#5B1080", // сиреневый
+  textTransform: "unset !important",
+};
+
+export const styleBl1Form14 = {
+  fontSize: 12.9,
+  height: "30px",
+  width: "230px",
+  bgcolor: "#E6F5D6", // светло-салатовый
+  border: "1px solid #d4d4d4", // серый
+  borderRadius: 1,
+  color: "#5B1080", // сиреневый
+  textTransform: "unset !important",
+  boxShadow: 3,
+};
+// 
 //=== HcmBlock2 =======================================================
 export const styleBl2Gl01 = {
   border: 0,

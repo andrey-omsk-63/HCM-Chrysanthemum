@@ -4,48 +4,140 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-import { styleBl3Form01 } from "../../HcmMainStyle";
+import HcmBl2Form100 from "../HcmBlock2Components/HcmBl2Form100";
+
+import { TablStr } from "../../HcmServiceFunctions";
+
+import { styleBl3Form01, styleBl1Form06 } from "../../HcmMainStyle";
+import { styleBl1Form07, styleBl1Form08 } from "../../HcmMainStyle";
+import { styleBl1Form09, styleBl1Form099 } from "../../HcmMainStyle";
+import { styleBl1Form12, styleBl1Form14 } from "../../HcmMainStyle";
+
+let state1 = "▼ История перемещений";
+let state2 = "▲ История перемещений";
+let heightBl1 = window.innerHeight - 570;
+let heightBl2 = window.innerHeight - 700;
 
 const HcmBl1Form103 = () => {
-  const styleMain04 = {
-    fontSize:  12.9,
-    height: '20px',
-    width: '190px',
-    marginTop: '-5px',
-    //bgcolor:  '#E6F5D6', // светло-салатовый
-    // border: '1px solid #d4d4d4', // серый
-    // borderRadius: 1,
-    //border: 1,
-    color: 'black',
-    textTransform: 'unset !important',
-    //padding: "2px 0px 2px 0px",
-    //textShadow: '2px 2px 3px rgba(0,0,0,0.3)',
+  const [history, setHistory] = React.useState(false);
+  const [struct, setStruct] = React.useState(false);
+
+  const ClickHist = () => {
+    setHistory(!history);
   };
+
+  const ClickStruct = () => {
+    setStruct(true);
+  };
+
+  // const styleBl1Form012 = {
+  //   fontSize: 12.9,
+  //   height: "20px",
+  //   width: "190px",
+  //   marginTop: "-5px",
+  //   color: "#5B1080", // сиреневый
+  //   textTransform: "unset !important",
+  // };
+
+  // const styleBl1Form014 = {
+  //   fontSize: 12.9,
+  //   height: "30px",
+  //   width: "230px",
+  //   bgcolor: "#E6F5D6", // светло-салатовый
+  //   border: "1px solid #d4d4d4", // серый
+  //   borderRadius: 1,
+  //   color: "#5B1080", // сиреневый
+  //   textTransform: "unset !important",
+  //   boxShadow: 3,
+  // };
+
+  const StrokaForm101 = () => {
+    let resStr = [];
+    let masStr: any = [];
+    for (let i = 0; i < 5; i++) {
+      for (let j = 1; j < 3; j++) {
+        let maskStr = {
+          dBegin: "18.07.2018",
+          dEnd: "30.06.2021",
+          bu: "рппрпр ",
+          state: "ИТ отдел",
+          who: "Смена деятельности сотрудника",
+        };
+
+        switch (j) {
+          case 1:
+            maskStr.dBegin = "18.07.2018";
+            maskStr.dEnd = "30.06.2021";
+            maskStr.bu = "рпрпрп";
+            maskStr.state = "ИТ отдел";
+            maskStr.who = "Смена деятельности сотрудника";
+            break;
+          case 2:
+            maskStr.dBegin = "01.07.2021";
+            maskStr.dEnd = "01.10.2023";
+            maskStr.bu = "рпрпр";
+            maskStr.state = "Проектный офис";
+            maskStr.who = "Реорганизация";
+        }
+        masStr.push(maskStr);
+      }
+    }
+    for (let i = 0; i < masStr.length; i++) {
+      let brb: any = i === masStr.length - 1 ? 0 : "1px solid #d4d4d4";
+      resStr.push(
+        <Grid key={i} container sx={{ color: "#5B1080" }}>
+          {TablStr(0, 2, masStr[i].dBegin, styleBl1Form09(brb))}
+          {TablStr(0, 2, masStr[i].dEnd, styleBl1Form09(brb))}
+          {TablStr(0, 2, masStr[i].bu, styleBl1Form099(brb))}
+          {TablStr(0, 2, masStr[i].state, styleBl1Form09(brb))}
+          {TablStr(0, 4, masStr[i].who, styleBl1Form09(brb))}
+        </Grid>
+      );
+    }
+    return resStr;
+  };
+
+  const HeaderTabl = () => {
+    return (
+      <Grid container sx={styleBl1Form07}>
+        {TablStr(1, 2, "Дата начала работы", styleBl1Form08)}
+        {TablStr(1, 2, "Дата окнчания работы", styleBl1Form08)}
+        {TablStr(1, 2, "Бизнес-Юнит", styleBl1Form08)}
+        {TablStr(1, 2, "Подразделение", styleBl1Form08)}
+        {TablStr(1, 4, "Причина перевода", styleBl1Form08)}
+      </Grid>
+    );
+  };
+
+  let state = history ? state2 : state1;
+
   return (
     <Grid container sx={styleBl3Form01(340)}>
       <Grid item xs={12}>
-        <Box>
+        <Box sx={{ height: heightBl1 }}>
           <Grid container>
-            <Grid
-              item
-              xs={9.9}
-              sx={{ height: window.innerHeight - 570, border: 1 }}
-            ></Grid>
-            <Grid
-              item
-              xs={2.1}
-              sx={{ fontSize: 14, height: "30px", border: 1 }}
-            >
-              Посмотреть структуру компании
+            <Grid item xs={9.8}></Grid>
+            <Grid item xs={2.2} sx={{ height: "30px", textAlign: "right" }}>
+              <Button sx={styleBl1Form14} onClick={() => ClickStruct()}>
+                Посмотреть структуру компании
+              </Button>
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ height: window.innerHeight - 700, border: 1 }}>
-          <Button sx={styleMain04}>
-            ▼ История перемещений
+
+        <Box sx={{ height: heightBl2, border: 0 }}>
+          <Button sx={styleBl1Form12} onClick={() => ClickHist()}>
+            {state}
           </Button>
+          {history && (
+            <>
+              {HeaderTabl()}
+              <Box sx={styleBl1Form06(758)}>{StrokaForm101()}</Box>
+            </>
+          )}
         </Box>
       </Grid>
+      {struct && <HcmBl2Form100 close={setStruct} />}
     </Grid>
   );
 };
