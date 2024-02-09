@@ -17,7 +17,7 @@ let state1 = "▼ История перемещений";
 let state2 = "⯈ История перемещений";
 
 const HcmBl1Form103 = () => {
-  const [history, setHistory] = React.useState(false);
+  const [history, setHistory] = React.useState(true);
   const [struct, setStruct] = React.useState(false);
 
   const ClickHist = () => {
