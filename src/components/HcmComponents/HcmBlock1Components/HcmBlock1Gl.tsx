@@ -1,43 +1,43 @@
-import * as React from 'react';
-import { useSelector } from 'react-redux';
-import imageCompression from 'browser-image-compression';
+import * as React from "react";
+import { useSelector } from "react-redux";
+import imageCompression from "browser-image-compression";
 
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import HcmBl1Form101 from './HcmBl1Form101';
-import HcmBl1Form102 from './HcmBl1Form102';
-import HcmBl1Form103 from './HcmBl1Form103';
-import HcmBl1Form104 from './HcmBl1Form104';
-import HcmBl1Form106 from './HcmBl1Form106';
-import HcmBl1Form105 from './HcmBl1Form105';
-import HcmBl1Form107 from './HcmBl1Form107';
-import HcmBl1Form108 from './HcmBl1Form108';
-import HcmBlock1ViewImg from './HcmBlock1ViewImg';
+import HcmBl1Form101 from "./HcmBl1Form101";
+import HcmBl1Form102 from "./HcmBl1Form102";
+import HcmBl1Form103 from "./HcmBl1Form103";
+import HcmBl1Form104 from "./HcmBl1Form104";
+import HcmBl1Form106 from "./HcmBl1Form106";
+import HcmBl1Form105 from "./HcmBl1Form105";
+import HcmBl1Form107 from "./HcmBl1Form107";
+import HcmBl1Form108 from "./HcmBl1Form108";
+import HcmBlock1ViewImg from "./HcmBlock1ViewImg";
 
-import { RandomNumber } from '../../HcmServiceFunctions';
+import { RandomNumber } from "../../HcmServiceFunctions";
 
-import { styleMain04, styleBl2Gl01, styleBl1Form01 } from '../../HcmMainStyle';
-import { styleBl1Form03, styleBl1Form04 } from '../../HcmMainStyle';
-import { styleBl1Form05 } from '../../HcmMainStyle';
+import { styleMain04, styleBl2Gl01, styleBl1Form01 } from "../../HcmMainStyle";
+import { styleBl1Form03, styleBl1Form04 } from "../../HcmMainStyle";
+import { styleBl1Form05, styleBl1Form15 } from "../../HcmMainStyle";
 
 let Illum = 1;
 let oldIdx = -1;
 
 let maskForm = {
-  name: 'Пупкин Иван',
-  nik: 'Доцент',
-  birthDate: '12.12.1989',
-  beginDate: '21.12.2021',
-  post: 'Гранатомётчик',
-  department: 'Пехота',
-  chief: 'Бугор',
-  location: 'Россия, Омск UTC+6 (MSK+3)',
-  status: '💊 больничный',
+  name: "Пупкин Иван",
+  nik: "Доцент",
+  birthDate: "12.12.1989",
+  beginDate: "21.12.2021",
+  post: "Гранатомётчик",
+  department: "Пехота",
+  chief: "Бугор",
+  location: "Россия, Омск UTC+6 (MSK+3)",
+  status: "💊 больничный",
 };
 
 let blob: any = null;
@@ -69,10 +69,10 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   const [openLoader, setOpenLoader] = React.useState(true);
 
   const b64toBlob = (b64Data: any, contentType: any, sliceSize: number) => {
-    contentType = contentType || '';
+    contentType = contentType || "";
     sliceSize = sliceSize || 256;
-    let byteCharacters1 = Buffer.from(b64Data, 'base64');
-    let byteCharacters2 = byteCharacters1.toString('base64');
+    let byteCharacters1 = Buffer.from(b64Data, "base64");
+    let byteCharacters2 = byteCharacters1.toString("base64");
     //let byteCharacters = atob(b64Data);
     let byteCharacters = atob(byteCharacters2);
     let byteArrays = [];
@@ -90,9 +90,9 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   };
 
   const MakeNewBlob = (MESS: string) => {
-    let poz = MESS.indexOf(',');
+    let poz = MESS.indexOf(",");
     let sblob = MESS.slice(poz + 1);
-    let contentType = 'image/png';
+    let contentType = "image/png";
     let blob: any = b64toBlob(sblob, contentType, 256);
     return blob;
   };
@@ -255,10 +255,28 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     bl1Form107 && setBl1Form701(false);
     setBl1Form801(true);
   };
+
+  const ClickImg = () => {
+    setOpenImg(true);
+  };
+
+  const ClickNik1 = () => {
+    console.log("Действие по нажатию на ник1");
+  };
+
+  const ClickNik2 = () => {
+    console.log("Действие по нажатию на ник2");
+  };
   //=== Компоненты =========================================
-  const MenuBatton = (xss: number, wt: number, ill: number, name: string, func: Function) => {
+  const MenuBatton = (
+    xss: number,
+    wt: number,
+    ill: number,
+    name: string,
+    func: Function
+  ) => {
     return (
-      <Grid item xs={xss} sx={{ height: '30px' }}>
+      <Grid item xs={xss} sx={{ height: "30px" }}>
         <Button sx={styleMain04(wt, Illum, ill)} onClick={() => func()}>
           {name}
         </Button>
@@ -268,19 +286,24 @@ const HcmBlock1Gl = (props: { idx: number }) => {
 
   const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
     return (
-      <Grid container sx={{ marginTop: 1, color: '#5B1080' }}>
-        <Grid item xs={xss} sx={{ textShadow: '1px 1px 2px rgba(0,0,0,0.3)' }}>
+      <Grid container sx={{ marginTop: 1, color: "#5B1080" }}>
+        <Grid item xs={xss} sx={{ textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}>
           {recLeft}
         </Grid>
-        <Grid item xs sx={{ fontSize: 14, border: 0 }}>
+        {/* <Grid item xs sx={{ fontSize: 14, border: 0, marginLeft: '10px' }}>
           <b>{recRight}</b>
-        </Grid>
+        </Grid> */}
+        {typeof recRight === "object" ? (
+          <Grid item xs>
+            {recRight}
+          </Grid>
+        ) : (
+          <Grid item xs sx={{ fontSize: 14, marginLeft: '10px', border: 0 }}>
+            <b>{recRight}</b>
+          </Grid>
+        )}
       </Grid>
     );
-  };
-
-  const ClickImg = () => {
-    setOpenImg(true);
   };
 
   //============ Dinama =====================================================
@@ -291,13 +314,13 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   //let bot = 100 - 25000 / window.innerHeight;
 
   const styleBackdropBaza = {
-    color: '#fff',
-    marginLeft: '12px',
+    color: "#fff",
+    marginLeft: "12px",
     //marginRight: "90vh",
-    width: '180px',
-    marginTop: '63px',
+    width: "180px",
+    marginTop: "63px",
     //marginBottom: "73.5vh",
-    marginBottom: (100 - 25000 / window.innerHeight).toString() + 'vh',
+    marginBottom: (100 - 25000 / window.innerHeight).toString() + "vh",
     zIndex: (theme: any) => theme.zIndex.drawer + 1,
   };
 
@@ -314,12 +337,27 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   //if (openLoader) Output();
   //=========================================================================
 
+  const ButtonLink = (rec: any, func: Function) => {
+    // const styleBl1Form15 = {
+    //   fontSize: 13.5,
+    //   height: "15px",
+    //   color: "#5B1080", // сиреневый
+    //   textTransform: "unset !important",
+    //   textDecoration: "underline!important",
+    // };
+    return (
+      <Button sx={styleBl1Form15} onClick={() => func()}>
+        <b>{rec}</b>
+      </Button>
+    );
+  };
+
   const CardContent = () => {
     return (
       <Grid container>
         <Grid item xs={12} sx={styleBl1Form01}>
           <Grid container>
-            <Grid item xs={2} sx={{ height: '180px' }}>
+            <Grid item xs={2} sx={{ height: "180px" }}>
               <Grid container>
                 <Grid item xs={12} sx={styleBl1Form03}>
                   <em>
@@ -346,18 +384,22 @@ const HcmBlock1Gl = (props: { idx: number }) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={4} sx={{ height: '214px', fontSize: 14.5 }}>
-              {StrTablProp(2, 'Имя:', maskForm.name)}
-              {StrTablProp(2, 'Ник:', maskForm.nik)}
-              {StrTablProp(4, 'Дата рождения:', maskForm.birthDate)}
-              {StrTablProp(4, 'В компании с:', maskForm.beginDate)}
-              {StrTablProp(4, 'Должность:', maskForm.post)}
-              {StrTablProp(4, 'Подразделение:', maskForm.department)}
-              {StrTablProp(4, 'Руководитель(Ник):', maskForm.chief)}
+            <Grid item xs={4} sx={{ height: "214px", fontSize: 14.5 }}>
+              {StrTablProp(2, "Имя:", maskForm.name)}
+              {StrTablProp(2, "Ник:", ButtonLink(maskForm.nik, ClickNik1))}
+              {StrTablProp(4, "Дата рождения:", maskForm.birthDate)}
+              {StrTablProp(4, "В компании с:", maskForm.beginDate)}
+              {StrTablProp(4, "Должность:", maskForm.post)}
+              {StrTablProp(4, "Подразделение:", maskForm.department)}
+              {StrTablProp(
+                4,
+                "Руководитель(Ник):",
+                ButtonLink(maskForm.chief, ClickNik2)
+              )}
             </Grid>
-            <Grid item xs sx={{ height: '214px' }}>
-              {StrTablProp(0.1, '', maskForm.location)}
-              {StrTablProp(0.1, '', maskForm.status)}
+            <Grid item xs sx={{ height: "214px" }}>
+              {StrTablProp(0.1, "", maskForm.location)}
+              {StrTablProp(0.1, "", maskForm.status)}
             </Grid>
           </Grid>
         </Grid>
@@ -372,14 +414,14 @@ const HcmBlock1Gl = (props: { idx: number }) => {
         <Grid container sx={{ marginTop: 2, border: 0 }}>
           <Grid item xs={12}>
             <Grid container>
-              {MenuBatton(1.5, 1.5, 1, 'Отсутствия', ClickKnop1)}
-              {MenuBatton(1.5, 1.5, 2, 'Оборудование', ClickKnop2)}
-              {MenuBatton(1.75, 1.75, 3, 'В структуре компании', ClickKnop3)}
-              {MenuBatton(1.25, 1.25, 4, 'ИПР', ClickKnop4)}
-              {MenuBatton(1.75, 1.75, 5, 'Оценка компетенций', ClickKnop5)}
-              {MenuBatton(1.5, 1.5, 6, 'Адаптация', ClickKnop6)}
-              {MenuBatton(1.25, 1.25, 7, 'Цели', ClickKnop7)}
-              {MenuBatton(1.5, 1.5, 8, 'Задачи', ClickKnop8)}
+              {MenuBatton(1.5, 1.5, 1, "Отсутствия", ClickKnop1)}
+              {MenuBatton(1.5, 1.5, 2, "Оборудование", ClickKnop2)}
+              {MenuBatton(1.75, 1.75, 3, "В структуре компании", ClickKnop3)}
+              {MenuBatton(1.25, 1.25, 4, "ИПР", ClickKnop4)}
+              {MenuBatton(1.75, 1.75, 5, "Оценка компетенций", ClickKnop5)}
+              {MenuBatton(1.5, 1.5, 6, "Адаптация", ClickKnop6)}
+              {MenuBatton(1.25, 1.25, 7, "Цели", ClickKnop7)}
+              {MenuBatton(1.5, 1.5, 8, "Задачи", ClickKnop8)}
             </Grid>
           </Grid>
         </Grid>
@@ -391,7 +433,13 @@ const HcmBlock1Gl = (props: { idx: number }) => {
         {bl1Form106 && <HcmBl1Form106 />}
         {bl1Form107 && <HcmBl1Form107 />}
         {bl1Form108 && <HcmBl1Form108 idx={RandomNumber(1, 10000)} />}
-        {openImg && <HcmBlock1ViewImg close={setOpenImg} name={maskForm.name} nik={maskForm.nik} />}
+        {openImg && (
+          <HcmBlock1ViewImg
+            close={setOpenImg}
+            name={maskForm.name}
+            nik={maskForm.nik}
+          />
+        )}
       </Grid>
     </Grid>
   );

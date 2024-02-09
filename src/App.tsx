@@ -177,7 +177,8 @@ const App = () => {
     };
   }, [dispatch, massfaz]);
 
-  if (WS.url === "wss://localhost:3000/W" && flagOpenDebug) {
+  // if (WS.url === "wss://localhost:3000/W" && flagOpenDebug) {
+  if (flagOpenDebug) {
     console.log("РЕЖИМ ОТЛАДКИ!!!");
     // чтение и перевод в двоичный вид файла с картинкой
     axios

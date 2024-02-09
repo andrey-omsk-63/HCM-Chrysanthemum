@@ -179,6 +179,7 @@ export const styleBl1Form12 = {
   marginTop: '-5px',
   color: '#5B1080', // сиреневый
   textTransform: 'unset !important',
+  //textDecoration: 'underline!important',
 };
 
 export const styleBl1Form14 = {
@@ -192,7 +193,14 @@ export const styleBl1Form14 = {
   textTransform: 'unset !important',
   boxShadow: 3,
 };
-//
+
+export const styleBl1Form15 = {
+  fontSize: 13.5,
+  height: "15px",
+  color: "#5B1080", // сиреневый
+  textTransform: "unset !important",
+  textDecoration: "underline!important",
+};
 //=== HcmBlock2 =======================================================
 export const styleBl2Gl01 = {
   border: 0,
