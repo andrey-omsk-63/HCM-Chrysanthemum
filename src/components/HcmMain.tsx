@@ -203,7 +203,7 @@ const HcmMain = (props: {}) => {
 
   const ClickSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      if (event.target.value.length > 3) {
+      if (event.target.value.length > 2) {
         soob = 'Здесь будет поиск по ключу из 3-х символов';
         setOpenSetErr(true);
         setValueInp('');

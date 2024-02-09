@@ -1,14 +1,17 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { statsaveCreate } from "./redux/actions";
+import React from 'react';
+import {
+  //useSelector,
+  useDispatch,
+} from 'react-redux';
+import { statsaveCreate } from './redux/actions';
 //import { massfazCreate } from './redux/actions';
 
-import Grid from "@mui/material/Grid";
+import Grid from '@mui/material/Grid';
 
-import axios from "axios";
+import axios from 'axios';
 
-import HcmMain from "./components/HcmMain";
-import AppSocketError from "./AppSocketError";
+import HcmMain from './components/HcmMain';
+import AppSocketError from './AppSocketError';
 
 //import { MasskPoint } from "./components/MapServiceFunctions";
 
@@ -72,14 +75,14 @@ export let Coordinates: Array<Array<number>> = []; // массив коорди�
 let flagOpenDebug = true;
 let flagOpenWS = true;
 let WS: any = null;
-let soob = "";
+let soob = '';
 
 const App = () => {
   //=== Piece of Redux =====================================
-  let massfaz = useSelector((state: any) => {
-    const { massfazReducer } = state;
-    return massfazReducer.massfaz;
-  });
+  // let massfaz = useSelector((state: any) => {
+  //   const { massfazReducer } = state;
+  //   return massfazReducer.massfaz;
+  // });
   //console.log("APPmassfaz", massfaz);
   // let coordinates = useSelector((state: any) => {
   //   const { coordinatesReducer } = state;
@@ -87,110 +90,110 @@ const App = () => {
   // });
   const dispatch = useDispatch();
   //========================================================
-  const host =
-    "wss://" +
-    window.location.host +
-    window.location.pathname +
-    "W" +
-    window.location.search;
+  //const host =
+  //  'wss://' + window.location.host + window.location.pathname + 'W' + window.location.search;
 
   const [openSetErr, setOpenSetErr] = React.useState(false);
   //=== инициализация ======================================
   if (flagOpenWS) {
-    WS = new WebSocket(host);
+    //WS = new WebSocket(host);
     dateStat.ws = WS;
-    if (WS.url === "wss://localhost:3000/W") dateStat.debug = true;
+    //if (WS.url === 'wss://localhost:3000/W')
+    dateStat.debug = true;
     dispatch(statsaveCreate(dateStat));
     flagOpenWS = false;
   }
 
-  React.useEffect(() => {
-    WS.onopen = function (event: any) {
-      console.log("WS.current.onopen:", event);
-    };
-    WS.onclose = function (event: any) {
-      console.log("WS.current.onclose:", event);
-    };
-    WS.onerror = function (event: any) {
-      console.log("WS.current.onerror:", event);
-    };
-    WS.onmessage = function (event: any) {
-      let allData = JSON.parse(event.data);
-      let data = allData.data;
-      //console.log("пришло:", allData.type, data);
-      switch (allData.type) {
-        case "tflight":
-          //console.log("Tflight:", data, data.tflight);
-          // for (let j = 0; j < data.tflight.length; j++) {
-          //   for (let i = 0; i < dateMapGl.tflight.length; i++) {
-          //     if (data.tflight[j].idevice === dateMapGl.tflight[i].idevice) {
-          //       dateMapGl.tflight[i].tlsost = data.tflight[j].tlsost;
-          //     }
-          //   }
-          // }
-          // dispatch(mapCreate(dateMapGl));
-          // setTrigger(!trigger);
-          break;
-        case "phases":
-          // console.log("App пришло:", allData.type, data.phases[0].phase);
-          // for (let i = 0; i < massfaz.length; i++) {
-          //   if (
-          //     massfaz[i].idevice === data.phases[0].device &&
-          //     !dateStat.demo
-          //   ) {
-          //     massfaz[i].fazaSist = data.phases[0].phase;
-          //     dispatch(massfazCreate(massfaz));
-          //     setTrigger(!trigger);
-          //   }
-          // }
-          break;
-        case "mapInfo":
-          // dateMapGl = JSON.parse(JSON.stringify(data));
-          // dispatch(mapCreate(dateMapGl));
-          // let massRegion = [];
-          // for (let key in dateMapGl.regionInfo) {
-          //   if (!isNaN(Number(key))) massRegion.push(Number(key));
-          // }
-          // homeRegion = massRegion[0].toString();
-          // dateStat.region = homeRegion;
-          // dispatch(statsaveCreate(dateStat));
-          // //flagMap = true;
-          // setTrigger(!trigger);
-          break;
-        case "getPhases":
-          // console.log("getPhases:", data);
-          // dateStat.area = data.pos.area;
-          // dateStat.id = data.pos.id.toString();
-          // dateStat.phSvg = Array(8).fill(null);
-          // if (data.phases) {
-          //   for (let i = 0; i < data.phases.length; i++) {
-          //     dateStat.phSvg[i] = data.phases[i].phase;
-          //   }
-          // }
-          // dateStat.readyFaza = true;
-          // dispatch(statsaveCreate(dateStat));
-          // setTrigger(!trigger);
-          break;
-        default:
-          console.log("data_default:", data);
-      }
-    };
-  }, [dispatch, massfaz]);
+  // React.useEffect(() => {
+  //   WS.onopen = function (event: any) {
+  //     console.log('WS.current.onopen:', event);
+  //   };
+  //   WS.onclose = function (event: any) {
+  //     console.log('WS.current.onclose:', event);
+  //   };
+  //   WS.onerror = function (event: any) {
+  //     console.log('WS.current.onerror:', event);
+  //   };
+  //   WS.onmessage = function (event: any) {
+  //     let allData = JSON.parse(event.data);
+  //     let data = allData.data;
+  //     //console.log("пришло:", allData.type, data);
+  //     switch (allData.type) {
+  //       case 'tflight':
+  //         //console.log("Tflight:", data, data.tflight);
+  //         // for (let j = 0; j < data.tflight.length; j++) {
+  //         //   for (let i = 0; i < dateMapGl.tflight.length; i++) {
+  //         //     if (data.tflight[j].idevice === dateMapGl.tflight[i].idevice) {
+  //         //       dateMapGl.tflight[i].tlsost = data.tflight[j].tlsost;
+  //         //     }
+  //         //   }
+  //         // }
+  //         // dispatch(mapCreate(dateMapGl));
+  //         // setTrigger(!trigger);
+  //         break;
+  //       case 'phases':
+  //         // console.log("App пришло:", allData.type, data.phases[0].phase);
+  //         // for (let i = 0; i < massfaz.length; i++) {
+  //         //   if (
+  //         //     massfaz[i].idevice === data.phases[0].device &&
+  //         //     !dateStat.demo
+  //         //   ) {
+  //         //     massfaz[i].fazaSist = data.phases[0].phase;
+  //         //     dispatch(massfazCreate(massfaz));
+  //         //     setTrigger(!trigger);
+  //         //   }
+  //         // }
+  //         break;
+  //       case 'mapInfo':
+  //         // dateMapGl = JSON.parse(JSON.stringify(data));
+  //         // dispatch(mapCreate(dateMapGl));
+  //         // let massRegion = [];
+  //         // for (let key in dateMapGl.regionInfo) {
+  //         //   if (!isNaN(Number(key))) massRegion.push(Number(key));
+  //         // }
+  //         // homeRegion = massRegion[0].toString();
+  //         // dateStat.region = homeRegion;
+  //         // dispatch(statsaveCreate(dateStat));
+  //         // //flagMap = true;
+  //         // setTrigger(!trigger);
+  //         break;
+  //       case 'getPhases':
+  //         // console.log("getPhases:", data);
+  //         // dateStat.area = data.pos.area;
+  //         // dateStat.id = data.pos.id.toString();
+  //         // dateStat.phSvg = Array(8).fill(null);
+  //         // if (data.phases) {
+  //         //   for (let i = 0; i < data.phases.length; i++) {
+  //         //     dateStat.phSvg[i] = data.phases[i].phase;
+  //         //   }
+  //         // }
+  //         // dateStat.readyFaza = true;
+  //         // dispatch(statsaveCreate(dateStat));
+  //         // setTrigger(!trigger);
+  //         break;
+  //       default:
+  //         console.log('data_default:', data);
+  //     }
+  //   };
+  // }, [dispatch, massfaz]);
+  //http://localhost:3000/portrait.jpg
 
   // if (WS.url === "wss://localhost:3000/W" && flagOpenDebug) {
   if (flagOpenDebug) {
-    console.log("РЕЖИМ ОТЛАДКИ!!!");
+    console.log('РЕЖИМ ОТЛАДКИ!!!');
     // чтение и перевод в двоичный вид файла с картинкой
     axios
-      .get("http://localhost:3000/portrait.jpg", {
-        responseType: "arraybuffer",
+      // .get('https//www.vladtime.ru/uploads/posts/2017-12/1514228400_app-store-ios.jpg', {
+      .get('https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg', {
+        //.get('http://localhost:3000/portrait.jpg', {
+        responseType: 'arraybuffer',
       })
       .then(function (response) {
         let image = btoa(
           new Uint8Array(response.data).reduce(
             (data, byte) => data + String.fromCharCode(byte),
-            ""
-          )
+            '',
+          ),
         );
         dateStat.picture = image;
         dispatch(statsaveCreate(dateStat));
@@ -207,7 +210,7 @@ const App = () => {
   // }
 
   return (
-    <Grid container sx={{ height: "100vh", width: "100%", bgcolor: "#E9F5D8" }}>
+    <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
       <Grid item xs>
         {openSetErr && <AppSocketError sErr={soob} setOpen={setOpenSetErr} />}
         <HcmMain />
