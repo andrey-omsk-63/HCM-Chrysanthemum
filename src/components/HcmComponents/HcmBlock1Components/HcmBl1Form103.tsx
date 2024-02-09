@@ -89,7 +89,7 @@ const HcmBl1Form103 = () => {
   let heightBl0 = window.innerHeight - 340;
   let heightBl1 = heightBl0 * 0.6;
   let heightBl2 = heightBl0 * 0.4;
-  let state = history ? state2 : state1;
+  let state = !history ? state2 : state1;
 
   return (
     <Grid container sx={styleBl3Form01(340)}>

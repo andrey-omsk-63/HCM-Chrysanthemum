@@ -201,6 +201,15 @@ export const styleBl1Form15 = {
   textTransform: "unset !important",
   textDecoration: "underline!important",
 };
+
+export const styleBl1Form16 = {
+  fontSize: 15.4,
+  fontWeight: 400,
+  height: "15px",
+  color: "#5B1080", // сиреневый
+  textTransform: "unset !important",
+  textDecoration: "underline!important",
+};
 //=== HcmBlock2 =======================================================
 export const styleBl2Gl01 = {
   border: 0,

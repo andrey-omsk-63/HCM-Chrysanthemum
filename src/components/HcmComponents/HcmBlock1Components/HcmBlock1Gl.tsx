@@ -290,9 +290,6 @@ const HcmBlock1Gl = (props: { idx: number }) => {
         <Grid item xs={xss} sx={{ textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}>
           {recLeft}
         </Grid>
-        {/* <Grid item xs sx={{ fontSize: 14, border: 0, marginLeft: '10px' }}>
-          <b>{recRight}</b>
-        </Grid> */}
         {typeof recRight === "object" ? (
           <Grid item xs>
             {recRight}
@@ -338,13 +335,6 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   //=========================================================================
 
   const ButtonLink = (rec: any, func: Function) => {
-    // const styleBl1Form15 = {
-    //   fontSize: 13.5,
-    //   height: "15px",
-    //   color: "#5B1080", // сиреневый
-    //   textTransform: "unset !important",
-    //   textDecoration: "underline!important",
-    // };
     return (
       <Button sx={styleBl1Form15} onClick={() => func()}>
         <b>{rec}</b>
