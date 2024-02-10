@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 import {
   //useSelector,
   useDispatch,
-} from 'react-redux';
-import { statsaveCreate } from './redux/actions';
+} from "react-redux";
+import { statsaveCreate } from "./redux/actions";
 //import { massfazCreate } from './redux/actions';
 
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 
-import axios from 'axios';
+import axios from "axios";
 
-import HcmMain from './components/HcmMain';
-import AppSocketError from './AppSocketError';
+import HcmMain from "./components/HcmMain";
+import AppSocketError from "./AppSocketError";
 
 //import { MasskPoint } from "./components/MapServiceFunctions";
 
@@ -75,7 +75,7 @@ export let Coordinates: Array<Array<number>> = []; // массив коорди�
 let flagOpenDebug = true;
 let flagOpenWS = true;
 let WS: any = null;
-let soob = '';
+let soob = "";
 
 const App = () => {
   //=== Piece of Redux =====================================
@@ -92,6 +92,9 @@ const App = () => {
   //========================================================
   //const host =
   //  'wss://' + window.location.host + window.location.pathname + 'W' + window.location.search;
+  console.log("Host:", window.location.host);
+  console.log("Pathname:", window.location.pathname);
+  console.log("Search:", window.location.search);
 
   const [openSetErr, setOpenSetErr] = React.useState(false);
   //=== инициализация ======================================
@@ -180,20 +183,20 @@ const App = () => {
 
   // if (WS.url === "wss://localhost:3000/W" && flagOpenDebug) {
   if (flagOpenDebug) {
-    console.log('РЕЖИМ ОТЛАДКИ!!!');
+    console.log("РЕЖИМ ОТЛАДКИ!!!");
     // чтение и перевод в двоичный вид файла с картинкой
     axios
       // .get('https//www.vladtime.ru/uploads/posts/2017-12/1514228400_app-store-ios.jpg', {
-      .get('https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg', {
+      .get("https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg", {
         //.get('http://localhost:3000/portrait.jpg', {
-        responseType: 'arraybuffer',
+        responseType: "arraybuffer",
       })
       .then(function (response) {
         let image = btoa(
           new Uint8Array(response.data).reduce(
             (data, byte) => data + String.fromCharCode(byte),
-            '',
-          ),
+            ""
+          )
         );
         dateStat.picture = image;
         dispatch(statsaveCreate(dateStat));
@@ -210,7 +213,7 @@ const App = () => {
   // }
 
   return (
-    <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
+    <Grid container sx={{ height: "100vh", width: "100%", bgcolor: "#E9F5D8" }}>
       <Grid item xs>
         {openSetErr && <AppSocketError sErr={soob} setOpen={setOpenSetErr} />}
         <HcmMain />
