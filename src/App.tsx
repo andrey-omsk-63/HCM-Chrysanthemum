@@ -95,20 +95,37 @@ const App = () => {
   console.log("Host:", window.location.host);
   console.log("Pathname:", window.location.pathname);
   console.log("Search:", window.location.search);
+  if (window.location.host === "localhost:3000") dateStat.debug = true;
+  dispatch(statsaveCreate(dateStat));
 
-  const [post, setPost] = React.useState(null); 
+  const [post, setPost] = React.useState(null);
 
-const baseURL = 'https://user-permissions-api.hcm.ls-dev.ru/'
+  const baseURL = "https://user-permissions-api.hcm.ls-dev.ru/";
 
   axios
-      .post(baseURL, {
-        title: "Hello World!",
-        body: "This is a new post about Timeweb Cloud."
-      })
-      .then((response) => {
-        console.log('response.data:',response.data)
-        setPost(response.data);
-      });
+    .post(baseURL, {
+      id: "string",
+      userLogin: "string",
+      userRole: "string",
+    })
+    .then((response) => {
+      console.log("post-response.data:", response.data);
+      setPost(response.data);
+    });
+
+  axios
+    .put(baseURL, {
+      id: "string",
+    })
+    .then((response) => {
+      console.log("put-response.data:", response.data);
+      setPost(response.data);
+    });
+
+  axios.delete(`${baseURL}/1`).then(() => {
+    console.log("del.data:");
+    setPost(null);
+  });
 
   const [openSetErr, setOpenSetErr] = React.useState(false);
   //=== инициализация ======================================
@@ -121,83 +138,17 @@ const baseURL = 'https://user-permissions-api.hcm.ls-dev.ru/'
     flagOpenWS = false;
   }
 
-  // React.useEffect(() => {
-  //   WS.onopen = function (event: any) {
-  //     console.log('WS.current.onopen:', event);
-  //   };
-  //   WS.onclose = function (event: any) {
-  //     console.log('WS.current.onclose:', event);
-  //   };
-  //   WS.onerror = function (event: any) {
-  //     console.log('WS.current.onerror:', event);
-  //   };
-  //   WS.onmessage = function (event: any) {
-  //     let allData = JSON.parse(event.data);
-  //     let data = allData.data;
-  //     //console.log("пришло:", allData.type, data);
-  //     switch (allData.type) {
-  //       case 'tflight':
-  //         //console.log("Tflight:", data, data.tflight);
-  //         // for (let j = 0; j < data.tflight.length; j++) {
-  //         //   for (let i = 0; i < dateMapGl.tflight.length; i++) {
-  //         //     if (data.tflight[j].idevice === dateMapGl.tflight[i].idevice) {
-  //         //       dateMapGl.tflight[i].tlsost = data.tflight[j].tlsost;
-  //         //     }
-  //         //   }
-  //         // }
-  //         // dispatch(mapCreate(dateMapGl));
-  //         // setTrigger(!trigger);
-  //         break;
-  //       case 'phases':
-  //         // console.log("App пришло:", allData.type, data.phases[0].phase);
-  //         // for (let i = 0; i < massfaz.length; i++) {
-  //         //   if (
-  //         //     massfaz[i].idevice === data.phases[0].device &&
-  //         //     !dateStat.demo
-  //         //   ) {
-  //         //     massfaz[i].fazaSist = data.phases[0].phase;
-  //         //     dispatch(massfazCreate(massfaz));
-  //         //     setTrigger(!trigger);
-  //         //   }
-  //         // }
-  //         break;
-  //       case 'mapInfo':
-  //         // dateMapGl = JSON.parse(JSON.stringify(data));
-  //         // dispatch(mapCreate(dateMapGl));
-  //         // let massRegion = [];
-  //         // for (let key in dateMapGl.regionInfo) {
-  //         //   if (!isNaN(Number(key))) massRegion.push(Number(key));
-  //         // }
-  //         // homeRegion = massRegion[0].toString();
-  //         // dateStat.region = homeRegion;
-  //         // dispatch(statsaveCreate(dateStat));
-  //         // //flagMap = true;
-  //         // setTrigger(!trigger);
-  //         break;
-  //       case 'getPhases':
-  //         // console.log("getPhases:", data);
-  //         // dateStat.area = data.pos.area;
-  //         // dateStat.id = data.pos.id.toString();
-  //         // dateStat.phSvg = Array(8).fill(null);
-  //         // if (data.phases) {
-  //         //   for (let i = 0; i < data.phases.length; i++) {
-  //         //     dateStat.phSvg[i] = data.phases[i].phase;
-  //         //   }
-  //         // }
-  //         // dateStat.readyFaza = true;
-  //         // dispatch(statsaveCreate(dateStat));
-  //         // setTrigger(!trigger);
-  //         break;
-  //       default:
-  //         console.log('data_default:', data);
-  //     }
-  //   };
-  // }, [dispatch, massfaz]);
+  React.useEffect(() => {
+    axios.get(baseURL).then((response) => {
+      console.log("get-response.data:",response.data);
+      setPost(response.data);
+    });
+  }, []);
+
   //http://localhost:3000/portrait.jpg
 
-  // if (WS.url === "wss://localhost:3000/W" && flagOpenDebug) {
+  if (dateStat.debug) console.log("РЕЖИМ ОТЛАДКИ!!!", post);
   if (flagOpenDebug) {
-    console.log("РЕЖИМ ОТЛАДКИ!!!");
     // чтение и перевод в двоичный вид файла с картинкой
     axios
       // .get('https//www.vladtime.ru/uploads/posts/2017-12/1514228400_app-store-ios.jpg', {
@@ -216,15 +167,8 @@ const baseURL = 'https://user-permissions-api.hcm.ls-dev.ru/'
         dispatch(statsaveCreate(dateStat));
       });
 
-    // dateMapGl = JSON.parse(JSON.stringify(dataMap));
-    // dispatch(mapCreate(dateMapGl));
     flagOpenDebug = false;
   }
-
-  // if (flagMap && !flagOpenWS) {
-  //   flagMap = false;
-  //   setOpenMapInfo(true);
-  // }
 
   return (
     <Grid container sx={{ height: "100vh", width: "100%", bgcolor: "#E9F5D8" }}>
