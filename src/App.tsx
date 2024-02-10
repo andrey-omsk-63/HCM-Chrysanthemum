@@ -96,6 +96,20 @@ const App = () => {
   console.log("Pathname:", window.location.pathname);
   console.log("Search:", window.location.search);
 
+  const [post, setPost] = React.useState(null); 
+
+const baseURL = 'https://user-permissions-api.hcm.ls-dev.ru/'
+
+  axios
+      .post(baseURL, {
+        title: "Hello World!",
+        body: "This is a new post about Timeweb Cloud."
+      })
+      .then((response) => {
+        console.log('response.data:',response.data)
+        setPost(response.data);
+      });
+
   const [openSetErr, setOpenSetErr] = React.useState(false);
   //=== инициализация ======================================
   if (flagOpenWS) {
