@@ -1,24 +1,23 @@
-import React from "react";
+import React from 'react';
 import {
   //useSelector,
   useDispatch,
-} from "react-redux";
-import { statsaveCreate } from "./redux/actions";
+} from 'react-redux';
+import { statsaveCreate } from './redux/actions';
 //import { massfazCreate } from './redux/actions';
 
-import Grid from "@mui/material/Grid";
+import Grid from '@mui/material/Grid';
 
-import axios from "axios";
+import axios from 'axios';
 
-import HcmMain from "./components/HcmMain";
-import AppSocketError from "./AppSocketError";
+import HcmMain from './components/HcmMain';
+import AppSocketError from './AppSocketError';
+
+import { baseURL } from './components/HcmMainConst';
 
 //import { MasskPoint } from "./components/MapServiceFunctions";
 
 //import { SendSocketGetPhases } from "./components/MapSocketFunctions";
-
-//import { dataMap } from './otladkaMaps';
-//import { imgFaza } from "./otladkaPicFaza";
 
 export let dateMapGl: any;
 export let dateBindingsGl: any;
@@ -73,9 +72,8 @@ export let massMode: NameMode[] = [];
 export let Coordinates: Array<Array<number>> = []; // массив координат
 
 let flagOpenDebug = true;
-let flagOpenWS = true;
-let WS: any = null;
-let soob = "";
+//let flagOpenWS = true;
+let soob = '';
 
 const App = () => {
   //=== Piece of Redux =====================================
@@ -92,76 +90,67 @@ const App = () => {
   //========================================================
   //const host =
   //  'wss://' + window.location.host + window.location.pathname + 'W' + window.location.search;
-  console.log("Host:", window.location.host);
-  console.log("Pathname:", window.location.pathname);
-  console.log("Search:", window.location.search);
-  if (window.location.host === "localhost:3000") dateStat.debug = true;
+  console.log('Host:', window.location.host);
+  console.log('Pathname:', window.location.pathname);
+  console.log('Search:', window.location.search);
+  if (window.location.host === 'localhost:3000') dateStat.debug = true;
   dispatch(statsaveCreate(dateStat));
 
   const [post, setPost] = React.useState(null);
-
-  const baseURL = "https://user-permissions-api.hcm.ls-dev.ru/";
-
-  axios
-    .post(baseURL, {
-      id: "string",
-      userLogin: "string",
-      userRole: "string",
-    })
-    .then((response) => {
-      console.log("post-response.data:", response.data);
-      setPost(response.data);
-    });
-
-  axios
-    .put(baseURL, {
-      id: "string",
-    })
-    .then((response) => {
-      console.log("put-response.data:", response.data);
-      setPost(response.data);
-    });
-
-  axios.delete(`${baseURL}/1`).then(() => {
-    console.log("del.data:");
-    setPost(null);
-  });
-
   const [openSetErr, setOpenSetErr] = React.useState(false);
-  //=== инициализация ======================================
-  if (flagOpenWS) {
-    //WS = new WebSocket(host);
-    dateStat.ws = WS;
-    //if (WS.url === 'wss://localhost:3000/W')
-    dateStat.debug = true;
-    dispatch(statsaveCreate(dateStat));
-    flagOpenWS = false;
-  }
+  if (dateStat.debug) console.log('РЕЖИМ ОТЛАДКИ!!!', post);
 
+  //const baseURL = "https://user-permissions-api.hcm.ls-dev.ru/";
+
+  //=== инициализация ======================================
+  if (!dateStat.debug) {
+    axios
+      .post(baseURL, {
+        id: 'string',
+        userLogin: 'string',
+        userRole: 'string',
+      })
+      .then((response) => {
+        console.log('post-response.data:', response.data);
+        setPost(response.data);
+      });
+
+    axios
+      .put(baseURL, {
+        id: 'string',
+      })
+      .then((response) => {
+        console.log('put-response.data:', response.data);
+        setPost(response.data);
+      });
+
+    axios.delete(`${baseURL}/1`).then(() => {
+      console.log('!!!del.data:');
+      setPost(null);
+    });
+  }
+  //========================================================
   React.useEffect(() => {
     axios.get(baseURL).then((response) => {
-      console.log("get-response.data:",response.data);
+      console.log('get-response.data:', response.data);
       setPost(response.data);
     });
   }, []);
 
-  //http://localhost:3000/portrait.jpg
-
-  if (dateStat.debug) console.log("РЕЖИМ ОТЛАДКИ!!!", post);
   if (flagOpenDebug) {
     // чтение и перевод в двоичный вид файла с картинкой
     axios
       // .get('https//www.vladtime.ru/uploads/posts/2017-12/1514228400_app-store-ios.jpg', {
-      .get("https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg", {
+      .get('https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg', {
         //.get('http://localhost:3000/portrait.jpg', {
-        responseType: "arraybuffer",
+        responseType: 'arraybuffer',
       })
       .then(function (response) {
         let image = btoa(
           new Uint8Array(response.data).reduce(
             (data, byte) => data + String.fromCharCode(byte),
-            ""
-          )
+            '',
+          ),
         );
         dateStat.picture = image;
         dispatch(statsaveCreate(dateStat));
@@ -171,7 +160,7 @@ const App = () => {
   }
 
   return (
-    <Grid container sx={{ height: "100vh", width: "100%", bgcolor: "#E9F5D8" }}>
+    <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
       <Grid item xs>
         {openSetErr && <AppSocketError sErr={soob} setOpen={setOpenSetErr} />}
         <HcmMain />
