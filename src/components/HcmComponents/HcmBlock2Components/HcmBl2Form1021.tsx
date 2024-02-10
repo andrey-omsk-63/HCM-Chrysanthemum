@@ -1,25 +1,21 @@
 import * as React from 'react';
-// import {
-//   //useDispatch,
-//   useSelector,
-// } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
 //import { statsaveCreate } from '../../../redux/actions';
 
-//import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
-import { BadExit } from '../../HcmServiceFunctions';
+import { BadExit, TablStr } from '../../HcmServiceFunctions';
 
 import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
-import { styleBl5Form01, styleBl2Form02 } from '../../HcmMainStyle';
+import { styleBl5Form01 } from '../../HcmMainStyle';
+import { styleBl1Form07, styleBl1Form08 } from '../../HcmMainStyle';
+import { styleBl1Form09 } from '../../HcmMainStyle';
 
 let flagInput = true;
 let HAVE = 0;
-
-//let treeMenu: any = [];
-//let IDX = 0;
 
 const HcmBl2Form1021 = (props: { close: Function }) => {
   //== Piece of Redux =======================================
@@ -36,8 +32,7 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
   //=== инициализация ======================================
   if (flagInput) {
     HAVE = 0;
-    //IDX = datestat.idxTreeUnit;
-    //treeMenu = datestat.treeUnit;
+
     flagInput = false;
   }
   //========================================================
@@ -79,61 +74,144 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
 
   //========================================================
 
-  // const styleMain04 = (ILLUM: number, mode: number, xss: number) => {
-  //   const styleMain040 = {
-  //     marginTop: '5px',
-  //     fontSize: ILLUM === mode ? 13.5 : 12.5,
-  //     height: '24px',
-  //     bgcolor: ILLUM === mode ? '#82e94a' : '#E6F5D6', // ярко-салатовый/светло-салатовый
-  //     border: '1px solid #d4d4d4', // серый
-  //     borderRadius: 1,
-  //     color: xss === 0.01 ? '#7620a2' : 'black', // сиреневый / чёрный
-  //     textTransform: 'unset !important',
-  //     boxShadow: ILLUM === mode ? 9 : 3,
-  //   };
-  //   return styleMain040;
-  // };
+  const StrokaForm1021 = () => {
+    let resStr = [];
+    let masStr: any = [];
+    for (let i = 0; i < 5; i++) {
+      for (let j = 1; j < 5; j++) {
+        let maskStr = {
+          unit: 'ИТ отдел',
+          period: '1 квартал 2023',
+          why: 'Иван',
+          status: '1',
+          connect1: '5',
+          connect2: '6',
+          know: '4',
+          develop: '4',
+          tasks: '8',
+          pay: '7',
+          load: '9',
+        };
 
-  // const TreeContent = () => {
-  //   let resStr = [];
-  //   for (let i = 0; i < treeMenu.length; i++) {
-  //     let xss = 4.0;
-  //     let rec = treeMenu[i].lev3;
-  //     if (!treeMenu[i].lev3) {
-  //       xss = 2.0;
-  //       rec = treeMenu[i].lev2;
-  //       if (!treeMenu[i].lev2) {
-  //         xss = 0.01;
-  //         rec = treeMenu[i].lev1;
-  //       }
-  //     }
+        switch (j) {
+          case 1:
+            maskStr.unit = 'ИТ отдел';
+            maskStr.period = '1 квартал 2023';
+            maskStr.why = 'Орг.изменения';
+            maskStr.status = '1';
+            maskStr.connect1 = '6';
+            maskStr.connect2 = '5';
+            maskStr.know = '3';
+            maskStr.develop = '4';
+            maskStr.tasks = '8';
+            maskStr.pay = '7';
+            maskStr.load = '9';
+            break;
+          case 2:
+            maskStr.unit = 'ИТ отдел';
+            maskStr.period = '2 квартал 2023';
+            maskStr.why = 'Смена руководителя';
+            maskStr.status = '7';
+            maskStr.connect1 = '6';
+            maskStr.connect2 = '4';
+            maskStr.know = '9';
+            maskStr.develop = '2';
+            maskStr.tasks = '5';
+            maskStr.pay = '4';
+            maskStr.load = '3';
+            break;
+          case 3:
+            maskStr.unit = 'ИТ отдел';
+            maskStr.period = '3 квартал 2023';
+            maskStr.why = 'Выгорание команды';
+            maskStr.status = '6';
+            maskStr.connect1 = '3';
+            maskStr.connect2 = '7';
+            maskStr.know = '6';
+            maskStr.develop = '7';
+            maskStr.tasks = '4';
+            maskStr.pay = '8';
+            maskStr.load = '2';
+            break;
+          case 4:
+            maskStr.unit = 'ИТ отдел';
+            maskStr.period = '4 квартал 2023';
+            maskStr.why = 'Просто так';
+            maskStr.status = '4';
+            maskStr.connect1 = '10';
+            maskStr.connect2 = '2';
+            maskStr.know = '8';
+            maskStr.develop = '10';
+            maskStr.tasks = '9';
+            maskStr.pay = '6';
+            maskStr.load = '7';
+        }
+        masStr.push(maskStr);
+      }
+    }
+    for (let i = 0; i < masStr.length; i++) {
+      let brb: any = i === masStr.length - 1 ? 0 : '1px solid #d4d4d4';
+      resStr.push(
+        <Grid key={i} container sx={{ color: '#5B1080' }}>
+          {TablStr(0, 1.4, masStr[i].unit, styleBl1Form09(brb))}
+          {TablStr(0, 0.8, masStr[i].period, styleBl1Form09(brb))}
+          {TablStr(0, 1.0, masStr[i].why, styleBl1Form09(brb))}
+          {TablStr(0, 1.2, masStr[i].status, styleBl1Form09(brb))}
+          {TablStr(0, 1.25, masStr[i].connect1, styleBl1Form09(brb))}
+          {TablStr(0, 1.25, masStr[i].connect2, styleBl1Form09(brb))}
+          {TablStr(0, 1.5, masStr[i].know, styleBl1Form09(brb))}
+          {TablStr(0, 0.8, masStr[i].develop, styleBl1Form09(brb))}
+          {TablStr(0, 0.8, masStr[i].tasks, styleBl1Form09(brb))}
+          {TablStr(0, 1.0, masStr[i].pay, styleBl1Form09(brb))}
+          {TablStr(0, 1.0, masStr[i].load, styleBl1Form09(brb))}
+        </Grid>,
+      );
+    }
+    return resStr;
+  };
 
-  //     resStr.push(
-  //       <Grid key={i} container sx={{ marginBottom: 0 }}>
-  //         <Grid item xs={xss}></Grid>
-  //         <Grid item xs>
-  //           <Button sx={styleMain04(IDX, i, xss)} onClick={() => ClickTree(i)}>
-  //             {xss === 4 && (
-  //               <Box>
-  //                 <em>{rec}</em>
-  //               </Box>
-  //             )}
-  //             {xss === 0.01 && (
-  //               <Box sx={{ fontWeight: 900, fontSize: IDX === i ? 14.0 : 13.5 }}>
-  //                 <b>{rec}</b>
-  //               </Box>
-  //             )}
-  //             {xss === 2 && <Box>{rec}</Box>}
-  //           </Button>
-  //         </Grid>
-  //       </Grid>,
-  //     );
-  //   }
-  //   return resStr;
-  // };
+  const HeaderTabl = () => {
+    return (
+      <Grid container sx={styleBl1Form07}>
+        {TablStr(1, 1.4, 'Подразделение', styleBl1Form08)}
+        {TablStr(1, 0.8, 'За период', styleBl1Form08)}
+        {TablStr(1, 1, 'Причина проведения', styleBl1Form08)}
+        {TablStr(1, 1.2, 'Общее состояние команды', styleBl1Form08)}
+        {TablStr(1, 1.25, 'Взаимодействие в команде', styleBl1Form08)}
+        {TablStr(1, 1.25, 'Взаимодействие с руководителем', styleBl1Form08)}
+        {TablStr(1, 1.5, 'Информированность', styleBl1Form08)}
+        {TablStr(1, 0.8, 'Развитие', styleBl1Form08)}
+        {TablStr(1, 0.8, 'Текущие задачи', styleBl1Form08)}
+        {TablStr(1, 1, 'Заработная плата, бонусы', styleBl1Form08)}
+        {TablStr(1, 1, 'Нагрузка, режим работы', styleBl1Form08)}
+      </Grid>
+    );
+  };
 
   let heightBlock = window.innerHeight - 50;
   let widthBlock = window.innerWidth - 50;
+
+  const styleBl2Form02 = (part: number) => {
+    const styleBl2Form = {
+      fontSize: 14,
+      bgcolor: '#F1F5FB', // светло серый
+      border: '1px solid #d4d4d4',
+      borderRadius: 1,
+      color: '#5B1080', // сиреневый
+      boxShadow: 3,
+      textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+      height: window.innerHeight - part,
+      //overflowX: 'auto',
+    };
+    return styleBl2Form;
+  };
+
+  const styleBl2Form01 = {
+    //fontSize: 14,
+    overflowX: 'auto',
+    height: window.innerHeight - 150,
+    textAlign: 'center',
+  };
 
   return (
     <>
@@ -145,8 +223,10 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
           <Box sx={styleBl5Form01}>
             <b>Все НС</b>
           </Box>
-          <Box sx={styleBl2Form02(110)}>{/* {TreeContent()}*/}</Box>
-          {/* {HAVE > 0 && <>{FooterContent(SaveForm)}</>} */}
+          <Box sx={styleBl2Form02(96)}>
+            {HeaderTabl()}
+            <Box sx={styleBl2Form01}>{StrokaForm1021()}</Box>
+          </Box>
         </Box>
       </Modal>
       {badExit && <>{BadExit(badExit, handleCloseBadExit)}</>}

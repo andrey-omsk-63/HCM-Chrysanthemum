@@ -196,19 +196,19 @@ export const styleBl1Form14 = {
 
 export const styleBl1Form15 = {
   fontSize: 13.5,
-  height: "15px",
-  color: "#5B1080", // сиреневый
-  textTransform: "unset !important",
-  textDecoration: "underline!important",
+  height: '15px',
+  color: '#5B1080', // сиреневый
+  textTransform: 'unset !important',
+  textDecoration: 'underline!important',
 };
 
 export const styleBl1Form16 = {
   fontSize: 15.4,
   fontWeight: 400,
-  height: "15px",
-  color: "#5B1080", // сиреневый
-  textTransform: "unset !important",
-  textDecoration: "underline!important",
+  height: '15px',
+  color: '#5B1080', // сиреневый
+  textTransform: 'unset !important',
+  textDecoration: 'underline!important',
 };
 //=== HcmBlock2 =======================================================
 export const styleBl2Gl01 = {
@@ -259,7 +259,6 @@ export const styleBl2Form02 = (part: number) => {
     boxShadow: 3,
     padding: '0px 20px 14px 20px',
     textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-    //height: window.innerHeight - 145,
     height: window.innerHeight - part,
     overflowX: 'auto',
   };
@@ -274,14 +273,12 @@ export const styleBl3Form01 = (part: number) => {
     borderRadius: 1,
     margin: '20px 2px 0px 1px',
     height: window.innerHeight - part,
-    //padding: '0px 1px 0px 1px',
   };
   return styleBl3Form;
 };
 //=== HcmBlock4 =======================================================
 export const styleBl4Form01 = (part: number) => {
   const styleBl4Form = {
-    //height: (window.innerHeight - part) / 2,
     height: part,
     border: 0,
     padding: '0px 5px 5px 5px',
@@ -308,7 +305,6 @@ export const styleBl4Form03 = (part: number) => {
     boxShadow: 6,
     padding: '0px 20px 14px 20px',
     textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-    // height: (window.innerHeight - part) / 2 - 60,
     height: part,
   };
   return styleBl4Form;
@@ -336,8 +332,6 @@ export const styleBl5Form00 = (wdth: number, hdth: number) => {
 export const styleBl5Form01 = {
   fontSize: 20,
   textAlign: 'center',
-  //color: '#5B1080',
-  //color: "#801F95", // сиреневый
   color: '#7620a2', // сиреневый
   margin: '5px 0 10px 0',
   textShadow: '2px 2px 3px rgba(0,0,0,0.3)',
