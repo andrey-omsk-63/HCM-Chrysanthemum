@@ -129,14 +129,17 @@ const App = () => {
       setPost(null);
     });
   }
-  //========================================================
+  //===  Слушатель с сервера ===============================
+
   React.useEffect(() => {
     axios.get(baseURL).then((response) => {
       console.log('get-response.data:', response.data);
       setPost(response.data);
     });
-  }, []);
-
+    // .catch((error: any) => { // Если запрос не будет выполнен, то ошибка выводится в терминал
+    //   console.error(error);});
+  }, [setPost]);
+  //========================================================
   if (flagOpenDebug) {
     // чтение и перевод в двоичный вид файла с картинкой
     axios

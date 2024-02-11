@@ -36,7 +36,8 @@ export const CLINCH: Array<number> = [
   38, // Нет информации
 ];
 
-export const baseURL = 'https://user-permissions-api.hcm.ls-dev.ru/'; // адрес сервера
+//export const baseURL = 'https://user-permissions-api.hcm.ls-dev.ru/'; // адрес сервера
+export const baseURL = 'https://localhost/'; // адрес сервера
 
 export const UNIT: Array<any> = [
   {
