@@ -9,10 +9,10 @@ import Modal from '@mui/material/Modal';
 
 import { BadExit, TablStr } from '../../HcmServiceFunctions';
 
-import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
-import { styleBl5Form01 } from '../../HcmMainStyle';
+import { styleBl5Form00, styleModalEndBig } from '../../HcmMainStyle';
+import { styleBl5Form01, styleBl2Form03 } from '../../HcmMainStyle';
 import { styleBl1Form07, styleBl1Form08 } from '../../HcmMainStyle';
-import { styleBl1Form09 } from '../../HcmMainStyle';
+import { styleBl1Form09, styleBl2Form04 } from '../../HcmMainStyle';
 
 let flagInput = true;
 let HAVE = 0;
@@ -77,7 +77,7 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
   const StrokaForm1021 = () => {
     let resStr = [];
     let masStr: any = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
       for (let j = 1; j < 5; j++) {
         let maskStr = {
           unit: 'ИТ отдел',
@@ -191,41 +191,19 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
   let heightBlock = window.innerHeight - 50;
   let widthBlock = window.innerWidth - 50;
 
-  const styleBl2Form02 = (part: number) => {
-    const styleBl2Form = {
-      fontSize: 14,
-      bgcolor: '#F1F5FB', // светло серый
-      border: '1px solid #d4d4d4',
-      borderRadius: 1,
-      color: '#5B1080', // сиреневый
-      boxShadow: 3,
-      textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-      height: window.innerHeight - part,
-      //overflowX: 'auto',
-    };
-    return styleBl2Form;
-  };
-
-  const styleBl2Form01 = {
-    //fontSize: 14,
-    overflowX: 'auto',
-    height: window.innerHeight - 150,
-    textAlign: 'center',
-  };
-
   return (
     <>
       <Modal open={open} onClose={CloseEnd} hideBackdrop={false}>
         <Box sx={styleBl5Form00(widthBlock, heightBlock)}>
-          <Button sx={styleModalEnd} onClick={() => handleCloseBad()}>
+          <Button sx={styleModalEndBig} onClick={() => handleCloseBad()}>
             <b>&#10006;</b>
           </Button>
           <Box sx={styleBl5Form01}>
             <b>Все НС</b>
           </Box>
-          <Box sx={styleBl2Form02(96)}>
+          <Box sx={styleBl2Form03(96)}>
             {HeaderTabl()}
-            <Box sx={styleBl2Form01}>{StrokaForm1021()}</Box>
+            <Box sx={styleBl2Form04}>{StrokaForm1021()}</Box>
           </Box>
         </Box>
       </Modal>
