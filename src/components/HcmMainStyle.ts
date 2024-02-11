@@ -153,6 +153,16 @@ export const styleBl1Form077 = {
   color: '#7620a2', // сиреневый
 };
 
+export const styleBl1Form0777 = {
+  fontSize: 14,
+  bgcolor: '#95BCF2', // ярко-голубой
+  borderColor: '#95BCF2', // ярко-голубой
+  borderTopLeftRadius: 2,
+  borderTopRightRadius: 2,
+  color: '#7620a2', // сиреневый
+  padding: '3px 0px 3px 8px',
+};
+
 export const styleBl1Form08 = {
   padding: '5px 0px 5px 0px',
   border: 0,
@@ -176,6 +186,15 @@ export const styleBl1Form099 = (brb: number) => {
   const stylePKForm33 = {
     textAlign: 'left',
     padding: '10px 0px 10px 0px',
+    borderBottom: brb,
+  };
+  return stylePKForm33;
+};
+
+export const styleBl1Form0999 = (brb: number) => {
+  const stylePKForm33 = {
+    textAlign: 'left',
+    padding: '10px 0px 10px 8px',
     borderBottom: brb,
   };
   return stylePKForm33;

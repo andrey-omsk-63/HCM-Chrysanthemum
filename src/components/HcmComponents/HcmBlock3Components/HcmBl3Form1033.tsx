@@ -6,16 +6,16 @@ import Box from '@mui/material/Box';
 
 import { styleBl3Form01 } from '../../HcmMainStyle';
 
-const HcmBl3Form104 = () => {
+const HcmBl3Form103 = () => {
   return (
     <Grid container sx={styleBl3Form01(62)}>
       <Grid item xs={12}>
         <Box sx={{ fontSize: 16, marginTop: -1.75, marginLeft: 2 }}>
-          <b>Справочная информация ➤ Профили компетенций</b>
+          <b>Справочная информация ➤ Структура компании copy</b>
         </Box>
       </Grid>
     </Grid>
   );
 };
 
-export default HcmBl3Form104;
+export default HcmBl3Form103;

@@ -3,8 +3,7 @@ import * as React from 'react';
 import HcmErrorMessage from '../HcmErrorMessage';
 import HcmBl3Form101 from './HcmBl3Form101';
 import HcmBl3Form102 from './HcmBl3Form102';
-//import HcmBl3Form103 from './HcmBl3Form103';
-import HcmBl3Form104 from './HcmBl3Form104';
+import HcmBl3Form103 from './HcmBl3Form103';
 
 import { FORM3 } from '../../HcmMain';
 
@@ -19,9 +18,7 @@ const HcmBlock3Disp = (props: { setOpen: any }) => {
     case '2':
       soob += 'Структура компании';
       break;
-    // case '3':
-    //   soob += 'Структура компании copy';
-    //   break;
+
     case '3':
       soob += 'Профили компетенций';
   }
@@ -30,8 +27,7 @@ const HcmBlock3Disp = (props: { setOpen: any }) => {
     <>
       {FORM3 === '1' && <HcmBl3Form101 />}
       {FORM3 === '2' && <HcmBl3Form102 />}
-      {/* {FORM3 === '3' && <HcmBl3Form103 />} */}
-      {FORM3 === '3' && <HcmBl3Form104 />}
+      {FORM3 === '3' && <HcmBl3Form103 />}
       {Number(FORM3) > 4 && <HcmErrorMessage sErr={soob} setOpen={props.setOpen} />}
     </>
   );
