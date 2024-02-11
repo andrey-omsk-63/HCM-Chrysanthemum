@@ -71,9 +71,7 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
   //   HAVE++;
   //   setTrigger(!trigger);
   // };
-
   //========================================================
-
   const StrokaForm1021 = () => {
     let resStr = [];
     let masStr: any = [];

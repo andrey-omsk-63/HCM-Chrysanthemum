@@ -135,13 +135,22 @@ export const styleBl1Form06 = (part: number) => {
 export const styleBl1Form07 = {
   fontSize: 14,
   textAlign: 'center',
-  //bgcolor: "#C0E2C3", // салатово-зелёный
   bgcolor: '#95BCF2', // ярко-голубой
   borderColor: '#95BCF2', // ярко-голубой
   borderTopLeftRadius: 2,
   borderTopRightRadius: 2,
   color: '#7620a2', // сиреневый
   padding: '3px 0px 3px 0px',
+};
+
+export const styleBl1Form077 = {
+  fontSize: 14,
+  textAlign: 'center',
+  bgcolor: '#95BCF2', // ярко-голубой
+  borderColor: '#95BCF2', // ярко-голубой
+  borderTopLeftRadius: 2,
+  borderTopRightRadius: 2,
+  color: '#7620a2', // сиреневый
 };
 
 export const styleBl1Form08 = {
