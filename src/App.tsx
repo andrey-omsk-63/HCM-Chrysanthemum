@@ -104,15 +104,31 @@ const App = () => {
 
   //=== инициализация ======================================
   // if (!dateStat.debug) {
-  axios
-    .post(baseURL, {
+  // axios
+  //   .post(baseURL, {
+  //     id: 'string',
+  //     userLogin: 'string',
+  //     userRole: 'string',
+  //   })
+  //   .then((response) => {
+  //     console.log('post-response.data:', response.data);
+  //     setPost(response.data);
+  //   });
+  axios({
+    method: 'POST',
+    url: baseURL,
+    data: {
       id: 'string',
       userLogin: 'string',
       userRole: 'string',
-    })
+    },
+  })
     .then((response) => {
       console.log('post-response.data:', response.data);
       setPost(response.data);
+    })
+    .catch((error: any) => {
+      console.error('Post:', error);
     });
 
   axios
@@ -120,30 +136,54 @@ const App = () => {
       id: 'string',
     })
     .then((response) => {
-      console.log('put-response.data:', response.data);
       setPost(response.data);
+    })
+    .catch((error: any) => {
+      // Если запрос не будет выполнен, то ошибка выводится в терминал
+      console.error('Put:', error);
     });
-  // .catch((error: any) => {
-  //   // Если запрос не будет выполнен, то ошибка выводится в терминал
-  //   console.error(error);
-
-  axios.delete(`${baseURL}/1`).then(() => {
-    console.log('!!!del.data:');
-    setPost(null);
-  });
+  // axios.delete(`${baseURL}/1`).then(() => {
+  //   console.log('!!!del.data:');
+  //   setPost(null);
+  // });
   //}
   //===  Слушатель с сервера ===============================
 
   React.useEffect(() => {
-    axios
-      .get(baseURL)
+    // axios
+    //   .get(baseURL, {
+    //     params: {
+    //       id: 'string',
+    //       userLogin: 'string',
+    //       userRole: 'string',
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log('get-response.data:', response.data);
+    //     setPost(response.data);
+    //   })
+    //   .catch((error: any) => {
+    //     // Если запрос не будет выполнен, то ошибка выводится в терминал
+    //     console.error(error);
+    //   });
+
+    axios({
+      method: 'GET',
+      url: baseURL,
+      data: {
+        params: {
+          id: 'string',
+          userLogin: 'string',
+          userRole: 'string',
+        },
+      },
+    })
       .then((response) => {
         console.log('get-response.data:', response.data);
         setPost(response.data);
       })
       .catch((error: any) => {
-        // Если запрос не будет выполнен, то ошибка выводится в терминал
-        console.error(error);
+        console.error('Get:', error);
       });
   }, [setPost]);
   //========================================================

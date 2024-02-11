@@ -45,6 +45,8 @@ const HcmBl2Form102 = () => {
     setTrigger(!trigger);
   };
 
+  const ClickKnop5 = () => {};
+
   const ClickKnop6 = () => {
     setBl2Form2011(true);
   };
@@ -75,10 +77,7 @@ const HcmBl2Form102 = () => {
 
         <Grid item xs={5} sx={{ border: 0, height: '30px' }}></Grid>
         <Grid item xs={1.5} sx={{}}>
-          <Button
-            sx={styleMain04(1.5, Illum, 9)}
-            //onClick={() => ClickKnop4()}
-          >
+          <Button sx={styleMain04(1.5, Illum, 9)} onClick={() => ClickKnop5()}>
             Добавить НС
           </Button>
         </Grid>
@@ -109,15 +108,18 @@ const HcmBl2Form102 = () => {
     );
   };
 
+  const styleBl2Form05 = {
+    border: 0,
+    marginTop: '10px',
+    height: window.innerHeight - 195,
+  };
+
   return (
     <Grid container sx={styleBl3Form01(153)}>
       <Grid item xs={12}>
         <Grid container>
           {MenuContent()}
-          <Grid
-            item
-            xs={12}
-            sx={{ border: 0, marginTop: '10px', height: window.innerHeight - 195 }}>
+          <Grid item xs={12} sx={styleBl2Form05}>
             {HeaderTabl()}
           </Grid>
         </Grid>
