@@ -103,41 +103,48 @@ const App = () => {
   //const baseURL = "https://user-permissions-api.hcm.ls-dev.ru/";
 
   //=== инициализация ======================================
-  if (!dateStat.debug) {
-    axios
-      .post(baseURL, {
-        id: 'string',
-        userLogin: 'string',
-        userRole: 'string',
-      })
-      .then((response) => {
-        console.log('post-response.data:', response.data);
-        setPost(response.data);
-      });
-
-    axios
-      .put(baseURL, {
-        id: 'string',
-      })
-      .then((response) => {
-        console.log('put-response.data:', response.data);
-        setPost(response.data);
-      });
-
-    axios.delete(`${baseURL}/1`).then(() => {
-      console.log('!!!del.data:');
-      setPost(null);
+  // if (!dateStat.debug) {
+  axios
+    .post(baseURL, {
+      id: 'string',
+      userLogin: 'string',
+      userRole: 'string',
+    })
+    .then((response) => {
+      console.log('post-response.data:', response.data);
+      setPost(response.data);
     });
-  }
+
+  axios
+    .put(baseURL, {
+      id: 'string',
+    })
+    .then((response) => {
+      console.log('put-response.data:', response.data);
+      setPost(response.data);
+    });
+  // .catch((error: any) => {
+  //   // Если запрос не будет выполнен, то ошибка выводится в терминал
+  //   console.error(error);
+
+  axios.delete(`${baseURL}/1`).then(() => {
+    console.log('!!!del.data:');
+    setPost(null);
+  });
+  //}
   //===  Слушатель с сервера ===============================
 
   React.useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      console.log('get-response.data:', response.data);
-      setPost(response.data);
-    });
-    // .catch((error: any) => { // Если запрос не будет выполнен, то ошибка выводится в терминал
-    //   console.error(error);});
+    axios
+      .get(baseURL)
+      .then((response) => {
+        console.log('get-response.data:', response.data);
+        setPost(response.data);
+      })
+      .catch((error: any) => {
+        // Если запрос не будет выполнен, то ошибка выводится в терминал
+        console.error(error);
+      });
   }, [setPost]);
   //========================================================
   if (flagOpenDebug) {
