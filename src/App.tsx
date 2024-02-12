@@ -72,7 +72,6 @@ export let massMode: NameMode[] = [];
 export let Coordinates: Array<Array<number>> = []; // массив координат
 
 let flagOpenDebug = true;
-//let flagOpenWS = true;
 let soob = "";
 
 const App = () => {
@@ -134,12 +133,6 @@ const App = () => {
   //     console.error('Put:', error);
   //   });
 
-  // axios.delete(`${baseURL}/1`).then(() => {
-  //   console.log('!!!del.data:');
-  //   setPost(null);
-  // });
-  //}
-
   //===  Слушатель с сервера ===============================
   React.useEffect(() => {
     axios
@@ -152,21 +145,20 @@ const App = () => {
         console.error("Ошибка в GetPermissions:", error);
       });
 
-      axios
-      .get('https://localhost:21812/permissions')
-      .then((response) => {
-        console.log("getPermission-response.data:", response.data);
-        setGetPermission(response.data);
-      })
-      .catch((error: any) => {
-        console.error("2Ошибка в GetPermissions:", error);
-      });
+      // axios
+      // .get('https://localhost:21812/permissions')
+      // .then((response) => {
+      //   console.log("getPermission-response.data:", response.data);
+      //   setGetPermission(response.data);
+      // })
+      // .catch((error: any) => {
+      //   console.error("2Ошибка в GetPermissions:", error);
+      // });
   }, [setGetPermission]);
   //========================================================
   if (flagOpenDebug) {
     // чтение и перевод в двоичный вид файла с картинкой
     axios
-      // .get('https//www.vladtime.ru/uploads/posts/2017-12/1514228400_app-store-ios.jpg', {
       .get("https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg", {
         //.get('http://localhost:3000/portrait.jpg', {
         responseType: "arraybuffer",
