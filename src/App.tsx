@@ -137,7 +137,7 @@ const App = () => {
   //===  Слушатель с сервера ===============================
   React.useEffect(() => {
     axios
-      .get('https://user-permissions-api.hcm.ls-dev.ru:21812/permissions')
+      .get('https://user-permissions-api.hcm.ls-dev.ru/permissions')
       .then((response) => {
         console.log('getPermission-response.data:', response.data);
         setGetPermission(response.data);
@@ -147,15 +147,15 @@ const App = () => {
       });
 
     axios
-      .get('https://person.chry.ls-dev.ru/persons', {
+      .get('https://person.chry.ls-dev.ru/persons?limit=2', {
+        responseType: 'arraybuffer',
         //headers: { 'Access-Control-Allow-Origin': '*' },
         //withCredentials: true,
-
-        params: {
-          //departments: [],
-          _offset: 2,
-          //limit: 100,
-        },
+        // params: {
+        //   departments: [],
+        //   _offset: 2,
+        //   limit: 100,
+        // },
       })
       .then((response) => {
         console.log('getPerson-response.data:', response.data);
