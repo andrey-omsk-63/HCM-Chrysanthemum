@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 import {
   //useSelector,
   useDispatch,
-} from "react-redux";
-import { statsaveCreate } from "./redux/actions";
+} from 'react-redux';
+import { statsaveCreate } from './redux/actions';
 //import { massfazCreate } from './redux/actions';
 
-import Grid from "@mui/material/Grid";
+import Grid from '@mui/material/Grid';
 
-import axios from "axios";
+import axios from 'axios';
 
-import HcmMain from "./components/HcmMain";
-import AppSocketError from "./AppSocketError";
+import HcmMain from './components/HcmMain';
+import AppSocketError from './AppSocketError';
 
 //import { baseURL } from "./components/HcmMainConst";
 
@@ -72,7 +72,7 @@ export let massMode: NameMode[] = [];
 export let Coordinates: Array<Array<number>> = []; // массив координат
 
 let flagOpenDebug = true;
-let soob = "";
+let soob = '';
 
 const App = () => {
   //=== Piece of Redux =====================================
@@ -92,14 +92,15 @@ const App = () => {
   // console.log('Host:', window.location.host);
   // console.log('Pathname:', window.location.pathname);
   // console.log('Search:', window.location.search);
-  if (window.location.host === "localhost:3000") dateStat.debug = true;
+  if (window.location.host === 'localhost:3000') dateStat.debug = true;
   dispatch(statsaveCreate(dateStat));
 
   const [getPermission, setGetPermission] = React.useState(null);
+  const [getPerson, setGetPerson] = React.useState(null);
   //const [postRoles, setPostRoles] = React.useState(null);
   //const [getRoles, setGetRoles] = React.useState(null);
   const [openSetErr, setOpenSetErr] = React.useState(false);
-  if (dateStat.debug) console.log("РЕЖИМ ОТЛАДКИ!!!",getPermission);
+  if (dateStat.debug) console.log('РЕЖИМ ОТЛАДКИ!!!', getPermission, getPerson);
 
   //const baseURL = "https://user-permissions-api.hcm.ls-dev.ru/";
 
@@ -138,37 +139,57 @@ const App = () => {
     axios
       .get('https://user-permissions-api.hcm.ls-dev.ru:21812/permissions')
       .then((response) => {
-        console.log("getPermission-response.data:", response.data);
+        console.log('getPermission-response.data:', response.data);
         setGetPermission(response.data);
       })
       .catch((error: any) => {
-        console.error("Ошибка в GetPermissions:", error);
+        console.error('Ошибка в GetPermissions:', error);
       });
 
-      // axios
-      // .get('https://localhost:21812/permissions')
-      // .then((response) => {
-      //   console.log("getPermission-response.data:", response.data);
-      //   setGetPermission(response.data);
-      // })
-      // .catch((error: any) => {
-      //   console.error("2Ошибка в GetPermissions:", error);
-      // });
+    axios
+      .get('https://person.chry.ls-dev.ru/persons', {
+        //headers: { 'Access-Control-Allow-Origin': '*' },
+        //withCredentials: true,
+
+        params: {
+          //departments: [],
+          _offset: 2,
+          //limit: 100,
+        },
+      })
+      .then((response) => {
+        console.log('getPerson-response.data:', response.data);
+        setGetPerson(response.data);
+      })
+      .catch((error: any) => {
+        console.error('Ошибка в GetPerson:', error);
+      });
+
+    //  "start": "set HTTPS=true&&react-scripts start",
+    // axios
+    // .get('https://localhost:21812/permissions')
+    // .then((response) => {
+    //   console.log("getPermission-response.data:", response.data);
+    //   setGetPermission(response.data);
+    // })
+    // .catch((error: any) => {
+    //   console.error("2Ошибка в GetPermissions:", error);
+    // });
   }, [setGetPermission]);
   //========================================================
   if (flagOpenDebug) {
     // чтение и перевод в двоичный вид файла с картинкой
     axios
-      .get("https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg", {
+      .get('https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg', {
         //.get('http://localhost:3000/portrait.jpg', {
-        responseType: "arraybuffer",
+        responseType: 'arraybuffer',
       })
       .then(function (response) {
         let image = btoa(
           new Uint8Array(response.data).reduce(
             (data, byte) => data + String.fromCharCode(byte),
-            ""
-          )
+            '',
+          ),
         );
         dateStat.picture = image;
         dispatch(statsaveCreate(dateStat));
@@ -178,7 +199,7 @@ const App = () => {
   }
 
   return (
-    <Grid container sx={{ height: "100vh", width: "100%", bgcolor: "#E9F5D8" }}>
+    <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
       <Grid item xs>
         {openSetErr && <AppSocketError sErr={soob} setOpen={setOpenSetErr} />}
         <HcmMain />
