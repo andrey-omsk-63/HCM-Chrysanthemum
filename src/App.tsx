@@ -98,7 +98,7 @@ const App = () => {
   const [getPermission, setGetPermission] = React.useState(null);
   const [getPerson, setGetPerson] = React.useState(null);
   //const [postRoles, setPostRoles] = React.useState(null);
-  //const [getRoles, setGetRoles] = React.useState(null);
+  const [getRoles, setGetRoles] = React.useState(null);
   const [openSetErr, setOpenSetErr] = React.useState(false);
   if (dateStat.debug) console.log('РЕЖИМ ОТЛАДКИ!!!', getPermission, getPerson);
 
@@ -137,10 +137,10 @@ const App = () => {
   //===  Слушатель с сервера ===============================
   React.useEffect(() => {
     axios
-      .get('https://user-permissions-api.hcm.ls-dev.ru/permissions')
+      .get('https://user-permissions-api.hcm.ls-dev.ru/usersRoles')
       .then((response) => {
-        console.log('getPermission-response.data:', response.data);
-        setGetPermission(response.data);
+        console.log('getRoles-response.data:', response.data);
+        setGetRoles(response.data);
       })
       .catch((error: any) => {
         console.error('Ошибка в GetPermissions:', error);
