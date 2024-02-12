@@ -1,19 +1,19 @@
-import React from 'react';
+import React from "react";
 import {
   //useSelector,
   useDispatch,
-} from 'react-redux';
-import { statsaveCreate } from './redux/actions';
+} from "react-redux";
+import { statsaveCreate } from "./redux/actions";
 //import { massfazCreate } from './redux/actions';
 
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 
-import axios from 'axios';
+import axios from "axios";
 
-import HcmMain from './components/HcmMain';
-import AppSocketError from './AppSocketError';
+import HcmMain from "./components/HcmMain";
+import AppSocketError from "./AppSocketError";
 
-import { baseURL } from './components/HcmMainConst';
+import { baseURL } from "./components/HcmMainConst";
 
 //import { MasskPoint } from "./components/MapServiceFunctions";
 
@@ -73,7 +73,7 @@ export let Coordinates: Array<Array<number>> = []; // массив коорди�
 
 let flagOpenDebug = true;
 //let flagOpenWS = true;
-let soob = '';
+let soob = "";
 
 const App = () => {
   //=== Piece of Redux =====================================
@@ -90,117 +90,83 @@ const App = () => {
   //========================================================
   //const host =
   //  'wss://' + window.location.host + window.location.pathname + 'W' + window.location.search;
-  console.log('Host:', window.location.host);
-  console.log('Pathname:', window.location.pathname);
-  console.log('Search:', window.location.search);
-  if (window.location.host === 'localhost:3000') dateStat.debug = true;
+  // console.log('Host:', window.location.host);
+  // console.log('Pathname:', window.location.pathname);
+  // console.log('Search:', window.location.search);
+  if (window.location.host === "localhost:3000") dateStat.debug = true;
   dispatch(statsaveCreate(dateStat));
 
-  const [post, setPost] = React.useState(null);
+  const [getPermission, setGetPermission] = React.useState(null);
+  //const [postRoles, setPostRoles] = React.useState(null);
+  //const [getRoles, setGetRoles] = React.useState(null);
   const [openSetErr, setOpenSetErr] = React.useState(false);
-  if (dateStat.debug) console.log('РЕЖИМ ОТЛАДКИ!!!', post);
+  if (dateStat.debug) console.log("РЕЖИМ ОТЛАДКИ!!!",getPermission);
 
   //const baseURL = "https://user-permissions-api.hcm.ls-dev.ru/";
 
   //=== инициализация ======================================
-  // if (!dateStat.debug) {
+  // axios({
+  //   method: "POST",
+  //   url: baseURL,
+  //   data: {
+  //     id: "string",
+  //     userLogin: "string",
+  //     userRole: "string",
+  //   },
+  // })
+  //   .then((response) => {
+  //     console.log("post-response.data:", response.data);
+  //     setPostt(response.data);
+  //   })
+  //   .catch((error: any) => {
+  //     console.error("Ошибка в Post:", error);
+  // });
+
   // axios
-  //   .post(baseURL, {
+  //   .put(baseURL, {
   //     id: 'string',
-  //     userLogin: 'string',
-  //     userRole: 'string',
   //   })
   //   .then((response) => {
-  //     console.log('post-response.data:', response.data);
   //     setPost(response.data);
+  //   })
+  //   .catch((error: any) => {
+  //     // Если запрос не будет выполнен, то ошибка выводится в терминал
+  //     console.error('Put:', error);
   //   });
-  axios({
-    method: 'POST',
-    url: baseURL,
-    data: {
-      id: 'string',
-      userLogin: 'string',
-      userRole: 'string',
-    },
-  })
-    .then((response) => {
-      console.log('post-response.data:', response.data);
-      setPost(response.data);
-    })
-    .catch((error: any) => {
-      console.error('Post:', error);
-    });
 
-  axios
-    .put(baseURL, {
-      id: 'string',
-    })
-    .then((response) => {
-      setPost(response.data);
-    })
-    .catch((error: any) => {
-      // Если запрос не будет выполнен, то ошибка выводится в терминал
-      console.error('Put:', error);
-    });
   // axios.delete(`${baseURL}/1`).then(() => {
   //   console.log('!!!del.data:');
   //   setPost(null);
   // });
   //}
+
   //===  Слушатель с сервера ===============================
-
   React.useEffect(() => {
-    // axios
-    //   .get(baseURL, {
-    //     params: {
-    //       id: 'string',
-    //       userLogin: 'string',
-    //       userRole: 'string',
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log('get-response.data:', response.data);
-    //     setPost(response.data);
-    //   })
-    //   .catch((error: any) => {
-    //     // Если запрос не будет выполнен, то ошибка выводится в терминал
-    //     console.error(error);
-    //   });
-
-    axios({
-      method: 'GET',
-      url: baseURL,
-      data: {
-        params: {
-          id: 'string',
-          userLogin: 'string',
-          userRole: 'string',
-        },
-      },
-    })
+    axios
+      .get(baseURL+'/permissions')
       .then((response) => {
-        console.log('get-response.data:', response.data);
-        setPost(response.data);
+        console.log("getPermission-response.data:", response.data);
+        setGetPermission(response.data);
       })
       .catch((error: any) => {
-        console.error('Get:', error);
+        console.error("Ошибка в GetPermissions:", error);
       });
-  }, [setPost]);
+  }, [setGetPermission]);
   //========================================================
   if (flagOpenDebug) {
     // чтение и перевод в двоичный вид файла с картинкой
     axios
       // .get('https//www.vladtime.ru/uploads/posts/2017-12/1514228400_app-store-ios.jpg', {
-      .get('https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg', {
+      .get("https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg", {
         //.get('http://localhost:3000/portrait.jpg', {
-        responseType: 'arraybuffer',
+        responseType: "arraybuffer",
       })
       .then(function (response) {
         let image = btoa(
           new Uint8Array(response.data).reduce(
             (data, byte) => data + String.fromCharCode(byte),
-            '',
-          ),
+            ""
+          )
         );
         dateStat.picture = image;
         dispatch(statsaveCreate(dateStat));
@@ -210,7 +176,7 @@ const App = () => {
   }
 
   return (
-    <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
+    <Grid container sx={{ height: "100vh", width: "100%", bgcolor: "#E9F5D8" }}>
       <Grid item xs>
         {openSetErr && <AppSocketError sErr={soob} setOpen={setOpenSetErr} />}
         <HcmMain />
