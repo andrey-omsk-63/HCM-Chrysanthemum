@@ -13,7 +13,7 @@ import axios from "axios";
 import HcmMain from "./components/HcmMain";
 import AppSocketError from "./AppSocketError";
 
-import { baseURL } from "./components/HcmMainConst";
+//import { baseURL } from "./components/HcmMainConst";
 
 //import { MasskPoint } from "./components/MapServiceFunctions";
 
@@ -143,13 +143,23 @@ const App = () => {
   //===  Слушатель с сервера ===============================
   React.useEffect(() => {
     axios
-      .get(baseURL+'/permissions')
+      .get('https://user-permissions-api.hcm.ls-dev.ru:21812/permissions')
       .then((response) => {
         console.log("getPermission-response.data:", response.data);
         setGetPermission(response.data);
       })
       .catch((error: any) => {
         console.error("Ошибка в GetPermissions:", error);
+      });
+
+      axios
+      .get('https://localhost:21812/permissions')
+      .then((response) => {
+        console.log("getPermission-response.data:", response.data);
+        setGetPermission(response.data);
+      })
+      .catch((error: any) => {
+        console.error("2Ошибка в GetPermissions:", error);
       });
   }, [setGetPermission]);
   //========================================================
