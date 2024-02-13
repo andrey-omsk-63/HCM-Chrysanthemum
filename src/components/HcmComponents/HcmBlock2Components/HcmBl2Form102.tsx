@@ -1,20 +1,21 @@
-import * as React from "react";
+import * as React from 'react';
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
-import HcmBl2Form1021 from "./HcmBl2Form1021";
+import HcmBl2Form1021 from './HcmBl2Form1021';
 
-import { TablStr } from "../../HcmServiceFunctions";
+import { TablStr } from '../../HcmServiceFunctions';
 
-import { styleBl3Form01, styleMain04 } from "../../HcmMainStyle";
-import { styleBl1Form077, styleBl1Form08 } from "../../HcmMainStyle";
-import { styleBl2Form06 } from "../../HcmMainStyle";
+import { styleBl3Form01, styleMain04 } from '../../HcmMainStyle';
+import { styleBl1Form077, styleBl1Form08 } from '../../HcmMainStyle';
+import { styleBl2Form06, styleBl2Form05 } from '../../HcmMainStyle';
 
 const date = new Date();
 const tekYear = date.getFullYear();
 const tekMonth = date.getMonth();
+//const tekMonth = 7;
 let tekQ = 0;
 if (tekMonth < 4) tekQ = 1;
 if (tekMonth > 3 && tekMonth < 7) tekQ = 2;
@@ -97,7 +98,7 @@ const HcmBl2Form102 = () => {
           {KnopQ(4, ClickKnop4)}
         </Grid>
 
-        <Grid item xs={5} sx={{ border: 0, height: "30px" }}></Grid>
+        <Grid item xs={5} sx={{ border: 0, height: '30px' }}></Grid>
         <Grid item xs={1.5} sx={{}}>
           <Button sx={styleMain04(1.5, Illum, 9)} onClick={() => ClickKnop5()}>
             Добавить НС
@@ -115,26 +116,26 @@ const HcmBl2Form102 = () => {
   const HeaderTabl = () => {
     return (
       <Grid container sx={styleBl1Form077}>
-        {TablStr(1, 1.4, "Подразделение", styleBl1Form08)}
-        {TablStr(1, 0.8, "За период", styleBl1Form08)}
-        {TablStr(1, 1, "Причина проведения", styleBl1Form08)}
-        {TablStr(1, 1.2, "Общее состояние команды", styleBl1Form08)}
-        {TablStr(1, 1.25, "Взаимодействие в команде", styleBl1Form08)}
-        {TablStr(1, 1.25, "Взаимодействие с руководителем", styleBl1Form08)}
-        {TablStr(1, 1.5, "Информированность", styleBl1Form08)}
-        {TablStr(1, 0.8, "Развитие", styleBl1Form08)}
-        {TablStr(1, 0.8, "Текущие задачи", styleBl1Form08)}
-        {TablStr(1, 1, "Заработная плата, бонусы", styleBl1Form08)}
-        {TablStr(1, 1, "Нагрузка, режим работы", styleBl1Form08)}
+        {TablStr(1, 1.4, 'Подразделение', styleBl1Form08)}
+        {TablStr(1, 0.8, 'За период', styleBl1Form08)}
+        {TablStr(1, 1, 'Причина проведения', styleBl1Form08)}
+        {TablStr(1, 1.2, 'Общее состояние команды', styleBl1Form08)}
+        {TablStr(1, 1.25, 'Взаимодействие в команде', styleBl1Form08)}
+        {TablStr(1, 1.25, 'Взаимодействие с руководителем', styleBl1Form08)}
+        {TablStr(1, 1.5, 'Информированность', styleBl1Form08)}
+        {TablStr(1, 0.8, 'Развитие', styleBl1Form08)}
+        {TablStr(1, 0.8, 'Текущие задачи', styleBl1Form08)}
+        {TablStr(1, 1, 'Заработная плата, бонусы', styleBl1Form08)}
+        {TablStr(1, 1, 'Нагрузка, режим работы', styleBl1Form08)}
       </Grid>
     );
   };
 
-  const styleBl2Form05 = {
-    border: 0,
-    marginTop: "10px",
-    height: window.innerHeight - 195,
-  };
+  // const styleBl2Form05 = {
+  //   border: 0,
+  //   marginTop: '10px',
+  //   height: window.innerHeight - 195,
+  // };
 
   return (
     <Grid container sx={styleBl3Form01(153)}>
