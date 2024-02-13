@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { statsaveCreate } from './../../../redux/actions';
 import imageCompression from 'browser-image-compression';
 
 import Grid from '@mui/material/Grid';
@@ -8,6 +9,10 @@ import Button from '@mui/material/Button';
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+
+import axios from 'axios';
+//import 'dayjs/locale/ru';
+//import dayjs, { Dayjs } from 'dayjs';
 
 import HcmBl1Form101 from './HcmBl1Form101';
 import HcmBl1Form102 from './HcmBl1Form102';
@@ -19,7 +24,9 @@ import HcmBl1Form107 from './HcmBl1Form107';
 import HcmBl1Form108 from './HcmBl1Form108';
 import HcmBlock1ViewImg from './HcmBlock1ViewImg';
 
-import { RandomNumber } from '../../HcmServiceFunctions';
+import { RandomNumber, MakeNewBlob } from '../../HcmServiceFunctions';
+
+import { baseURL2 } from '../../HcmMainConst';
 
 import { styleMain04, styleBl2Gl01, styleBl1Form01 } from '../../HcmMainStyle';
 import { styleBl1Form03, styleBl1Form04 } from '../../HcmMainStyle';
@@ -29,9 +36,9 @@ let Illum = 1;
 let oldIdx = -1;
 
 let maskForm = {
-  name: 'Пупкин Иван',
-  nik: 'Доцент',
-  birthDate: '12.12.1989',
+  name: '',
+  nik: '',
+  birthDate: '',
   beginDate: '21.12.2021',
   post: 'Гранатомётчик',
   department: 'Пехота',
@@ -51,10 +58,10 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     const { statsaveReducer } = state;
     return statsaveReducer.datestat;
   });
-  //console.log("datestat:", datestat);
+  //console.log("getPersonNik:", getPersonNik, );
   //const debug = datestat.debug;
   //const ws = datestat.ws;
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
   //===========================================================
   const [bl1Form101, setBl1Form101] = React.useState(false);
   const [bl1Form102, setBl1Form201] = React.useState(false);
@@ -64,38 +71,10 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   const [bl1Form106, setBl1Form601] = React.useState(false);
   const [bl1Form107, setBl1Form701] = React.useState(false);
   const [bl1Form108, setBl1Form801] = React.useState(false);
+  const [getPersonNik, setGetPersonNik] = React.useState(null);
   const [openImg, setOpenImg] = React.useState(false);
   //const [trigger, setTrigger] = React.useState(false);
   const [openLoader, setOpenLoader] = React.useState(true);
-
-  const b64toBlob = (b64Data: any, contentType: any, sliceSize: number) => {
-    contentType = contentType || '';
-    sliceSize = sliceSize || 256;
-    let byteCharacters1 = Buffer.from(b64Data, 'base64');
-    let byteCharacters2 = byteCharacters1.toString('base64');
-    //let byteCharacters = atob(b64Data);
-    let byteCharacters = atob(byteCharacters2);
-    let byteArrays = [];
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      let slice = byteCharacters.slice(offset, offset + sliceSize);
-      let byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      let byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-    let blob = new Blob(byteArrays, { type: contentType });
-    return blob;
-  };
-
-  const MakeNewBlob = (MESS: string) => {
-    let poz = MESS.indexOf(',');
-    let sblob = MESS.slice(poz + 1);
-    let contentType = 'image/png';
-    let blob: any = b64toBlob(sblob, contentType, 256);
-    return blob;
-  };
 
   const handleImageUpload = async () => {
     let options = {
@@ -111,8 +90,60 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     }
   };
 
+  const MakeDateRus = (tekData: Date) => {
+    let ddd = new Date(tekData.toString());
+    let sDay = ddd.getDate();
+    let sMes = ddd.getMonth() + 1;
+    let sYear = ddd.getFullYear();
+    let dataRus = (sDay < 10 ? '0' + sDay : sDay) + '-';
+    dataRus += (sMes < 10 ? '0' + sMes : sMes) + '-' + sYear;
+    return dataRus;
+  };
+
+  const FillMask = React.useCallback((rec: any) => {
+    let mask = {
+      name: rec.name,
+      nik: rec.nickName,
+      birthDate: MakeDateRus(rec.birthDate),
+      beginDate: MakeDateRus(rec.startDate),
+      post: rec.jobPosition,
+      department: rec.department.name,
+      chief: rec.manager,
+      location: rec.location.country + ', ' + rec.location.city + ' ' + rec.location.timeZone,
+      status: rec.personAbsence.data[0].reason,
+    };
+    maskForm = mask;
+  }, []);
+
   //=== инициализация ======================================
-  //console.log('£££:', datestat.picture);
+  let kard = datestat.person[0];
+  React.useEffect(() => {
+    if (kard) {
+      let url = baseURL2 + '/' + kard.nickName;
+      // Карточка сотрудника
+      axios
+        .get(url, {
+          // params: {
+          //   departments: [],
+          //   _offset: 2,
+          //   limit: 100,
+          // },
+        })
+        .then((response) => {
+          console.log('GetPersonNik.data:', response.data);
+          console.log('GetPersonNik.url:', response.config.url);
+          datestat.personNik = response.data;
+          dispatch(statsaveCreate(datestat));
+          FillMask(response.data[0]);
+          setGetPersonNik(response.data);
+        })
+        .catch((error: any) => {
+          console.error('Ошибка в GetPersonNik:', error);
+        });
+    }
+  }, [setGetPersonNik, props.idx, kard, datestat, dispatch, FillMask]);
+  console.log('getPersonNik:', getPersonNik);
+
   if (props.idx !== oldIdx) {
     if (!PICT && datestat.picture) {
       blob = MakeNewBlob(datestat.picture);
@@ -290,7 +321,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
             {recRight}
           </Grid>
         ) : (
-          <Grid item xs sx={{ fontSize: 14, marginLeft: '10px', border: 0 }}>
+          <Grid item xs sx={{ fontSize: 14, marginLeft: '6px', border: 0 }}>
             <b>{recRight}</b>
           </Grid>
         )}
@@ -344,7 +375,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
               <Grid container>
                 <Grid item xs={12} sx={styleBl1Form03}>
                   <em>
-                    Личная карточка <b>Доцент</b>
+                    Личная карточка <b>{maskForm.nik}</b>
                   </em>
                 </Grid>
               </Grid>
