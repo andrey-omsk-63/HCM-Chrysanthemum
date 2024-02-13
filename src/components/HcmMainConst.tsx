@@ -37,8 +37,8 @@ export const CLINCH: Array<number> = [
 ];
 
 //export const baseURL = 'https://user-permissions-api.hcm.ls-dev.ru:21812'; // адрес сервера
-export const baseURL1 = 'https://user-permissions-api.hcm.ls-dev.ru'; // адрес сервера 1
-export const baseURL2 = 'https://person.chry.ls-dev.ru'; // адрес сервера 2
+export const baseURL1 = 'https://user-permissions-api.chry.ls-dev.ru/usersRoles'; // адрес сервера 1
+export const baseURL2 = 'https://person.chry.ls-dev.ru/persons'; // адрес сервера 2
 
 
 export const UNIT: Array<any> = [

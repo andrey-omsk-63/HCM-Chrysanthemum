@@ -16,11 +16,11 @@ import { DEMO } from '../src/components/HcmMain';
 
 import { styleModalEnd } from '../src/components/HcmMainStyle';
 
-import { styleVarKnopNum } from '../src/components/HcmComponents/HcmComponentsStyle';
-import { styleKnop, styleOutputFaza } from '../src/components/HcmComponents/HcmComponentsStyle';
-import { StyleSetControl, styleControl01 } from '../src/components/HcmComponents/HcmComponentsStyle';
-import { StyleTitle, styleTitleDEMO } from '../src/components/HcmComponents/HcmComponentsStyle';
-import { StyleModalMenuVar, StyleModalMenuConst } from '../src/components/HcmComponents/HcmComponentsStyle';
+import { styleVarKnopNum } from './HcmComponentsStyle';
+import { styleKnop, styleOutputFaza } from './HcmComponentsStyle';
+import { StyleSetControl, styleControl01 } from './HcmComponentsStyle';
+import { StyleTitle, styleTitleDEMO } from './HcmComponentsStyle';
+import { StyleModalMenuVar, StyleModalMenuConst } from './HcmComponentsStyle';
 
 let oldIdx = -1;
 let needRend = false;

@@ -11,9 +11,10 @@ import Grid from "@mui/material/Grid";
 import axios from "axios";
 
 import HcmMain from "./components/HcmMain";
-import AppSocketError from "./AppSocketError";
+import HcmErrorMessage from "./components/HcmComponents/HcmErrorMessage";
+//import AppSocketError from "./AppSocketError";
 
-import { baseURL2 } from "./components/HcmMainConst";
+import { baseURL1, baseURL2 } from "./components/HcmMainConst";
 
 //import { SendSocketGetPhases } from "./components/MapSocketFunctions";
 
@@ -27,6 +28,8 @@ export interface Stater {
   picture: any; // фото в личную карточу в двоичном коде
   treeUnit: any; // дерево подразделений
   idxTreeUnit: number; // индекс в дереве подразделений
+  usersRoles: Array<any>; // список сотрудников и их ролей
+  person: Array<any>; // список сотрудников с фильтрацией по подразделениям
 }
 
 export let dateStat: Stater = {
@@ -35,6 +38,8 @@ export let dateStat: Stater = {
   picture: null,
   treeUnit: [],
   idxTreeUnit: 0,
+  usersRoles: [],
+  person: [],
 };
 
 export interface Pointer {
@@ -97,23 +102,21 @@ const App = () => {
   const [getPerson, setGetPerson] = React.useState<any>(null);
   const [getPersonNik, setGetPersonNik] = React.useState(null);
   //const [postRoles, setPostRoles] = React.useState(null);
-  const [getUsersRoles, setGetUsersRoless] = React.useState(null);
+  const [getUsersRoles, setGetUsersRoles] = React.useState(null);
   const [openSetErr, setOpenSetErr] = React.useState(false);
   if (dateStat.debug)
     console.log("РЕЖИМ ОТЛАДКИ!!!", getUsersRoles, getPerson, getPersonNik);
-
-  //const baseURL = "https://user-permissions-api.hcm.ls-dev.ru/";
 
   //=== инициализация ======================================
 
   //===  Слушатель с сервера ===============================
   React.useEffect(() => {
+    // Получение списка сотрудников и их ролей
     axios
-    .get('https://user-permissions-api.chry.ls-dev.ru/usersRoles')
-      // .get("https://user-permissions-api.hcm.ls-dev.ru/usersRoles")
+      .get(baseURL1)
       .then((response) => {
-        console.log("getRoles-response.data:", response.data);
-        setGetUsersRoless(response.data);
+        console.log("GetUsersRoles.data:", response.data);
+        setGetUsersRoles(response.data);
       })
       .catch((error: any) => {
         console.error("Ошибка в GetPermissions/usersRoles:", error);
@@ -121,7 +124,7 @@ const App = () => {
 
     // Получение списка сотрудников с фильтрацией по подразделениям
     axios
-      .get(baseURL2 + "/persons", {
+      .get(baseURL2, {
         params: {
           departments: [],
           _offset: 2,
@@ -132,33 +135,40 @@ const App = () => {
         console.log("GetPerson.data:", response.data);
         console.log("GetPerson.url:", response.config.url);
         setGetPerson(response.data);
+        dateStat.person = response.data;
+        dispatch(statsaveCreate(dateStat));
       })
       .catch((error: any) => {
         console.error("Ошибка в GetPerson:", error);
+        soob =
+          "Ошибка при открытии справочника сотрудников с фильтрацией по подразделениям. Обратитесь к администратору Базы данных";
       });
-  }, [setGetPerson]);
+  }, [setGetPerson, setGetUsersRoles, dispatch]);
   //========================================================
   React.useEffect(() => {
     if (getPerson) {
-      let url = baseURL2 + "/persons/" + getPerson[0].data[0].nickName;
-      console.log("***:", url);
-      // Просмотр карточки сотрудника
-      // axios
-      //   .get(url, {
-      //     // params: {
-      //     //   departments: [],
-      //     //   _offset: 2,
-      //     //   limit: 100,
-      //     // },
-      //   })
-      //   .then((response) => {
-      //     console.log("GetPersonNik.data:", response.data);
-      //     console.log("GetPersonNik.url:", response.config.url);
-      //     setGetPersonNik(response.data);
-      //   })
-      //   .catch((error: any) => {
-      //     console.error("Ошибка в GetPersonNik:", error);
-      //   });
+      if (getPerson.length) {
+        //console.log("***:", getPerson[0].nickName)
+         let url = baseURL2 + "/" + getPerson[0].nickName;
+         console.log("***:", url);
+        // //осмотр карточки сотрудника
+        axios
+          .get(url, {
+            // params: {
+            //   departments: [],
+            //   _offset: 2,
+            //   limit: 100,
+            // },
+          })
+          .then((response) => {
+            console.log("GetPersonNik.data:", response.data);
+            console.log("GetPersonNik.url:", response.config.url);
+            setGetPersonNik(response.data);
+          })
+          .catch((error: any) => {
+            console.error("Ошибка в GetPersonNik:", error);
+          });
+      }
     }
   }, [setGetPersonNik, getPerson]);
 
@@ -186,9 +196,9 @@ const App = () => {
   return (
     <Grid container sx={{ height: "100vh", width: "100%", bgcolor: "#E9F5D8" }}>
       <Grid item xs>
-        {openSetErr && <AppSocketError sErr={soob} setOpen={setOpenSetErr} />}
-        <HcmMain />
+        {getPerson && getUsersRoles && <HcmMain />}
       </Grid>
+      {openSetErr && <HcmErrorMessage sErr={soob} setOpen={setOpenSetErr} />}
     </Grid>
   );
 };
