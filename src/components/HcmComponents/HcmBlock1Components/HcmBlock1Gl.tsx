@@ -109,7 +109,8 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     maskForm.department = rec.department.name;
     maskForm.chief = rec.manager;
     maskForm.location =
-      rec.location.country + ', ' + rec.location.city + ' ' + rec.location.timeZone;
+      rec.location.country + ', ' + rec.location.city + ' UTC+' + rec.location.timeZone;
+    maskForm.location += ' (MSK+' + (rec.location.timeZone - 3) + ')';
     maskForm.status = rec.state;
     console.log('3REC:', maskForm);
   }, []);
