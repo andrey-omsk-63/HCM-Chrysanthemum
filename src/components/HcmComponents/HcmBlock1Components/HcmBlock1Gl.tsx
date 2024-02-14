@@ -101,25 +101,25 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   };
 
   const FillMask = React.useCallback((rec: any) => {
-    let mask = {
-      name: rec.name,
-      nik: rec.nickName,
-      birthDate: MakeDateRus(rec.birthDate),
-      beginDate: MakeDateRus(rec.startDate),
-      post: rec.jobPosition,
-      department: rec.department.name,
-      chief: rec.manager,
-      location: rec.location.country + ', ' + rec.location.city + ' ' + rec.location.timeZone,
-      status: rec.personAbsence.data[0].reason,
-    };
-    maskForm = mask;
+    maskForm.name = rec.name;
+    maskForm.nik = rec.nickName;
+    maskForm.birthDate = MakeDateRus(rec.birthDate);
+    maskForm.beginDate = MakeDateRus(rec.startDate);
+    maskForm.post = rec.jobPosition;
+    maskForm.department = rec.department.name;
+    maskForm.chief = rec.manager;
+    maskForm.location =
+      rec.location.country + ', ' + rec.location.city + ' ' + rec.location.timeZone;
+    maskForm.status = rec.state;
+    console.log('3REC:', maskForm);
   }, []);
 
   //=== инициализация ======================================
-  let kard = datestat.person[0];
+  let kard = datestat.person[1];
   React.useEffect(() => {
     if (kard) {
       let url = baseURL2 + '/' + kard.nickName;
+      console.log('URL:', url);
       // Карточка сотрудника
       axios
         .get(url, {
@@ -142,7 +142,8 @@ const HcmBlock1Gl = (props: { idx: number }) => {
         });
     }
   }, [setGetPersonNik, props.idx, kard, datestat, dispatch, FillMask]);
-  console.log('getPersonNik:', getPersonNik);
+
+  console.log('getPersonNik:', getPersonNik, datestat.personNik);
 
   if (props.idx !== oldIdx) {
     if (!PICT && datestat.picture) {

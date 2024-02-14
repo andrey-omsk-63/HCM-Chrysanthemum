@@ -31,6 +31,7 @@ export interface Stater {
   usersRoles: Array<any>; // список сотрудников и их ролей
   person: Array<any>; // список сотрудников с фильтрацией по подразделениям
   personNik: any; // карточка сотрудника
+  token: string; // токен
 }
 
 export let dateStat: Stater = {
@@ -42,6 +43,7 @@ export let dateStat: Stater = {
   usersRoles: [],
   person: [],
   personNik: null,
+  token: '',
 };
 
 export interface Pointer {
@@ -94,9 +96,14 @@ const App = () => {
   //========================================================
   //const host =
   //  'wss://' + window.location.host + window.location.pathname + 'W' + window.location.search;
-  console.log('Host:', window.location.host);
-  console.log('Pathname:', window.location.pathname);
-  console.log('Search:', window.location.search);
+  //console.log('Host:', window.location.host);
+  //console.log('Pathname:', window.location.pathname);
+  //console.log('Search:', window.location.search);
+
+  let token = window.location.search.slice(7);
+  dateStat.token = token;
+  console.log('token:', token);
+
   if (window.location.host === 'localhost:3000') dateStat.debug = true;
   dispatch(statsaveCreate(dateStat));
 
@@ -105,8 +112,9 @@ const App = () => {
   //const [getPersonNik, setGetPersonNik] = React.useState(null);
   //const [postRoles, setPostRoles] = React.useState(null);
   const [getUsersRoles, setGetUsersRoles] = React.useState(null);
+  const [getUsersPermission, setGetUsersPermission] = React.useState(null);
   const [openSetErr, setOpenSetErr] = React.useState(false);
-  if (dateStat.debug) console.log('РЕЖИМ ОТЛАДКИ!!!', getUsersRoles, getPerson);
+  if (dateStat.debug) console.log('РЕЖИМ ОТЛАДКИ!!!', getUsersRoles, getPerson, getUsersPermission);
 
   //=== инициализация ======================================
 
@@ -114,10 +122,25 @@ const App = () => {
   React.useEffect(() => {
     // Получение списка сотрудников и их ролей
     axios
-      .get(baseURL1)
+      .get(baseURL1 + '/usersRoles')
       .then((response) => {
         console.log('GetUsersRoles.data:', response.data);
         setGetUsersRoles(response.data);
+      })
+      .catch((error: any) => {
+        console.error('Ошибка в GetPermissions/usersRoles:', error);
+      });
+
+    console.log('AAAAAA:', `Bearer ${token}`);
+
+    // Получение доступов пользователя по информации, содержащейся в bearer token
+    axios
+      .get(baseURL1 + '/permissions', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log('GetUsersPermissions.data:', response.data);
+        setGetUsersPermission(response.data);
       })
       .catch((error: any) => {
         console.error('Ошибка в GetPermissions/usersRoles:', error);
@@ -144,7 +167,7 @@ const App = () => {
         soob =
           'Ошибка при открытии справочника сотрудников с фильтрацией по подразделениям. Обратитесь к администратору Базы данных';
       });
-  }, [setGetPerson, setGetUsersRoles, dispatch]);
+  }, [setGetPerson, setGetUsersRoles, dispatch, token]);
   //========================================================
   // React.useEffect(() => {
   //   if (getPerson) {
@@ -247,3 +270,6 @@ export default App;
 // .catch((error: any) => {
 //   console.error("2Ошибка в GetPermissions:", error);
 // });
+// 'Access-Control-Allow-Origin': '*',
+// 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+// 'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
