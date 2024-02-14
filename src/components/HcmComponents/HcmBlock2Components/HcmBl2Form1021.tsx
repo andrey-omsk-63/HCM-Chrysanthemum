@@ -201,7 +201,7 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
           </Box>
           <Box sx={styleBl2Form03(96)}>
             {HeaderTabl()}
-            <Box sx={styleBl2Form04}>{StrokaForm1021()}</Box>
+            <Box sx={styleBl2Form04(150)}>{StrokaForm1021()}</Box>
           </Box>
         </Box>
       </Modal>

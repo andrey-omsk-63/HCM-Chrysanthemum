@@ -1,28 +1,48 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
-import HcmBl2Form1021 from './HcmBl2Form1021';
+import HcmBl2Form1021 from "./HcmBl2Form1021";
+import HcmBl2Form1022 from "./HcmBl2Form1022";
 
-import { TablStr } from '../../HcmServiceFunctions';
+import { TablStr } from "../../HcmServiceFunctions";
 
-import { styleBl3Form01, styleMain04 } from '../../HcmMainStyle';
-import { styleBl1Form077, styleBl1Form08 } from '../../HcmMainStyle';
-import { styleBl2Form06, styleBl2Form05 } from '../../HcmMainStyle';
+import { styleBl3Form01, styleMain04 } from "../../HcmMainStyle";
+import { styleBl1Form077, styleBl1Form08 } from "../../HcmMainStyle";
+import { styleBl2Form06, styleBl2Form05 } from "../../HcmMainStyle";
+import { styleBl1Form09, styleBl2Form04 } from "../../HcmMainStyle";
 
 const date = new Date();
 const tekYear = date.getFullYear();
 const tekMonth = date.getMonth();
 //const tekMonth = 7;
 let tekQ = 0;
+
 if (tekMonth < 4) tekQ = 1;
 if (tekMonth > 3 && tekMonth < 7) tekQ = 2;
 if (tekMonth > 6 && tekMonth < 10) tekQ = 3;
 if (tekMonth > 9) tekQ = 4;
 
 let Illum = tekQ;
+let optQ = tekQ;
+
+let maskForm = {
+  avtor: "Доцент", // 'Автор
+  why: "Так себе основание", // Причина проведения
+  status: "Хорошее", // Общее состояние команды
+  connect2: "Не очень хорошее", // Взаимодействие с руководителем
+  pay: "Хорошая", // Заработная плата, бонусы
+  load: "Сильная", // Нагрузка, режим работы
+  //============
+  unit: "ООО Рога и капыта", // Подразделение
+  period: "1 квартал 2023",
+  know: "Высокая", // Информированность
+  develop: "Непрерывное", // Развитие
+  tasks: "Сложные", // Текущие задачи
+  connect1: "Хорошее", // Взаимодействие в команде
+};
 
 const HcmBl2Form102 = () => {
   //== Piece of Redux =======================================
@@ -36,25 +56,26 @@ const HcmBl2Form102 = () => {
 
   //========================================================
   const [bl2Form1021, setBl2Form2011] = React.useState(false);
+  const [bl2Form1022, setBl2Form2012] = React.useState(false);
   const [trigger, setTrigger] = React.useState(false);
   //=== Функции - обработчики ==============================
   const ClickKnop1 = () => {
-    Illum = 1;
+    Illum = optQ = 1;
     setTrigger(!trigger);
   };
 
   const ClickKnop2 = () => {
-    Illum = 2;
+    Illum = optQ = 2;
     setTrigger(!trigger);
   };
 
   const ClickKnop3 = () => {
-    Illum = 3;
+    Illum = optQ = 3;
     setTrigger(!trigger);
   };
 
   const ClickKnop4 = () => {
-    Illum = 4;
+    Illum = optQ = 4;
     setTrigger(!trigger);
   };
 
@@ -62,8 +83,9 @@ const HcmBl2Form102 = () => {
 
   const ClickKnop6 = () => {
     //setBl2Form2011(true);
+    setBl2Form2012(true);
   };
-  //========================================================
+  //=== Компоненты =========================================
   const MenuContent = () => {
     const KnopQ = (nomQ: number, func: Function) => {
       return (
@@ -98,7 +120,7 @@ const HcmBl2Form102 = () => {
           {KnopQ(4, ClickKnop4)}
         </Grid>
 
-        <Grid item xs={5} sx={{ border: 0, height: '30px' }}></Grid>
+        <Grid item xs={5} sx={{ border: 0, height: "30px" }}></Grid>
         <Grid item xs={1.5} sx={{}}>
           <Button sx={styleMain04(1.5, Illum, 9)} onClick={() => ClickKnop5()}>
             Добавить НС
@@ -106,7 +128,7 @@ const HcmBl2Form102 = () => {
         </Grid>
         <Grid item xs={1.5} sx={{}}>
           <Button sx={styleMain04(1.5, Illum, 9)} onClick={() => ClickKnop6()}>
-            Выбрать период
+            Выбрать за период
           </Button>
         </Grid>
       </>
@@ -116,26 +138,104 @@ const HcmBl2Form102 = () => {
   const HeaderTabl = () => {
     return (
       <Grid container sx={styleBl1Form077}>
-        {TablStr(1, 1.4, 'Подразделение', styleBl1Form08)}
-        {TablStr(1, 0.8, 'За период', styleBl1Form08)}
-        {TablStr(1, 1, 'Причина проведения', styleBl1Form08)}
-        {TablStr(1, 1.2, 'Общее состояние команды', styleBl1Form08)}
-        {TablStr(1, 1.25, 'Взаимодействие в команде', styleBl1Form08)}
-        {TablStr(1, 1.25, 'Взаимодействие с руководителем', styleBl1Form08)}
-        {TablStr(1, 1.5, 'Информированность', styleBl1Form08)}
-        {TablStr(1, 0.8, 'Развитие', styleBl1Form08)}
-        {TablStr(1, 0.8, 'Текущие задачи', styleBl1Form08)}
-        {TablStr(1, 1, 'Заработная плата, бонусы', styleBl1Form08)}
-        {TablStr(1, 1, 'Нагрузка, режим работы', styleBl1Form08)}
+        {TablStr(1, 1.4, "Подразделение", styleBl1Form08)}
+        {TablStr(1, 0.8, "За период", styleBl1Form08)}
+        {TablStr(1, 1, "Причина проведения", styleBl1Form08)}
+        {TablStr(1, 1.2, "Общее состояние команды", styleBl1Form08)}
+        {TablStr(1, 1.25, "Взаимодействие в команде", styleBl1Form08)}
+        {TablStr(1, 1.25, "Взаимодействие с руководителем", styleBl1Form08)}
+        {TablStr(1, 1.5, "Информированность", styleBl1Form08)}
+        {TablStr(1, 0.8, "Развитие", styleBl1Form08)}
+        {TablStr(1, 0.8, "Текущие задачи", styleBl1Form08)}
+        {TablStr(1, 1, "Заработная плата, бонусы", styleBl1Form08)}
+        {TablStr(1, 1, "Нагрузка, режим работы", styleBl1Form08)}
       </Grid>
     );
   };
 
-  // const styleBl2Form05 = {
-  //   border: 0,
-  //   marginTop: '10px',
-  //   height: window.innerHeight - 195,
-  // };
+  const StrokaForm1021 = () => {
+    let resStr = [];
+    let masStr: any = [];
+    for (let i = 0; i < 6; i++) {
+      for (let j = 1; j < 5; j++) {
+        let maskStr = JSON.parse(JSON.stringify(maskForm));
+        maskStr.period = optQ + "-й квартал " + tekYear;
+        switch (j) {
+          case 1:
+            maskStr.unit = "ИТ отдел";
+            //maskStr.period = "1 квартал 2023";
+            maskStr.why = "Орг.изменения";
+            maskStr.status = "1";
+            maskStr.connect1 = "6";
+            maskStr.connect2 = "5";
+            maskStr.know = "3";
+            maskStr.develop = "4";
+            maskStr.tasks = "8";
+            maskStr.pay = "7";
+            maskStr.load = "9";
+            break;
+          case 2:
+            maskStr.unit = "ИТ отдел";
+            //maskStr.period = "2 квартал 2023";
+            maskStr.why = "Смена руководителя";
+            maskStr.status = "7";
+            maskStr.connect1 = "6";
+            maskStr.connect2 = "4";
+            maskStr.know = "9";
+            maskStr.develop = "2";
+            maskStr.tasks = "5";
+            maskStr.pay = "4";
+            maskStr.load = "3";
+            break;
+          case 3:
+            maskStr.unit = "ИТ отдел";
+            // maskStr.period = "3 квартал 2023";
+            maskStr.why = "Выгорание команды";
+            maskStr.status = "6";
+            maskStr.connect1 = "3";
+            maskStr.connect2 = "7";
+            maskStr.know = "6";
+            maskStr.develop = "7";
+            maskStr.tasks = "4";
+            maskStr.pay = "8";
+            maskStr.load = "2";
+            break;
+          case 4:
+            maskStr.unit = "ИТ отдел";
+            //maskStr.period = "4 квартал 2023";
+            maskStr.why = "Просто так";
+            maskStr.status = "4";
+            maskStr.connect1 = "10";
+            maskStr.connect2 = "2";
+            maskStr.know = "8";
+            maskStr.develop = "10";
+            maskStr.tasks = "9";
+            maskStr.pay = "6";
+            maskStr.load = "7";
+        }
+        masStr.push(maskStr);
+      }
+    }
+    for (let i = 0; i < masStr.length; i++) {
+      let brb: any = i === masStr.length - 1 ? 0 : "1px solid #d4d4d4";
+      resStr.push(
+        <Grid key={i} container sx={{ color: "#5B1080" }}>
+          {TablStr(0, 1.4, masStr[i].unit, styleBl1Form09(brb))}
+          {TablStr(0, 0.8, masStr[i].period, styleBl1Form09(brb))}
+          {TablStr(0, 1.0, masStr[i].why, styleBl1Form09(brb))}
+          {TablStr(0, 1.2, masStr[i].status, styleBl1Form09(brb))}
+          {TablStr(0, 1.25, masStr[i].connect1, styleBl1Form09(brb))}
+          {TablStr(0, 1.25, masStr[i].connect2, styleBl1Form09(brb))}
+          {TablStr(0, 1.5, masStr[i].know, styleBl1Form09(brb))}
+          {TablStr(0, 0.8, masStr[i].develop, styleBl1Form09(brb))}
+          {TablStr(0, 0.8, masStr[i].tasks, styleBl1Form09(brb))}
+          {TablStr(0, 1.0, masStr[i].pay, styleBl1Form09(brb))}
+          {TablStr(0, 1.0, masStr[i].load, styleBl1Form09(brb))}
+        </Grid>
+      );
+    }
+    return resStr;
+  };
 
   return (
     <Grid container sx={styleBl3Form01(153)}>
@@ -144,9 +244,11 @@ const HcmBl2Form102 = () => {
           {MenuContent()}
           <Grid item xs={12} sx={styleBl2Form05}>
             {HeaderTabl()}
+            <Box sx={styleBl2Form04(245)}>{StrokaForm1021()}</Box>
           </Grid>
         </Grid>
         {bl2Form1021 && <HcmBl2Form1021 close={setBl2Form2011} />}
+        {bl2Form1022 && <HcmBl2Form1022 close={setBl2Form2012} />}
       </Grid>
     </Grid>
   );

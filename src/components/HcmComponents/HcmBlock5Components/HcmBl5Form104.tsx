@@ -31,17 +31,17 @@ let massGoodDate: Array<string> = [];
 
 let maskForm = {
   avtor: 'Доцент', // 'Автор
-  base: 'Так себе основание', // Причина проведения
-  state: 'Хорошее', // Общее состояние команды
-  coop: 'Не очень хорошее', // Взаимодействие с руководителем
-  wages: 'Хорошая', // Заработная плата, бонусы
+  why: 'Так себе основание', // Причина проведения
+  status: 'Хорошее', // Общее состояние команды
+  connect2: 'Не очень хорошее', // Взаимодействие с руководителем
+  pay: 'Хорошая', // Заработная плата, бонусы
   load: 'Сильная', // Нагрузка, режим работы
   //============
   unit: 'ООО Рога и капыта', // Подразделение
   know: 'Высокая', // Информированность
   develop: 'Непрерывное', // Развитие
-  task: 'Сложные', // Текущие задачи
-  connect: 'Хорошее', // Взаимодействие в команде
+  tasks: 'Сложные', // Текущие задачи
+  connect1: 'Хорошее', // Взаимодействие в команде
 };
 let currencies01: any = []; // Авторы
 let currencies02: any = []; // Причины проведения
@@ -65,15 +65,15 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   //const dispatch = useDispatch();
   //console.log("Setup_massplan:", massplan);
   //========================================================
-  const [valueState, setValueState] = React.useState(maskForm.state);
-  const [valueCoop, setValueCoop] = React.useState(maskForm.coop);
-  const [valueWages, setValueWages] = React.useState(maskForm.wages);
+  const [valueStatus, setValueStatus] = React.useState(maskForm.status);
+  const [valueConnect2, setValueConnect2] = React.useState(maskForm.connect2);
+  const [valuePay, setValuePay] = React.useState(maskForm.pay);
   const [valueLoad, setValueLoad] = React.useState(maskForm.load);
   const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
   const [valueKnow, setValueKnow] = React.useState(maskForm.know);
   const [valueDevelop, setValueDevelop] = React.useState(maskForm.develop);
-  const [valueTask, setValueTask] = React.useState(maskForm.task);
-  const [valueConnect, setValueConnect] = React.useState(maskForm.connect);
+  const [valueTask, setValueTask] = React.useState(maskForm.tasks);
+  const [valueConnect1, setValueConnect1] = React.useState(maskForm.connect1);
 
   const [currency01, setCurrency01] = React.useState('0');
   const [currency02, setCurrency02] = React.useState('0');
@@ -118,26 +118,26 @@ const HcmBl5Form104 = (props: { close: Function }) => {
     } else handleCloseBad();
   };
 
-  const hdlChangeState = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const hdlChangeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      setValueState(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.state = event.target.value.trimStart();
+      setValueStatus(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.status = event.target.value.trimStart();
       HAVE++;
     }
   };
 
-  const hdlChangeCoop = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const hdlChangeConnect2 = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      setValueCoop(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.coop = event.target.value.trimStart();
+      setValueConnect2(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.connect2 = event.target.value.trimStart();
       HAVE++;
     }
   };
 
-  const hdlChangeWages = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const hdlChangePay = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      setValueWages(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.wages = event.target.value.trimStart();
+      setValuePay(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.pay = event.target.value.trimStart();
       HAVE++;
     }
   };
@@ -169,15 +169,15 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   const hdlChangeTask = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
       setValueTask(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.task = event.target.value.trimStart();
+      maskForm.tasks = event.target.value.trimStart();
       HAVE++;
     }
   };
 
-  const hdlChangeConnect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const hdlChangeConnect1 = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      setValueConnect(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.connect = event.target.value.trimStart();
+      setValueConnect1(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.connect1 = event.target.value.trimStart();
       HAVE++;
     }
   };
@@ -214,7 +214,7 @@ const HcmBl5Form104 = (props: { close: Function }) => {
           break;
         case 2: // Причины проведения
           setCurrency02(event.target.value);
-          maskForm.base = dat2[Number(event.target.value)];
+          maskForm.why = dat2[Number(event.target.value)];
           HAVE++;
           break;
         case 3: // Подразделения
@@ -241,17 +241,17 @@ const HcmBl5Form104 = (props: { close: Function }) => {
             {StrTablProp(
               6,
               'Общее состояние команды',
-              InputStrField(212, hdlChangeState, valueState),
+              InputStrField(212, hdlChangeStatus, valueStatus),
             )}
             {StrTablProp(
               6,
               'Взаимодействие с руководителем',
-              InputStrField(212, hdlChangeCoop, valueCoop),
+              InputStrField(212, hdlChangeConnect2, valueConnect2),
             )}
             {StrTablProp(
               6,
               'Заработная плата, бонусы',
-              InputStrField(212, hdlChangeWages, valueWages),
+              InputStrField(212, hdlChangePay, valuePay),
             )}
             {StrTablProp(6, 'Нагрузка, режим работы', InputStrField(212, hdlChangeLoad, valueLoad))}
           </Grid>{' '}
@@ -264,7 +264,7 @@ const HcmBl5Form104 = (props: { close: Function }) => {
             {StrTablProp(
               6,
               'Взаимодействие в команде',
-              InputStrField(212, hdlChangeConnect, valueConnect),
+              InputStrField(212, hdlChangeConnect1, valueConnect1),
             )}
           </Grid>
         </Grid>
