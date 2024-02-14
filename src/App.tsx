@@ -94,9 +94,9 @@ const App = () => {
   //========================================================
   //const host =
   //  'wss://' + window.location.host + window.location.pathname + 'W' + window.location.search;
-  // console.log('Host:', window.location.host);
-  // console.log('Pathname:', window.location.pathname);
-  // console.log('Search:', window.location.search);
+  console.log('Host:', window.location.host);
+  console.log('Pathname:', window.location.pathname);
+  console.log('Search:', window.location.search);
   if (window.location.host === 'localhost:3000') dateStat.debug = true;
   dispatch(statsaveCreate(dateStat));
 
