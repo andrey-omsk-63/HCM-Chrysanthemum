@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { statsaveCreate } from '../redux/actions';
+//import imageCompression from 'browser-image-compression';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import HcmErrorMessage from './HcmComponents/HcmErrorMessage';
+import HcmBl0Form101 from './HcmBl0Form101';
 import HcmBlock1Gl from './HcmComponents/HcmBlock1Components/HcmBlock1Gl';
 import HcmBlock2Gl from './HcmComponents/HcmBlock2Components/HcmBlock2Gl';
 import HcmBlock3Disp from './HcmComponents/HcmBlock3Components/HcmBlock3Disp';
@@ -17,6 +19,8 @@ import { SortingByThreeKeys } from './HcmServiceFunctions';
 import { PreparCurrencies05, PreparCurrencies03 } from './HcmServiceFunctions';
 import { InputDirect, RandomNumber } from './HcmServiceFunctions';
 import { InputStrFieldSearch } from './HcmServiceFunctions';
+
+//import { MakeNewBlob } from './HcmServiceFunctions';
 
 //import { SendSocketGetPhases } from './HcmSocketFunctions';
 
@@ -38,8 +42,14 @@ let currencies05: any = [];
 
 let flagOpen = false;
 let soob = '';
+let nikCard = '';
 
-const HcmMain = (props: {}) => {
+// let blob: any = null;
+// let reader: any = null;
+// let compressedFile: any = null;
+// let PICT: any = null;
+
+const HcmMain = (props: { pers: any }) => {
   //== Piece of Redux =======================================
   let datestat = useSelector((state: any) => {
     const { statsaveReducer } = state;
@@ -49,6 +59,7 @@ const HcmMain = (props: {}) => {
   //const ws = datestat.ws;
   const dispatch = useDispatch();
   //===========================================================
+  const [dispBlock0, setDispBlock0] = React.useState(true);
   const [dispBlock1, setDispBlock1] = React.useState(false);
   const [dispBlock2, setDispBlock2] = React.useState(false);
   const [dispBlock3, setDispBlock3] = React.useState(false);
@@ -62,9 +73,51 @@ const HcmMain = (props: {}) => {
   //const [currency04, setCurrency04] = React.useState("0");
   const [currency05, setCurrency05] = React.useState('0');
   const [trigger, setTrigger] = React.useState(false);
+  //const [openLoader, setOpenLoader] = React.useState(true);
+
+  // const handleImageUpload = async () => {
+  //   let options = {
+  //     maxSizeMB: 1,
+  //     maxWidthOrHeight: 320,
+  //     useWebWorker: true,
+  //   };
+  //   try {
+  //     compressedFile = await imageCompression(blob, options);
+  //     reader.readAsDataURL(compressedFile);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   if (!PICT) {
+  //     //console.log('OPENNFACE:', openFace);
+  //     if (!PICT && datestat.picture) {
+  //       blob = MakeNewBlob(datestat.picture);
+  //       reader = new FileReader();
+  //       compressedFile = null;
+  //       handleImageUpload();
+  //       const handleMake = () => {
+  //         if (reader.result !== null) {
+  //           PICT = reader.result; // если длина спрессованной картинки < 200байт - косячная картинка
+  //           setOpenLoader(false);
+  //           //openFace = false;
+  //         } else {
+  //           setTimeout(() => {
+  //             handleMake();
+  //           }, 100);
+  //         }
+  //       };
+  //       handleMake();
+  //     } else setOpenLoader(false);
+  //     //openFace = false;
+  //   }
+  // }, [datestat.picture]);
 
   //=== инициализация ======================================
   if (!flagOpen) {
+    nikCard = datestat.user.login;
+
     currencies03 = PreparCurrencies03(); // Справочная информация
     currencies05 = PreparCurrencies05(); // Ввод данных
 
@@ -114,6 +167,8 @@ const HcmMain = (props: {}) => {
     setDispBlock2(false);
     setDispBlock3(false);
     setDispBlock4(false);
+    setDispBlock0(true);
+    nikCard = datestat.user.login;
   };
 
   const Turn01 = () => {
@@ -124,6 +179,8 @@ const HcmMain = (props: {}) => {
     setDispBlock2(false);
     setDispBlock3(false);
     setDispBlock4(false);
+    setDispBlock0(false);
+    nikCard = datestat.user.login;
   };
 
   const Turn02 = () => {
@@ -134,6 +191,7 @@ const HcmMain = (props: {}) => {
     setDispBlock1(false);
     setDispBlock3(false);
     setDispBlock4(false);
+    setDispBlock0(false);
   };
 
   // const Turn03 = () => {
@@ -151,6 +209,7 @@ const HcmMain = (props: {}) => {
     setDispBlock1(false);
     setDispBlock3(false);
     setDispBlock2(false);
+    setDispBlock0(false);
   };
 
   // const Turn05 = () => {
@@ -182,6 +241,7 @@ const HcmMain = (props: {}) => {
   const SetDispBlock3 = (mode: boolean) => {
     setCurrency03((FORM3 = '0'));
     setDispBlock3(mode);
+    setDispBlock0(false);
   };
 
   const ClickKnop4 = () => {
@@ -194,6 +254,7 @@ const HcmMain = (props: {}) => {
     setCurrency05((FORM5 = '0'));
     setCurrency03((FORM3 = '0'));
     setDispBlock5(mode);
+    setDispBlock0(false);
   };
 
   // const ClickSearch = () => {
@@ -254,6 +315,7 @@ const HcmMain = (props: {}) => {
           setDispBlock3(true);
           setDispBlock4(false);
           setDispBlock5(false);
+          setDispBlock0(false);
           break;
         case 5: // Ввод данных
           setCurrency05(evTV);
@@ -264,6 +326,7 @@ const HcmMain = (props: {}) => {
           setDispBlock3(false);
           setDispBlock4(false);
           setDispBlock5(true);
+          setDispBlock0(false);
       }
     };
 
@@ -319,6 +382,15 @@ const HcmMain = (props: {}) => {
     );
   };
 
+  const SetOpenCard = (NIK: string) => {
+    console.log('!!!!!!:', NIK);
+
+    ClickKnop1();
+    nikCard = NIK;
+    //setDispBlock1(true);
+    //setTrigger(!trigger);
+  };
+
   let inpLength = (window.innerWidth / 12) * 1.6 - 20;
 
   return (
@@ -346,11 +418,7 @@ const HcmMain = (props: {}) => {
             <Grid item xs={0.7} sx={styleMain05}>
               🔔👤
             </Grid>
-            <Grid
-              item
-              xs={1.6}
-              //sx={styleMain03}
-            >
+            <Grid item xs={1.6}>
               <Box sx={{ cursor: 'pointer' }}>
                 {/* 🔍 Поиск */}
                 {InputStrFieldSearch(inpLength, ClickSearch, valueInp)}
@@ -358,7 +426,8 @@ const HcmMain = (props: {}) => {
             </Grid>
           </Grid>
         </Grid>
-        {dispBlock1 && <HcmBlock1Gl idx={RandomNumber(1, 10000)} />}
+        {dispBlock0 && <HcmBl0Form101 pers={props.pers} openCard={SetOpenCard} />}
+        {dispBlock1 && <HcmBlock1Gl nik={nikCard} />}
         {dispBlock2 && <HcmBlock2Gl idx={RandomNumber(1, 10000)} />}
         {dispBlock3 && <HcmBlock3Disp setOpen={SetDispBlock3} />}
         {dispBlock4 && <HcmBlock4Gl idx={RandomNumber(1, 10000)} />}

@@ -33,7 +33,7 @@ import { styleBl1Form03, styleBl1Form04 } from '../../HcmMainStyle';
 import { styleBl1Form05, styleBl1Form15 } from '../../HcmMainStyle';
 
 let Illum = 1;
-let oldIdx = -1;
+let oldNik = '######';
 
 let maskForm = {
   name: '',
@@ -51,17 +51,18 @@ let blob: any = null;
 let reader: any = null;
 let compressedFile: any = null;
 let PICT: any = null;
+let openFace = true;
 
-const HcmBlock1Gl = (props: { idx: number }) => {
+const HcmBlock1Gl = (props: { nik: string }) => {
   //== Piece of Redux =======================================
   let datestat = useSelector((state: any) => {
     const { statsaveReducer } = state;
     return statsaveReducer.datestat;
   });
-  //console.log("getPersonNik:", getPersonNik, );
   //const debug = datestat.debug;
-  //const ws = datestat.ws;
   const dispatch = useDispatch();
+  //console.log('!!!getPersonNik:');
+
   //===========================================================
   const [bl1Form101, setBl1Form101] = React.useState(false);
   const [bl1Form102, setBl1Form201] = React.useState(false);
@@ -74,7 +75,8 @@ const HcmBlock1Gl = (props: { idx: number }) => {
   const [getPersonNik, setGetPersonNik] = React.useState(null);
   const [openImg, setOpenImg] = React.useState(false);
   //const [trigger, setTrigger] = React.useState(false);
-  const [openLoader, setOpenLoader] = React.useState(true);
+
+  const [openLoader, setOpenLoader] = React.useState(false);
 
   const handleImageUpload = async () => {
     let options = {
@@ -115,38 +117,10 @@ const HcmBlock1Gl = (props: { idx: number }) => {
     console.log('3REC:', maskForm);
   }, []);
 
-  //=== инициализация ======================================
-  let kard = datestat.person[1];
-  React.useEffect(() => {
-    if (kard) {
-      let url = baseURL2 + '/' + kard.nickName;
-      console.log('URL:', url);
-      // Карточка сотрудника
-      axios
-        .get(url, {
-          // params: {
-          //   departments: [],
-          //   _offset: 2,
-          //   limit: 100,
-          // },
-        })
-        .then((response) => {
-          console.log('GetPersonNik.data:', response.data);
-          console.log('GetPersonNik.url:', response.config.url);
-          datestat.personNik = response.data;
-          dispatch(statsaveCreate(datestat));
-          FillMask(response.data[0]);
-          setGetPersonNik(response.data);
-        })
-        .catch((error: any) => {
-          console.error('Ошибка в GetPersonNik:', error);
-        });
-    }
-  }, [setGetPersonNik, props.idx, kard, datestat, dispatch, FillMask]);
-
-  console.log('getPersonNik:', getPersonNik, datestat.personNik);
-
-  if (props.idx !== oldIdx) {
+  //console.log('1PICT:', PICT);
+  if (!PICT && openFace) {
+    openFace = false;
+    //console.log('2PICT:', PICT);
     if (!PICT && datestat.picture) {
       blob = MakeNewBlob(datestat.picture);
       reader = new FileReader();
@@ -156,7 +130,7 @@ const HcmBlock1Gl = (props: { idx: number }) => {
         if (reader.result !== null) {
           PICT = reader.result; // если длина спрессованной картинки < 200байт - косячная картинка
           setOpenLoader(false);
-          // setTrigger(!trigger);
+          openFace = false;
         } else {
           setTimeout(() => {
             handleMake();
@@ -165,8 +139,40 @@ const HcmBlock1Gl = (props: { idx: number }) => {
       };
       handleMake();
     } else setOpenLoader(false);
+    openFace = false;
+  }
 
-    oldIdx = props.idx;
+  //=== инициализация ======================================
+  let kard = -1;
+  console.log('££££££:', props.nik);
+  for (let i = 0; i < datestat.person.length; i++) {
+    if (datestat.person[i].nickName === props.nik) kard = i;
+  }
+  React.useEffect(() => {
+    if (kard >= 0) {
+      let url = baseURL2 + '/' + datestat.person[kard].nickName;
+      //console.log('URL:', url);
+      // Карточка сотрудника
+      axios
+        .get(url)
+        .then((response) => {
+          console.log('Карточка сотрудника:', response.data);
+          //console.log('GetPersonNik.url:', response.config.url);
+          datestat.personNik = response.data;
+          dispatch(statsaveCreate(datestat));
+          FillMask(response.data[0]);
+          //setTrigger(!trigger);
+          setGetPersonNik(response.data);
+          //console.log('getPersonNik:', getPersonNik);
+        })
+        .catch((error: any) => {
+          console.error('Ошибка в GetPersonNik:', error);
+        });
+    }
+  }, [kard, props.nik, datestat, dispatch, FillMask, setGetPersonNik]);
+
+  if (props.nik !== oldNik) {
+    oldNik = props.nik;
     switch (Illum) {
       case 1: // Отсутствия
         setBl1Form101(true);

@@ -22,6 +22,11 @@ export let dateMapGl: any;
 export let dateBindingsGl: any;
 export let dateAddObjectsGl: any;
 
+export interface User {
+  login: string;
+  id: number;
+}
+
 export interface Stater {
   ws: any;
   debug: boolean;
@@ -32,6 +37,8 @@ export interface Stater {
   person: Array<any>; // список сотрудников с фильтрацией по подразделениям
   personNik: any; // карточка сотрудника
   token: string; // токен
+  permissions: any; // доступы пользователя по информации, содержащейся в bearer token
+  user: null | User; // id и login вошедшего пользователя
 }
 
 export let dateStat: Stater = {
@@ -44,6 +51,8 @@ export let dateStat: Stater = {
   person: [],
   personNik: null,
   token: '',
+  user: null,
+  permissions: null,
 };
 
 export interface Pointer {
@@ -78,6 +87,8 @@ export let massMode: NameMode[] = [];
 
 export let Coordinates: Array<Array<number>> = []; // массив координат
 
+let token = '';
+//let flagOpen = true;
 let flagOpenDebug = true;
 let soob = '';
 
@@ -99,14 +110,7 @@ const App = () => {
   //console.log('Host:', window.location.host);
   //console.log('Pathname:', window.location.pathname);
   //console.log('Search:', window.location.search);
-
-  let token = window.location.search.slice(7);
-  dateStat.token = token;
-  console.log('token:', token);
-
-  if (window.location.host === 'localhost:3000') dateStat.debug = true;
-  dispatch(statsaveCreate(dateStat));
-
+  //========================================================
   //const [getPermission, setGetPermission] = React.useState(null);
   const [getPerson, setGetPerson] = React.useState<any>(null);
   //const [getPersonNik, setGetPersonNik] = React.useState(null);
@@ -114,9 +118,23 @@ const App = () => {
   const [getUsersRoles, setGetUsersRoles] = React.useState(null);
   const [getUsersPermission, setGetUsersPermission] = React.useState(null);
   const [openSetErr, setOpenSetErr] = React.useState(false);
-  if (dateStat.debug) console.log('РЕЖИМ ОТЛАДКИ!!!', getUsersRoles, getPerson, getUsersPermission);
 
   //=== инициализация ======================================
+  //if (flagOpen) {
+  token = window.location.search.slice(7);
+  if (!token) {
+    soob = 'Вы пытаетесь зайти в систему без авторизации!';
+    setOpenSetErr(true);
+  }
+  dateStat.token = token;
+  console.log('token:', token);
+
+  if (window.location.host === 'localhost:3000') dateStat.debug = true;
+  token && (dateStat.user = JSON.parse(atob(token.split('.')[1])));
+  if (dateStat.debug) console.log('РЕЖИМ ОТЛАДКИ!!!', dateStat.user);
+  dispatch(statsaveCreate(dateStat));
+  //flagOpen = false;
+  //}
 
   //===  Слушатель с сервера ===============================
   React.useEffect(() => {
@@ -124,14 +142,14 @@ const App = () => {
     axios
       .get(baseURL1 + '/usersRoles')
       .then((response) => {
-        console.log('GetUsersRoles.data:', response.data);
+        console.log('Списка сотрудников и их ролей:', response.data);
         setGetUsersRoles(response.data);
       })
       .catch((error: any) => {
         console.error('Ошибка в GetPermissions/usersRoles:', error);
       });
 
-    console.log('AAAAAA:', `Bearer ${token}`);
+    //console.log('AAAAAA:', `Bearer ${token}`);
 
     // Получение доступов пользователя по информации, содержащейся в bearer token
     axios
@@ -139,7 +157,7 @@ const App = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log('GetUsersPermissions.data:', response.data);
+        console.log('Доступы пользователя:', response.data);
         setGetUsersPermission(response.data);
       })
       .catch((error: any) => {
@@ -151,13 +169,13 @@ const App = () => {
       .get(baseURL2, {
         params: {
           departments: [],
-          _offset: 2,
+          _offset: 1,
           limit: 100,
         },
       })
       .then((response) => {
-        console.log('GetPerson.data:', response.data);
-        console.log('GetPerson.url:', response.config.url);
+        console.log('Список сотрудников по подразделениям:', response.data);
+        //console.log('GetPerson.url:', response.config.url);
         setGetPerson(response.data);
         dateStat.person = response.data;
         dispatch(statsaveCreate(dateStat));
@@ -166,36 +184,10 @@ const App = () => {
         console.error('Ошибка в GetPerson:', error);
         soob =
           'Ошибка при открытии справочника сотрудников с фильтрацией по подразделениям. Обратитесь к администратору Базы данных';
+        setOpenSetErr(true);
       });
-  }, [setGetPerson, setGetUsersRoles, dispatch, token]);
+  }, [setGetPerson, setGetUsersRoles, dispatch]);
   //========================================================
-  // React.useEffect(() => {
-  //   if (getPerson) {
-  //     if (getPerson.length) {
-  //       //console.log("***:", getPerson[0].nickName)
-  //       let url = baseURL2 + '/' + getPerson[0].nickName;
-  //       console.log('***:', url);
-  //       // Карточка сотрудника
-  //       axios
-  //         .get(url, {
-  //           // params: {
-  //           //   departments: [],
-  //           //   _offset: 2,
-  //           //   limit: 100,
-  //           // },
-  //         })
-  //         .then((response) => {
-  //           console.log('GetPersonNik.data:', response.data);
-  //           console.log('GetPersonNik.url:', response.config.url);
-  //           setGetPersonNik(response.data);
-  //         })
-  //         .catch((error: any) => {
-  //           console.error('Ошибка в GetPersonNik:', error);
-  //         });
-  //     }
-  //   }
-  // }, [setGetPersonNik, getPerson]);
-
   if (flagOpenDebug) {
     // чтение и перевод в двоичный вид файла с картинкой
     axios
@@ -222,8 +214,7 @@ const App = () => {
   return (
     <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
       <Grid item xs>
-        {/* {getPerson && getUsersRoles && <HcmMain />} */}
-        {getPerson && <HcmMain />}
+        {getPerson && getUsersRoles && getUsersPermission && <HcmMain pers={getPerson} />}
       </Grid>
       {openSetErr && <HcmErrorMessage sErr={soob} setOpen={setOpenSetErr} />}
     </Grid>

@@ -95,7 +95,7 @@ const HcmBl3Form103 = () => {
   };
 
   return (
-    <Grid container sx={styleBl3Form01(62)}>
+    <Grid container sx={styleBl3Form01(48)}>
       <Grid item xs={12}>
         <Box sx={{ fontSize: 16, marginTop: -1.75, marginLeft: 2 }}>
           <b>Справочная информация ➤ Профили компетенций</b>
