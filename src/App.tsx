@@ -122,9 +122,9 @@ const App = () => {
   //=== инициализация ======================================
   //if (flagOpen) {
   token = window.location.search.slice(7);
-  if (!token) {
+  if (!token && !openSetErr) {
     soob = 'Вы пытаетесь зайти в систему без авторизации!';
-    //setOpenSetErr(true);
+    setOpenSetErr(true);
   }
   dateStat.token = token;
   console.log('token:', token);
@@ -133,8 +133,6 @@ const App = () => {
   token && (dateStat.user = JSON.parse(atob(token.split('.')[1])));
   if (dateStat.debug) console.log('РЕЖИМ ОТЛАДКИ!!!', dateStat.user);
   dispatch(statsaveCreate(dateStat));
-  //flagOpen = false;
-  //}
 
   //===  Слушатель с сервера ===============================
   React.useEffect(() => {
