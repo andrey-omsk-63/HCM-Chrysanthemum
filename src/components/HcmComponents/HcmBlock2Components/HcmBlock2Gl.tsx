@@ -5,6 +5,8 @@ import Grid from '@mui/material/Grid';
 //import Box from "@mui/material/Box";
 import Button from '@mui/material/Button';
 
+import axios from 'axios';
+
 import HcmBl2Form100 from './HcmBl2Form100';
 import HcmBl2Form101 from './HcmBl2Form101';
 import HcmBl2Form102 from './HcmBl2Form102';
@@ -30,6 +32,31 @@ const HcmBlock2Gl = (props: { idx: number }) => {
   const [bl2Form101, setBl2Form101] = React.useState(false);
   const [bl2Form102, setBl2Form201] = React.useState(false);
   const [bl2Form103, setBl2Form301] = React.useState(false);
+  const [GetCatalog, setGetCatalog] = React.useState<any>(null);
+  let url = 'https://catalog.chry.ls-dev.ru/departments?manager=' + datestat.personNik[0].nickName;
+  console.log(
+    '!!!datestat.personNik',
+    datestat.personNik[0].nickName,
+    datestat.personNik[0].manager,
+    url,
+  );
+
+  React.useEffect(() => {
+    //if (datestat.personNik[0].nickName === datestat.personNik[0].manager) {
+    console.log('URL:', datestat.personNik.nickName, url);
+    // Получение иерархии подразделений
+    axios
+      .get(url)
+      .then((response) => {
+        console.log('Получение иерархии подразделений:', response.data);
+        setGetCatalog(response.data);
+      })
+      .catch((error: any) => {
+        console.error('ОКарточка пользователя:', error);
+      });
+    //}
+  }, [setGetCatalog, datestat.personNik, url]);
+
   //=== инициализация ======================================
   if (props.idx !== oldIdx) {
     oldIdx = props.idx;

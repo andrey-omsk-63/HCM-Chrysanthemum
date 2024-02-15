@@ -31,13 +31,14 @@ export interface Stater {
   ws: any;
   debug: boolean;
   picture: any; // фото в личную карточу в двоичном коде
+  picture2: any; // фото в личную карточу в двоичном коде ещё одна
   treeUnit: any; // дерево подразделений
   idxTreeUnit: number; // индекс в дереве подразделений
   usersRoles: Array<any>; // список сотрудников и их ролей
   person: Array<any>; // список сотрудников с фильтрацией по подразделениям
   personNik: any; // карточка сотрудника
   token: string; // токен
-  permissions: any; // доступы пользователя по информации, содержащейся в bearer token
+  permissions: Array<any>; // доступы пользователя по информации, содержащейся в bearer token
   user: null | User; // id и login вошедшего пользователя
 }
 
@@ -45,6 +46,7 @@ export let dateStat: Stater = {
   ws: null,
   debug: false,
   picture: null,
+  picture2: null,
   treeUnit: [],
   idxTreeUnit: 0,
   usersRoles: [],
@@ -52,7 +54,7 @@ export let dateStat: Stater = {
   personNik: null,
   token: '',
   user: null,
-  permissions: null,
+  permissions: [],
 };
 
 export interface Pointer {
@@ -113,6 +115,7 @@ const App = () => {
   //========================================================
   //const [getPermission, setGetPermission] = React.useState(null);
   const [getPerson, setGetPerson] = React.useState<any>(null);
+  const [getPersonNik, setGetPersonNik] = React.useState(null);
   //const [getPersonNik, setGetPersonNik] = React.useState(null);
   //const [postRoles, setPostRoles] = React.useState(null);
   const [getUsersRoles, setGetUsersRoles] = React.useState<any>(null);
@@ -144,7 +147,7 @@ const App = () => {
         setGetUsersRoles(response.data);
       })
       .catch((error: any) => {
-        console.error('Ошибка в GetPermissions/usersRoles:', error);
+        console.error('Список сотрудников и их ролей:', error);
       });
 
     // Получение доступов пользователя по информации, содержащейся в bearer token
@@ -154,11 +157,13 @@ const App = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          console.log('Доступы пользователя:', response.data);
+          console.log('Доступы пользователя:', response.data.permissions);
+          dateStat.permissions = response.data.permissions;
+          dispatch(statsaveCreate(dateStat));
           setGetUsersPermission(response.data);
         })
         .catch((error: any) => {
-          console.error('Ошибка в GetPermissions/usersRoles:', error);
+          console.error('Доступы пользователя:', error);
         });
     }
 
@@ -185,6 +190,30 @@ const App = () => {
         //setOpenSetErr(true);
       });
   }, [setGetPerson, setGetUsersRoles, setGetUsersPermission, dispatch]);
+
+  React.useEffect(() => {
+    if (dateStat.user) {
+      let url = baseURL2 + '/' + dateStat.user.login;
+      //console.log('URL:', url);
+      // Карточка пользователя
+      axios
+        .get(url)
+        .then((response) => {
+          console.log('Карточка пользователя:', response.data);
+          //console.log('GetPersonNik.url:', response.config.url);
+          dateStat.personNik = response.data;
+          dispatch(statsaveCreate(dateStat));
+          console.log('000dateStat.personNik:', dateStat.personNik);
+          //setTrigger(!trigger);
+          setGetPersonNik(response.data);
+          //console.log('getPersonNik:', getPersonNik);
+        })
+        .catch((error: any) => {
+          console.error('ОКарточка пользователя:', error);
+        });
+    }
+  }, [dispatch, setGetPersonNik]);
+
   //========================================================
   if (flagOpenDebug) {
     // чтение и перевод в двоичный вид файла с картинкой
@@ -203,17 +232,31 @@ const App = () => {
           ),
         );
         dateStat.picture = image;
-        dispatch(statsaveCreate(dateStat));
       });
 
+    // axios
+    //   .get('https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg', {
+    //     responseType: 'arraybuffer',
+    //   })
+    //   .then(function (response) {
+    //     let image = btoa(
+    //       new Uint8Array(response.data).reduce(
+    //         (data, byte) => data + String.fromCharCode(byte),
+    //         '',
+    //       ),
+    //     );
+    //     dateStat.picture2 = image;
+    //   });
+    dispatch(statsaveCreate(dateStat));
     flagOpenDebug = false;
   }
 
-  console.log('openSetErr:', openSetErr);
   return (
     <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
       <Grid item xs>
-        {getPerson && getUsersRoles && getUsersPermission && <HcmMain pers={getPerson} />}
+        {getPerson && getPersonNik && getUsersRoles && getUsersPermission && (
+          <HcmMain pers={getPerson} />
+        )}
       </Grid>
       {openSetErr && <HcmErrorMessage sErr={soob} setOpen={setOpenSetErr} />}
     </Grid>

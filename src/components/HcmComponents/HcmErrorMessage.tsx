@@ -39,7 +39,7 @@ const HcmErrorMessage = (props: { sErr: string; setOpen: any }) => {
 
   const handleClose = () => {
     props.setOpen(false);
-    //setOpenSet(false);
+    setOpenSet(false);
   };
 
   const CloseEnd = (event: any, reason: string) => {

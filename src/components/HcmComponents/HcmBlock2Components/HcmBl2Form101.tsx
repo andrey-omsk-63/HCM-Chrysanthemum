@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -11,6 +12,12 @@ import { styleBl1Form07, styleBl1Form08 } from '../../HcmMainStyle';
 import { styleBl1Form09, styleBl1Form16 } from '../../HcmMainStyle';
 
 const HcmBl2Form101 = () => {
+  let datestat = useSelector((state: any) => {
+    const { statsaveReducer } = state;
+    return statsaveReducer.datestat;
+  });
+  let PERSON = datestat.person;
+  console.log('PERSON:', PERSON);
   const ClickNik1 = () => {
     console.log('Действие по нажатию на ник1');
   };
@@ -25,70 +32,18 @@ const HcmBl2Form101 = () => {
 
   const StrokaForm101 = () => {
     let resStr = [];
-    let masStr: any = [];
-    for (let i = 0; i < 5; i++) {
-      for (let j = 1; j < 5; j++) {
-        let maskStr = {
-          unit: 'ИТ отдел',
-          nik: 'Доцент',
-          name: 'Иван',
-          post: 'Гранатомётчик',
-          city: 'Омск',
-          status: 'Отпуск 14.01.2024-30.01.2024',
-          tip: 'Офисный',
-        };
 
-        switch (j) {
-          case 1:
-            maskStr.unit = 'ИТ отдел';
-            maskStr.nik = 'Доцент';
-            maskStr.name = 'Иван';
-            maskStr.post = 'Гранатомётчик';
-            maskStr.city = 'Омск';
-            maskStr.status = 'Отпуск 14.01.2024-30.01.2024';
-            maskStr.tip = 'Офисный';
-            break;
-          case 2:
-            maskStr.unit = 'ИТ отдел';
-            maskStr.nik = 'Фантомас';
-            maskStr.name = 'Артём';
-            maskStr.post = 'Смотрящий';
-            maskStr.city = 'Омск';
-            maskStr.status = 'Работа';
-            maskStr.tip = 'Офисный';
-            break;
-          case 3:
-            maskStr.unit = 'ИТ отдел';
-            maskStr.nik = 'Лишенец';
-            maskStr.name = 'Валерий';
-            maskStr.post = 'Консультант';
-            maskStr.city = 'Москва';
-            maskStr.status = 'Работа';
-            maskStr.tip = 'Удалённый';
-            break;
-          case 4:
-            maskStr.unit = 'ИТ отдел';
-            maskStr.nik = 'Бугор';
-            maskStr.name = 'Фёдор';
-            maskStr.post = 'Начальник';
-            maskStr.city = 'Омск';
-            maskStr.status = 'Работа';
-            maskStr.tip = 'Офисный';
-        }
-        masStr.push(maskStr);
-      }
-    }
-    for (let i = 0; i < masStr.length; i++) {
-      let brb: any = i === masStr.length - 1 ? 0 : '1px solid #d4d4d4';
+    for (let i = 0; i < PERSON.length; i++) {
+      let brb: any = i === PERSON.length - 1 ? 0 : '1px solid #d4d4d4';
       resStr.push(
         <Grid key={i} container sx={{ color: '#5B1080' }}>
-          {TablStr(0, 2, masStr[i].unit, styleBl1Form09(brb))}
-          {TablStr(0, 2, ButtonLink(masStr[i].nik, ClickNik1), styleBl1Form09(brb))}
-          {TablStr(0, 1, masStr[i].name, styleBl1Form09(brb))}
-          {TablStr(0, 2, masStr[i].post, styleBl1Form09(brb))}
-          {TablStr(0, 1, masStr[i].city, styleBl1Form09(brb))}
-          {TablStr(0, 2, masStr[i].status, styleBl1Form09(brb))}
-          {TablStr(0, 2, masStr[i].tip, styleBl1Form09(brb))}
+          {TablStr(0, 3.5, PERSON[i].department.name, styleBl1Form09(brb))}
+          {TablStr(0, 2, ButtonLink(PERSON[i].nickName, ClickNik1), styleBl1Form09(brb))}
+          {TablStr(0, 1, PERSON[i].name, styleBl1Form09(brb))}
+          {TablStr(0, 2.5, PERSON[i].jobPosition, styleBl1Form09(brb))}
+          {TablStr(0, 1, PERSON[i].city, styleBl1Form09(brb))}
+          {TablStr(0, 2, PERSON[i].state, styleBl1Form09(brb))}
+          {/* {TablStr(0, 2, 'Офисный', styleBl1Form09(brb))} */}
         </Grid>,
       );
     }
@@ -98,13 +53,13 @@ const HcmBl2Form101 = () => {
   const HeaderTabl = () => {
     return (
       <Grid container sx={styleBl1Form07}>
-        {TablStr(1, 2, 'Подразделение', styleBl1Form08)}
+        {TablStr(1, 3.5, 'Подразделение', styleBl1Form08)}
         {TablStr(1, 2, 'Сотрудник', styleBl1Form08)}
         {TablStr(1, 1, 'Имя', styleBl1Form08)}
-        {TablStr(1, 2, 'Должность', styleBl1Form08)}
+        {TablStr(1, 2.5, 'Должность', styleBl1Form08)}
         {TablStr(1, 1, 'Город', styleBl1Form08)}
         {TablStr(1, 2, 'Текущий статус работы', styleBl1Form08)}
-        {TablStr(1, 2, 'Тип', styleBl1Form08)}
+        {/* {TablStr(1, 2, 'Тип', styleBl1Form08)} */}
       </Grid>
     );
   };

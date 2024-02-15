@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { statsaveCreate } from './../../../redux/actions';
+//import { statsaveCreate } from './../../../redux/actions';
 import imageCompression from 'browser-image-compression';
 
 import Grid from '@mui/material/Grid';
@@ -118,10 +118,8 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     console.log('3REC:', maskForm);
   }, []);
 
-  //console.log('1PICT:', PICT);
   if (!PICT && openFace) {
     openFace = false;
-    //console.log('2PICT:', PICT);
     if (!PICT && datestat.picture) {
       blob = MakeNewBlob(datestat.picture);
       reader = new FileReader();
@@ -152,19 +150,14 @@ const HcmBlock1Gl = (props: { nik: string }) => {
   React.useEffect(() => {
     if (kard >= 0) {
       let url = baseURL2 + '/' + datestat.person[kard].nickName;
-      //console.log('URL:', url);
       // Карточка сотрудника
       axios
         .get(url)
         .then((response) => {
           console.log('Карточка сотрудника:', response.data);
           //console.log('GetPersonNik.url:', response.config.url);
-          datestat.personNik = response.data;
-          dispatch(statsaveCreate(datestat));
           FillMask(response.data[0]);
-          //setTrigger(!trigger);
           setGetPersonNik(response.data);
-          //console.log('getPersonNik:', getPersonNik);
         })
         .catch((error: any) => {
           console.error('Ошибка в GetPersonNik:', error);
@@ -391,16 +384,22 @@ const HcmBlock1Gl = (props: { nik: string }) => {
               <Grid container>
                 <Grid item xs={12} sx={styleBl1Form04}>
                   <Box sx={styleBl1Form05} onClick={() => ClickImg()}>
-                    {/* <img
-                      src="http://localhost:3000/portrait.jpg"
-                      //width={160}
-                      height={180}
-                      alt="PICT"
-                    /> */}
-                    {openLoader && <Dinama />}
-                    {!openLoader && (
+                    {datestat.user.login !== props.nik && (
+                      <img
+                        src="https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg"
+                        //width={160}
+                        height={180}
+                        alt="PICT"
+                      />
+                    )}
+                    {datestat.user.login === props.nik && (
                       <>
-                        <img src={PICT} height={180} alt="PICT" />
+                        {openLoader && <Dinama />}
+                        {!openLoader && (
+                          <>
+                            <img src={PICT} height={180} alt="PICT" />
+                          </>
+                        )}
                       </>
                     )}
                   </Box>
@@ -430,21 +429,25 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     <Grid container sx={styleBl2Gl01}>
       <Grid item xs={12}>
         {CardContent()}
-        <Grid container sx={{ marginTop: 2, border: 0 }}>
-          <Grid item xs={12}>
-            <Grid container>
-              {MenuBatton(1.5, 1.5, 1, 'Отсутствия', ClickKnop1)}
-              {MenuBatton(1.5, 1.5, 2, 'Оборудование', ClickKnop2)}
-              {MenuBatton(1.75, 1.75, 3, 'В структуре компании', ClickKnop3)}
-              {MenuBatton(1.25, 1.25, 4, 'ИПР', ClickKnop4)}
-              {MenuBatton(1.75, 1.75, 5, 'Оценка компетенций', ClickKnop5)}
-              {MenuBatton(1.5, 1.5, 6, 'Адаптация', ClickKnop6)}
-              {MenuBatton(1.25, 1.25, 7, 'Цели', ClickKnop7)}
-              {MenuBatton(1.5, 1.5, 8, 'Задачи', ClickKnop8)}
+        {(datestat.permissions.length > 0 || datestat.user.login === props.nik) && (
+          <Grid container sx={{ marginTop: 2, border: 0 }}>
+            <Grid item xs={12}>
+              <Grid container>
+                {MenuBatton(1.5, 1.5, 1, 'Отсутствия', ClickKnop1)}
+                {MenuBatton(1.5, 1.5, 2, 'Оборудование', ClickKnop2)}
+                {MenuBatton(1.75, 1.75, 3, 'В структуре компании', ClickKnop3)}
+                {MenuBatton(1.25, 1.25, 4, 'ИПР', ClickKnop4)}
+                {MenuBatton(1.75, 1.75, 5, 'Оценка компетенций', ClickKnop5)}
+                {MenuBatton(1.5, 1.5, 6, 'Адаптация', ClickKnop6)}
+                {MenuBatton(1.25, 1.25, 7, 'Цели', ClickKnop7)}
+                {MenuBatton(1.5, 1.5, 8, 'Задачи', ClickKnop8)}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        {bl1Form101 && <HcmBl1Form101 />}
+        )}
+        {bl1Form101 && (datestat.permissions.length > 0 || datestat.user.login === props.nik) && (
+          <HcmBl1Form101 />
+        )}
         {bl1Form102 && <HcmBl1Form102 />}
         {bl1Form103 && <HcmBl1Form103 />}
         {bl1Form104 && <HcmBl1Form104 />}
@@ -453,12 +456,7 @@ const HcmBlock1Gl = (props: { nik: string }) => {
         {bl1Form107 && <HcmBl1Form107 />}
         {bl1Form108 && <HcmBl1Form108 idx={RandomNumber(1, 10000)} />}
         {openImg && (
-          <HcmBlock1ViewImg
-            close={setOpenImg}
-            name={maskForm.name}
-            nik={maskForm.nik}
-            pict={PICT}
-          />
+          <HcmBlock1ViewImg close={setOpenImg} name={maskForm.name} nik={props.nik} pict={PICT} />
         )}
       </Grid>
     </Grid>
