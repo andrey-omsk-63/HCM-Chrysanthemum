@@ -13,9 +13,9 @@ const HcmErrorMessage = (props: { sErr: string; setOpen: any }) => {
   const styleSetInf = {
     outline: 'none',
     position: 'absolute',
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 380,
     bgcolor: 'background.paper',
     border: '1px solid #000',
@@ -39,11 +39,11 @@ const HcmErrorMessage = (props: { sErr: string; setOpen: any }) => {
 
   const handleClose = () => {
     props.setOpen(false);
-    setOpenSet(false);
+    //setOpenSet(false);
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === "escapeKeyDown") handleClose();
+    if (reason === 'escapeKeyDown') handleClose();
   };
 
   return (

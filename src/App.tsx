@@ -115,8 +115,8 @@ const App = () => {
   const [getPerson, setGetPerson] = React.useState<any>(null);
   //const [getPersonNik, setGetPersonNik] = React.useState(null);
   //const [postRoles, setPostRoles] = React.useState(null);
-  const [getUsersRoles, setGetUsersRoles] = React.useState(null);
-  const [getUsersPermission, setGetUsersPermission] = React.useState(null);
+  const [getUsersRoles, setGetUsersRoles] = React.useState<any>(null);
+  const [getUsersPermission, setGetUsersPermission] = React.useState<any>(null);
   const [openSetErr, setOpenSetErr] = React.useState(false);
 
   //=== инициализация ======================================
@@ -149,20 +149,20 @@ const App = () => {
         console.error('Ошибка в GetPermissions/usersRoles:', error);
       });
 
-    //console.log('AAAAAA:', `Bearer ${token}`);
-
     // Получение доступов пользователя по информации, содержащейся в bearer token
-    axios
-      .get(baseURL1 + '/permissions', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.log('Доступы пользователя:', response.data);
-        setGetUsersPermission(response.data);
-      })
-      .catch((error: any) => {
-        console.error('Ошибка в GetPermissions/usersRoles:', error);
-      });
+    if (token) {
+      axios
+        .get(baseURL1 + '/permissions', {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          console.log('Доступы пользователя:', response.data);
+          setGetUsersPermission(response.data);
+        })
+        .catch((error: any) => {
+          console.error('Ошибка в GetPermissions/usersRoles:', error);
+        });
+    }
 
     // Получение списка сотрудников с фильтрацией по подразделениям
     axios
@@ -176,17 +176,17 @@ const App = () => {
       .then((response) => {
         console.log('Список сотрудников по подразделениям:', response.data);
         //console.log('GetPerson.url:', response.config.url);
-        setGetPerson(response.data);
-        dateStat.person = response.data;
+        setGetPerson(response.data.data);
+        dateStat.person = response.data.data;
         dispatch(statsaveCreate(dateStat));
       })
       .catch((error: any) => {
         console.error('Ошибка в GetPerson:', error);
         soob =
           'Ошибка при открытии справочника сотрудников с фильтрацией по подразделениям. Обратитесь к администратору Базы данных';
-        setOpenSetErr(true);
+        //setOpenSetErr(true);
       });
-  }, [setGetPerson, setGetUsersRoles, dispatch]);
+  }, [setGetPerson, setGetUsersRoles, setGetUsersPermission, dispatch]);
   //========================================================
   if (flagOpenDebug) {
     // чтение и перевод в двоичный вид файла с картинкой
@@ -211,6 +211,7 @@ const App = () => {
     flagOpenDebug = false;
   }
 
+  console.log('openSetErr:', openSetErr);
   return (
     <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
       <Grid item xs>

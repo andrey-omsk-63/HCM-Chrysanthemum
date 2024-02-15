@@ -21,6 +21,7 @@ const HcmBl0Form101 = (props: { pers: any; openCard: Function }) => {
   console.log('dateStat.person:', datestat.user.login, datestat.person);
   //let PERSON = datestat.person;
   let PERSON = props.pers;
+
   //const debug = datestat.debug;
   //const dispatch = useDispatch();
   //===========================================================
