@@ -124,7 +124,7 @@ const App = () => {
   token = window.location.search.slice(7);
   if (!token) {
     soob = 'Вы пытаетесь зайти в систему без авторизации!';
-    setOpenSetErr(true);
+    //setOpenSetErr(true);
   }
   dateStat.token = token;
   console.log('token:', token);

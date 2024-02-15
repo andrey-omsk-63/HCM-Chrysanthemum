@@ -75,8 +75,9 @@ const HcmBlock1Gl = (props: { nik: string }) => {
   const [getPersonNik, setGetPersonNik] = React.useState(null);
   const [openImg, setOpenImg] = React.useState(false);
   //const [trigger, setTrigger] = React.useState(false);
+  //let ppp = PICT ? false : true;
 
-  const [openLoader, setOpenLoader] = React.useState(false);
+  const [openLoader, setOpenLoader] = React.useState(PICT ? false : true);
 
   const handleImageUpload = async () => {
     let options = {
