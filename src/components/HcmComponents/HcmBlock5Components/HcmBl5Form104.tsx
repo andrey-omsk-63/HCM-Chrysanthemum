@@ -10,16 +10,15 @@ import 'dayjs/locale/ru';
 import dayjs, { Dayjs } from 'dayjs';
 
 import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
-import { InputStrField } from '../../HcmServiceFunctions';
+import { InputStrField, InputStrFieldMult } from '../../HcmServiceFunctions';
 import { MakeDate, InputerDate, InputDirectRec } from '../../HcmServiceFunctions';
-import { PreparCurrenciesCommon } from '../../HcmServiceFunctions';
+import { PreparCurrenciesCommon, WaysInput } from '../../HcmServiceFunctions';
 
 import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
 import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
-import { styleBl5Form06 } from '../../HcmMainStyle';
+import { styleBl5Form06, styleBl5Form03 } from '../../HcmMainStyle';
 import { styleBl5Form04, styleBl5Form05 } from '../../HcmMainStyle';
 
-//let massForm: any = null;
 let flagInput = true;
 let HAVE = 0;
 
@@ -32,16 +31,19 @@ let massGoodDate: Array<string> = [];
 let maskForm = {
   avtor: 'Доцент', // 'Автор
   why: 'Так себе основание', // Причина проведения
-  status: 'Хорошее', // Общее состояние команды
-  connect2: 'Не очень хорошее', // Взаимодействие с руководителем
-  pay: 'Хорошая', // Заработная плата, бонусы
-  load: 'Сильная', // Нагрузка, режим работы
+  status: '0.0', // Общее состояние команды
+  connect2: '0.0', // Взаимодействие с руководителем
+  pay: '0.0', // Заработная плата, бонусы
+  load: '0.0', // Нагрузка, режим работы
+  link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
+  comment:
+    'Таганский суд Москвы в пятницу приступит к рассмотрению по существу иска к компании МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор».',
   //============
   unit: 'ООО Рога и капыта', // Подразделение
-  know: 'Высокая', // Информированность
-  develop: 'Непрерывное', // Развитие
-  tasks: 'Сложные', // Текущие задачи
-  connect1: 'Хорошее', // Взаимодействие в команде
+  know: '0.0', // Информированность
+  develop: '0.0', // Развитие
+  tasks: '0.0', // Текущие задачи
+  connect1: '0.0', // Взаимодействие в команде
 };
 let currencies01: any = []; // Авторы
 let currencies02: any = []; // Причины проведения
@@ -69,11 +71,15 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   const [valueConnect2, setValueConnect2] = React.useState(maskForm.connect2);
   const [valuePay, setValuePay] = React.useState(maskForm.pay);
   const [valueLoad, setValueLoad] = React.useState(maskForm.load);
+
   const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
   const [valueKnow, setValueKnow] = React.useState(maskForm.know);
   const [valueDevelop, setValueDevelop] = React.useState(maskForm.develop);
   const [valueTask, setValueTask] = React.useState(maskForm.tasks);
   const [valueConnect1, setValueConnect1] = React.useState(maskForm.connect1);
+
+  const [valueLink, setValueLink] = React.useState(maskForm.link);
+  const [valueComment, setValueComment] = React.useState(maskForm.comment);
 
   const [currency01, setCurrency01] = React.useState('0');
   const [currency02, setCurrency02] = React.useState('0');
@@ -118,66 +124,66 @@ const HcmBl5Form104 = (props: { close: Function }) => {
     } else handleCloseBad();
   };
 
-  const hdlChangeStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const hdlChangeStatus = (valueInp: string) => {
+    maskForm.status = valueInp;
+    setValueStatus(valueInp);
+    HAVE++;
+  };
+
+  const hdlChangeConnect2 = (valueInp: string) => {
+    maskForm.connect2 = valueInp;
+    setValueConnect2(valueInp);
+    HAVE++;
+  };
+
+  const hdlChangePay = (valueInp: string) => {
+    maskForm.pay = valueInp;
+    setValuePay(valueInp);
+    HAVE++;
+  };
+
+  const hdlChangeLoad = (valueInp: string) => {
+    maskForm.load = valueInp;
+    setValueLoad(valueInp);
+    HAVE++;
+  };
+
+  const hdlChangeKnow = (valueInp: string) => {
+    maskForm.know = valueInp;
+    setValueKnow(valueInp);
+    HAVE++;
+  };
+
+  const hdlChangeDevelop = (valueInp: string) => {
+    maskForm.develop = valueInp;
+    setValueDevelop(valueInp);
+    HAVE++;
+  };
+
+  const hdlChangeTask = (valueInp: string) => {
+    maskForm.tasks = valueInp;
+    setValueTask(valueInp);
+    HAVE++;
+  };
+
+  const hdlChangeConnect1 = (valueInp: string) => {
+    maskForm.connect1 = valueInp;
+    setValueConnect1(valueInp);
+    HAVE++;
+  };
+
+  const hdlChangeLink = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      setValueStatus(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.status = event.target.value.trimStart();
+      setValueLink(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.link = event.target.value.trimStart();
       HAVE++;
     }
   };
 
-  const hdlChangeConnect2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const hdlChangeComment = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      setValueConnect2(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.connect2 = event.target.value.trimStart();
-      HAVE++;
-    }
-  };
-
-  const hdlChangePay = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      setValuePay(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.pay = event.target.value.trimStart();
-      HAVE++;
-    }
-  };
-
-  const hdlChangeLoad = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      setValueLoad(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.load = event.target.value.trimStart();
-      HAVE++;
-    }
-  };
-
-  const hdlChangeKnow = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      setValueKnow(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.know = event.target.value.trimStart();
-      HAVE++;
-    }
-  };
-
-  const hdlChangeDevelop = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      setValueDevelop(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.develop = event.target.value.trimStart();
-      HAVE++;
-    }
-  };
-
-  const hdlChangeTask = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      setValueTask(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.tasks = event.target.value.trimStart();
-      HAVE++;
-    }
-  };
-
-  const hdlChangeConnect1 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      setValueConnect1(event.target.value.trimStart()); // удаление пробелов в начале строки
-      maskForm.connect1 = event.target.value.trimStart();
+      setValueComment(event.target.value.trimStart()); // удаление пробелов в начале строки
+      maskForm.comment = event.target.value.trimStart();
       HAVE++;
     }
   };
@@ -188,7 +194,7 @@ const HcmBl5Form104 = (props: { close: Function }) => {
         setValueDate1(dayjs(eventInp1));
       } else {
         setValueDate1((eventInp1 = event));
-        HAVE++
+        HAVE++;
       }
     };
     return <>{InputerDate(valueDate1, handleChangeDP, massGoodDate)}</>;
@@ -241,31 +247,46 @@ const HcmBl5Form104 = (props: { close: Function }) => {
             {StrTablProp(
               6,
               'Общее состояние команды',
-              InputStrField(212, hdlChangeStatus, valueStatus),
+              WaysInput(0, valueStatus, hdlChangeStatus, 0, 20),
             )}
             {StrTablProp(
               6,
               'Взаимодействие с руководителем',
-              InputStrField(212, hdlChangeConnect2, valueConnect2),
+              WaysInput(0, valueConnect2, hdlChangeConnect2, 0, 20),
             )}
             {StrTablProp(
               6,
               'Заработная плата, бонусы',
-              InputStrField(212, hdlChangePay, valuePay),
+              WaysInput(0, valuePay, hdlChangePay, 0, 20),
             )}
-            {StrTablProp(6, 'Нагрузка, режим работы', InputStrField(212, hdlChangeLoad, valueLoad))}
-          </Grid>{' '}
+            {StrTablProp(
+              6,
+              'Нагрузка, режим работы',
+              WaysInput(0, valueLoad, hdlChangeLoad, 0, 20),
+            )}
+          </Grid>
           <Grid item xs={6} sx={{ padding: '0px 0px 0px 2px' }}>
             {StrTablProp(4.5, 'Подразделение', StrokaMenuGlob(3, currency03, currencies03))}
             {StrTablProp(4.5, 'За период', ContentDate1())}
-            {StrTablProp(6, 'Информированность', InputStrField(212, hdlChangeKnow, valueKnow))}
-            {StrTablProp(6, 'Развитие', InputStrField(212, hdlChangeDevelop, valueDevelop))}
-            {StrTablProp(6, 'Текущие задачи', InputStrField(212, hdlChangeTask, valueTask))}
+            {StrTablProp(6, 'Информированность', WaysInput(0, valueKnow, hdlChangeKnow, 0, 20))}
+            {StrTablProp(6, 'Развитие', WaysInput(0, valueDevelop, hdlChangeDevelop, 0, 20))}
+            {StrTablProp(6, 'Текущие задачи', WaysInput(0, valueTask, hdlChangeTask, 0, 20))}
             {StrTablProp(
               6,
               'Взаимодействие в команде',
-              InputStrField(212, hdlChangeConnect1, valueConnect1),
+              WaysInput(0, valueConnect1, hdlChangeConnect1, 0, 20),
             )}
+          </Grid>
+          <Grid item xs={12} sx={{ padding: '0px 2px 0px 0px' }}>
+            {StrTablProp(2.2, 'Ссылка на НС', InputStrField(500, hdlChangeLink, valueLink))}
+          </Grid>
+          <Grid container sx={{ marginTop: 2 }}>
+            <Grid item xs={2.2} sx={{ height: 100 }}>
+              Комментарий
+            </Grid>
+            <Grid item xs sx={styleBl5Form03}>
+              {InputStrFieldMult(500, hdlChangeComment, valueComment)}
+            </Grid>
           </Grid>
         </Grid>
       </>
@@ -274,7 +295,7 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   return (
     <>
       <Modal open={open} onClose={CloseEnd} hideBackdrop={false}>
-        <Box sx={styleBl5Form00(1050, 344)}>
+        <Box sx={styleBl5Form00(1050, 507)}>
           <Button sx={styleModalEnd} onClick={() => handleCloseBad()}>
             <b>&#10006;</b>
           </Button>

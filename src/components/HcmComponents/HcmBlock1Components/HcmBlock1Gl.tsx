@@ -24,7 +24,7 @@ import HcmBl1Form107 from './HcmBl1Form107';
 import HcmBl1Form108 from './HcmBl1Form108';
 import HcmBlock1ViewImg from './HcmBlock1ViewImg';
 
-import { RandomNumber, MakeNewBlob } from '../../HcmServiceFunctions';
+import { RandomNumber, MakeNewBlob, MakeDateRus } from '../../HcmServiceFunctions';
 
 import { baseURL2 } from '../../HcmMainConst';
 
@@ -93,16 +93,6 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     }
   };
 
-  const MakeDateRus = (tekData: Date) => {
-    let ddd = new Date(tekData.toString());
-    let sDay = ddd.getDate();
-    let sMes = ddd.getMonth() + 1;
-    let sYear = ddd.getFullYear();
-    let dataRus = (sDay < 10 ? '0' + sDay : sDay) + '-';
-    dataRus += (sMes < 10 ? '0' + sMes : sMes) + '-' + sYear;
-    return dataRus;
-  };
-
   const FillMask = React.useCallback((rec: any) => {
     maskForm.name = rec.name;
     maskForm.nik = rec.nickName;
@@ -111,11 +101,14 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     maskForm.post = rec.jobPosition;
     maskForm.department = rec.department.name;
     maskForm.chief = rec.manager;
-    maskForm.location =
-      rec.location.country + ', ' + rec.location.city + ' UTC+' + rec.location.timeZone;
-    maskForm.location += ' (MSK+' + (rec.location.timeZone - 3) + ')';
+
+    let znak1 = rec.location.timeZone <= 0 ? '+' : '-';
+    maskForm.location = rec.location.country + ', ' + rec.location.city;
+    maskForm.location += ' UTC' + znak1 + Math.abs(rec.location.timeZone);
+    let znak2 = rec.location.timeZone - 3 <= 0 ? '+' : '-';
+    maskForm.location += ' (MSK' + znak2 + Math.abs(rec.location.timeZone - 3) + ')';
+
     maskForm.status = rec.state;
-    console.log('3REC:', maskForm);
   }, []);
 
   if (!PICT && openFace) {
@@ -149,7 +142,7 @@ const HcmBlock1Gl = (props: { nik: string }) => {
   }
   React.useEffect(() => {
     if (kard >= 0) {
-      let url = baseURL2 + '/' + datestat.person[kard].nickName;
+      let url = baseURL2 + '/' + datestat.person[kard].nickName + '?expand=personAbsence';
       // Карточка сотрудника
       axios
         .get(url)
@@ -368,56 +361,76 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     );
   };
 
+  const Title = () => {
+    return (
+      <Grid container>
+        <Grid item xs={12} sx={styleBl1Form03}>
+          <em>
+            Личная карточка <b>{maskForm.nik}</b>
+          </em>
+        </Grid>
+      </Grid>
+    );
+  };
+
+  const Portrait = () => {
+    return (
+      <Grid container>
+        <Grid item xs={12} sx={styleBl1Form04}>
+          <Box sx={styleBl1Form05} onClick={() => ClickImg()}>
+            {datestat.user.login !== props.nik && (
+              <img
+                src="https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg"
+                //width={160}
+                height={180}
+                alt="PICT"
+              />
+            )}
+            {datestat.user.login === props.nik && (
+              <>
+                {openLoader && <Dinama />}
+                {!openLoader && (
+                  <>
+                    <img src={PICT} height={180} alt="PICT" />
+                  </>
+                )}
+              </>
+            )}
+          </Box>
+        </Grid>
+      </Grid>
+    );
+  };
+
   const CardContent = () => {
     return (
       <Grid container>
         <Grid item xs={12} sx={styleBl1Form01}>
           <Grid container>
             <Grid item xs={2} sx={{ height: '180px' }}>
+              {Title()}
+              {Portrait()}
+            </Grid>
+            <Grid item xs={10} sx={{ fontSize: 14.5 }}>
               <Grid container>
-                <Grid item xs={12} sx={styleBl1Form03}>
-                  <em>
-                    Личная карточка <b>{maskForm.nik}</b>
-                  </em>
+                <Grid item xs={4} sx={{ border: 0, height: '56px', fontSize: 14.5 }}>
+                  {StrTablProp(3, 'Имя:', maskForm.name)}
+                  {StrTablProp(3, 'Ник:', ButtonLink(maskForm.nik, ClickNik1))}
+                </Grid>
+                <Grid item xs={8} sx={{ border: 0, height: '56px' }}>
+                  {StrTablProp(0.1, '', maskForm.location)}
+                  {StrTablProp(0.1, '', maskForm.status)}
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={12} sx={styleBl1Form04}>
-                  <Box sx={styleBl1Form05} onClick={() => ClickImg()}>
-                    {datestat.user.login !== props.nik && (
-                      <img
-                        src="https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg"
-                        //width={160}
-                        height={180}
-                        alt="PICT"
-                      />
-                    )}
-                    {datestat.user.login === props.nik && (
-                      <>
-                        {openLoader && <Dinama />}
-                        {!openLoader && (
-                          <>
-                            <img src={PICT} height={180} alt="PICT" />
-                          </>
-                        )}
-                      </>
-                    )}
-                  </Box>
+              <Grid container sx={{}}>
+                <Grid item xs={12} sx={{ border: 0, height: '150px', fontSize: 14.5 }}>
+                  {StrTablProp(2, 'Дата рождения:', maskForm.birthDate)}
+                  {StrTablProp(2, 'В компании с:', maskForm.beginDate)}
+                  {StrTablProp(2, 'Должность:', maskForm.post)}
+                  {StrTablProp(2, 'Подразделение:', maskForm.department)}
+                  {StrTablProp(2, 'Руководитель(Ник):', ButtonLink(maskForm.chief, ClickNik2))}
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item xs={4} sx={{ height: '214px', fontSize: 14.5 }}>
-              {StrTablProp(2, 'Имя:', maskForm.name)}
-              {StrTablProp(2, 'Ник:', ButtonLink(maskForm.nik, ClickNik1))}
-              {StrTablProp(4, 'Дата рождения:', maskForm.birthDate)}
-              {StrTablProp(4, 'В компании с:', maskForm.beginDate)}
-              {StrTablProp(4, 'Должность:', maskForm.post)}
-              {StrTablProp(4, 'Подразделение:', maskForm.department)}
-              {StrTablProp(4, 'Руководитель(Ник):', ButtonLink(maskForm.chief, ClickNik2))}
-            </Grid>
-            <Grid item xs sx={{ height: '214px' }}>
-              {StrTablProp(0.1, '', maskForm.location)}
-              {StrTablProp(0.1, '', maskForm.status)}
             </Grid>
           </Grid>
         </Grid>
@@ -445,9 +458,9 @@ const HcmBlock1Gl = (props: { nik: string }) => {
             </Grid>
           </Grid>
         )}
-        {bl1Form101 && (datestat.permissions.length > 0 || datestat.user.login === props.nik) && (
-          <HcmBl1Form101 />
-        )}
+        {bl1Form101 &&
+          (datestat.permissions.length > 0 || datestat.user.login === props.nik) &&
+          getPersonNik && <HcmBl1Form101 card={getPersonNik} />}
         {bl1Form102 && <HcmBl1Form102 />}
         {bl1Form103 && <HcmBl1Form103 />}
         {bl1Form104 && <HcmBl1Form104 />}

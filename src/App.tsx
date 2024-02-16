@@ -193,7 +193,7 @@ const App = () => {
 
   React.useEffect(() => {
     if (dateStat.user) {
-      let url = baseURL2 + '/' + dateStat.user.login;
+      let url = baseURL2 + '/' + dateStat.user.login + '?expand=personAbsence';
       //console.log('URL:', url);
       // Карточка пользователя
       axios
