@@ -1,28 +1,33 @@
-import * as React from "react";
+import * as React from 'react';
 //import { useDispatch, useSelector } from 'react-redux';
 //import { statsaveCreate } from '../../../redux/actions';
 
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 
-import { BadExit, InputDirectRec } from "../../HcmServiceFunctions";
-import { PreparCurrenciesCommon } from "../../HcmServiceFunctions";
+import { BadExit, InputDirectRec } from '../../HcmServiceFunctions';
+import { PreparCurrenciesCommon } from '../../HcmServiceFunctions';
 
-import { styleModalEnd } from "../../HcmMainStyle";
-import { styleBl5Form01 } from "../../HcmMainStyle";
+import { styleModalEnd } from '../../HcmMainStyle';
+import { styleBl5Form01 } from '../../HcmMainStyle';
 // import { styleBl1Form07, styleBl1Form08 } from '../../HcmMainStyle';
 // import { styleBl1Form09, styleBl2Form04, styleBl2Form03} from '../../HcmMainStyle';
 
 let flagInput = true;
 let HAVE = 0;
 
+let maskForm = {
+  god: '',
+  qvartal: '',
+};
+
 let currencies01: any = []; // Год
 let currencies02: any = []; // Квартал
 
-let dat1 = ["2023", "2022", "2021", "2020"];
-let dat2 = ["1-й квартал", "2-й квартал", "3-й квартал", "4-й квартал"];
+let dat1 = ['2023', '2022', '2021', '2020'];
+let dat2 = ['1-й квартал', '2-й квартал', '3-й квартал', '4-й квартал'];
 
 const HcmBl2Form1022 = (props: { close: Function }) => {
   //== Piece of Redux =======================================
@@ -35,12 +40,17 @@ const HcmBl2Form1022 = (props: { close: Function }) => {
   //========================================================
   const [open, setOpen] = React.useState(true);
   const [badExit, setBadExit] = React.useState(false);
-  const [currency01, setCurrency01] = React.useState("0");
-  const [currency02, setCurrency02] = React.useState("0");
+  const [currency01, setCurrency01] = React.useState('0');
+  const [currency02, setCurrency02] = React.useState('0');
   //const [trigger, setTrigger] = React.useState(false);
   //=== инициализация ======================================
   if (flagInput) {
     HAVE = 0;
+    let sYear = new Date().getFullYear();
+    dat1 = [];
+    for (let i = 1; i < 11; i++) dat1.push((sYear - i).toString());
+    maskForm.god = dat1[0];
+    maskForm.qvartal = dat2[0];
     currencies01 = PreparCurrenciesCommon(dat1); // Год
     currencies02 = PreparCurrenciesCommon(dat2); // Квартал
     flagInput = false;
@@ -49,21 +59,27 @@ const HcmBl2Form1022 = (props: { close: Function }) => {
   const handleClose = () => {
     flagInput = true;
     setOpen(false);
-    props.close(false);
+    props.close(maskForm);
+  };
+
+  const CloseBad = () => {
+    maskForm.god = ''; // выход без сохранения
+    maskForm.qvartal = '';
+    handleClose();
   };
 
   const handleCloseBad = () => {
     HAVE && setBadExit(true);
-    !HAVE && handleClose();
+    !HAVE && CloseBad(); // выход без сохранения
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === "escapeKeyDown") handleCloseBad();
+    if (reason === 'escapeKeyDown') handleCloseBad();
   };
 
   const handleCloseBadExit = (mode: boolean) => {
     setBadExit(false);
-    mode && handleClose(); // выход без сохранения
+    mode && CloseBad(); // выход без сохранения
   };
   //=== Функции - обработчики ==============================
   const SavePeriod = () => {
@@ -75,49 +91,49 @@ const HcmBl2Form1022 = (props: { close: Function }) => {
 
   const styleModalMenu = {
     marginTop: 0.5,
-    maxHeight: "30px",
-    minHeight: "30px",
-    border: "1px solid #d4d4d4", // серый
+    maxHeight: '30px',
+    minHeight: '30px',
+    border: '1px solid #d4d4d4', // серый
     borderRadius: 1,
-    bgcolor: "#E6F5D6", // светло салатовый
-    color: "#5B1080", // сиреневый
-    textTransform: "unset !important",
-    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+    bgcolor: '#E6F5D6', // светло салатовый
+    color: '#5B1080', // сиреневый
+    textTransform: 'unset !important',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
     boxShadow: 6,
   };
 
   const styleSetPK01 = {
-    outline: "none",
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
+    outline: 'none',
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 260,
-    bgcolor: "background.paper",
-    border: "1px solid #FFFFFF",
+    bgcolor: 'background.paper',
+    border: '1px solid #FFFFFF',
     borderRadius: 1,
     boxShadow: 24,
-    textAlign: "center",
-    padding: "1px 10px 12px 12px",
+    textAlign: 'center',
+    padding: '1px 10px 12px 12px',
   };
 
   const StrokaMenuGlob = (mode: number, currency: any, currencies: any) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       switch (mode) {
-        case 1: 
+        case 1:
           setCurrency01(event.target.value);
-          //maskForm.avtor = dat1[Number(event.target.value)];
+          maskForm.god = dat1[Number(event.target.value)];
           HAVE++;
           break;
         case 2:
           setCurrency02(event.target.value);
-          //maskForm.why = dat2[Number(event.target.value)];
+          maskForm.qvartal = dat2[Number(event.target.value)];
           HAVE++;
       }
     };
 
     return (
-      <Box sx={{ marginTop: "-5px" }}>
+      <Box sx={{ marginTop: '-5px' }}>
         {InputDirectRec(handleChange, 155, currency, currencies)}
       </Box>
     );
@@ -133,21 +149,21 @@ const HcmBl2Form1022 = (props: { close: Function }) => {
           <Box sx={styleBl5Form01}>
             <b>Выберите период просмотра:</b>
           </Box>
-          <Grid container sx={{ textAlign: "left", color: "#5B1080" }}>
+          <Grid container sx={{ textAlign: 'left', color: '#5B1080' }}>
             <Grid item xs={5} sx={{ border: 0 }}>
               <b>Год</b>
             </Grid>
             <Grid item xs={7} sx={{ border: 0 }}>
               {StrokaMenuGlob(1, currency01, currencies01)}
             </Grid>
-            <Grid item xs={5} sx={{ border: 0, marginTop: "10px" }}>
+            <Grid item xs={5} sx={{ border: 0, marginTop: '10px' }}>
               <b>Квартал</b>
             </Grid>
-            <Grid item xs={7} sx={{ border: 0, marginTop: "10px" }}>
+            <Grid item xs={7} sx={{ border: 0, marginTop: '10px' }}>
               {StrokaMenuGlob(2, currency02, currencies02)}
             </Grid>
           </Grid>
-          <Box sx={{ marginTop: "15px", color: "#5B1080" }}>
+          <Box sx={{ marginTop: '15px', color: '#5B1080' }}>
             <Button sx={styleModalMenu} onClick={() => handleCloseBad()}>
               Отмена
             </Button>

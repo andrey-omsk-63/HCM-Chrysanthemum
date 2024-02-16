@@ -17,7 +17,7 @@ import { styleBl1Form09, styleBl2Form04 } from '../../HcmMainStyle';
 let flagInput = true;
 let HAVE = 0;
 
-const HcmBl2Form1021 = (props: { close: Function }) => {
+const HcmBl2Form1021 = (props: { form: any; close: Function }) => {
   //== Piece of Redux =======================================
   // let datestat = useSelector((state: any) => {
   //   const { statsaveReducer } = state;
@@ -94,7 +94,7 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
         switch (j) {
           case 1:
             maskStr.unit = 'ИТ отдел';
-            maskStr.period = '1 квартал 2023';
+            maskStr.period = props.form.qvartal + ' ' + props.form.god;
             maskStr.why = 'Орг.изменения';
             maskStr.status = '1';
             maskStr.connect1 = '6';
@@ -107,7 +107,7 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
             break;
           case 2:
             maskStr.unit = 'ИТ отдел';
-            maskStr.period = '2 квартал 2023';
+            maskStr.period = props.form.qvartal + ' ' + props.form.god;
             maskStr.why = 'Смена руководителя';
             maskStr.status = '7';
             maskStr.connect1 = '6';
@@ -120,7 +120,7 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
             break;
           case 3:
             maskStr.unit = 'ИТ отдел';
-            maskStr.period = '3 квартал 2023';
+            maskStr.period = props.form.qvartal + ' ' + props.form.god;
             maskStr.why = 'Выгорание команды';
             maskStr.status = '6';
             maskStr.connect1 = '3';
@@ -133,7 +133,7 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
             break;
           case 4:
             maskStr.unit = 'ИТ отдел';
-            maskStr.period = '4 квартал 2023';
+            maskStr.period = props.form.qvartal + ' ' + props.form.god;
             maskStr.why = 'Просто так';
             maskStr.status = '4';
             maskStr.connect1 = '10';
@@ -150,7 +150,11 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
     for (let i = 0; i < masStr.length; i++) {
       let brb: any = i === masStr.length - 1 ? 0 : '1px solid #d4d4d4';
       resStr.push(
-        <Grid key={i} container sx={{ color: '#5B1080' }}>
+        <Grid
+          key={i}
+          container
+          sx={{ color: '#5B1080', cursor: 'pointer' }}
+          onClick={() => ClicStr(i)}>
           {TablStr(0, 1.4, masStr[i].unit, styleBl1Form09(brb))}
           {TablStr(0, 0.8, masStr[i].period, styleBl1Form09(brb))}
           {TablStr(0, 1.0, masStr[i].why, styleBl1Form09(brb))}
@@ -166,6 +170,10 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
       );
     }
     return resStr;
+  };
+
+  const ClicStr = (idx: number) => {
+    console.log('Запись:', idx);
   };
 
   const HeaderTabl = () => {
@@ -197,7 +205,9 @@ const HcmBl2Form1021 = (props: { close: Function }) => {
             <b>&#10006;</b>
           </Button>
           <Box sx={styleBl5Form01}>
-            <b>Все НС</b>
+            <b>
+              Все НС за {props.form.qvartal} {props.form.god}
+            </b>
           </Box>
           <Box sx={styleBl2Form03(96)}>
             {HeaderTabl()}

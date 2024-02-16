@@ -18,7 +18,8 @@ const HcmBl1Form101 = (props: { card: any }) => {
     let resStr = [];
     for (let i = 0; i < absence.length; i++) {
       let brb: any = i === absence.length - 1 ? 0 : '1px solid #d4d4d4';
-      let quo = '✔';
+      // let quo = '✔';
+      let quo = '';
       let period = MakeDateRus(absence[i].startDate) + ' - ';
       period += MakeDateRus(absence[i].endDate);
       resStr.push(

@@ -17,9 +17,8 @@ const HcmErrorMessage = (props: { sErr: string; setOpen: any }) => {
     top: '50%',
     transform: 'translate(-50%, -50%)',
     width: 380,
-    bgcolor: 'background.paper',
-    border: '1px solid #000',
-    borderColor: 'red',
+    bgcolor: '#fcebfb', // бледно-розовый
+    border: '1px solid #fcebfb', // бледно-розовый
     borderRadius: 1,
     boxShadow: 24,
     textShadow: '2px 2px 3px rgba(0,0,0,0.3)',

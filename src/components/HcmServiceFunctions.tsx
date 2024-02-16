@@ -355,7 +355,6 @@ export const WaysInput = (
   };
 
   const handleChange = (event: any) => {
-    console.log('Пришло:', event.target.value);
     //let valueInp = event.target.value.replace(/^0+/, '');
     let valueInp = event.target.value;
     if (Number(valueInp) < MIN) valueInp = MIN;

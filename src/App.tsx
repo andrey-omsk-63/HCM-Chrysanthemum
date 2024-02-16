@@ -252,7 +252,13 @@ const App = () => {
   }
 
   return (
-    <Grid container sx={{ height: '100vh', width: '100%', bgcolor: '#E9F5D8' }}>
+    <Grid
+      container
+      sx={{
+        height: '100vh',
+        width: '100%',
+        background: 'linear-gradient(135deg, #DCE0AB 25%,#97BB92 52%, #D2D8B7 85%)',
+      }}>
       <Grid item xs>
         {getPerson && getPersonNik && getUsersRoles && getUsersPermission && (
           <HcmMain pers={getPerson} />
