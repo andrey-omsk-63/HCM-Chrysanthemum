@@ -75,45 +75,6 @@ const HcmMain = (props: { pers: any }) => {
   const [trigger, setTrigger] = React.useState(false);
   //const [openLoader, setOpenLoader] = React.useState(true);
 
-  // const handleImageUpload = async () => {
-  //   let options = {
-  //     maxSizeMB: 1,
-  //     maxWidthOrHeight: 320,
-  //     useWebWorker: true,
-  //   };
-  //   try {
-  //     compressedFile = await imageCompression(blob, options);
-  //     reader.readAsDataURL(compressedFile);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   if (!PICT) {
-  //     //console.log('OPENNFACE:', openFace);
-  //     if (!PICT && datestat.picture) {
-  //       blob = MakeNewBlob(datestat.picture);
-  //       reader = new FileReader();
-  //       compressedFile = null;
-  //       handleImageUpload();
-  //       const handleMake = () => {
-  //         if (reader.result !== null) {
-  //           PICT = reader.result; // если длина спрессованной картинки < 200байт - косячная картинка
-  //           setOpenLoader(false);
-  //           //openFace = false;
-  //         } else {
-  //           setTimeout(() => {
-  //             handleMake();
-  //           }, 100);
-  //         }
-  //       };
-  //       handleMake();
-  //     } else setOpenLoader(false);
-  //     //openFace = false;
-  //   }
-  // }, [datestat.picture]);
-
   //=== инициализация ======================================
   if (!flagOpen) {
     nikCard = datestat.user.login;

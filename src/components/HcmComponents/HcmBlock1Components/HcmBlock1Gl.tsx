@@ -111,6 +111,7 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     maskForm.status = rec.state;
   }, []);
 
+  //=== распаковка файла картинок ==========================
   if (!PICT && openFace) {
     openFace = false;
     if (!PICT && datestat.picture) {
@@ -136,19 +137,19 @@ const HcmBlock1Gl = (props: { nik: string }) => {
 
   //=== инициализация ======================================
   let kard = -1;
-  console.log('££££££:', props.nik);
+  //console.log('££££££:', props.nik);
   for (let i = 0; i < datestat.person.length; i++) {
     if (datestat.person[i].nickName === props.nik) kard = i;
   }
   React.useEffect(() => {
     if (kard >= 0) {
       let url = baseURL2 + '/' + datestat.person[kard].nickName + '?expand=personAbsence';
-      // Карточка сотрудника
+
+      // Чтение карточки сотрудника
       axios
         .get(url)
         .then((response) => {
           console.log('Карточка сотрудника:', response.data);
-          //console.log('GetPersonNik.url:', response.config.url);
           FillMask(response.data[0]);
           setGetPersonNik(response.data);
         })
@@ -328,8 +329,6 @@ const HcmBlock1Gl = (props: { nik: string }) => {
   const handleClose = () => {
     setOpenLoader(false);
   };
-
-  //let bot = 100 - 25000 / window.innerHeight;
 
   const styleBackdropBaza = {
     color: '#fff',

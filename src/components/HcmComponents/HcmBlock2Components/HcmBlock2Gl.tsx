@@ -41,10 +41,8 @@ const HcmBlock2Gl = (props: { idx: number }) => {
     url,
   );
 
+  // Получение иерархии подразделений
   React.useEffect(() => {
-    //if (datestat.personNik[0].nickName === datestat.personNik[0].manager) {
-    console.log('URL:', datestat.personNik.nickName, url);
-    // Получение иерархии подразделений
     axios
       .get(url)
       .then((response) => {

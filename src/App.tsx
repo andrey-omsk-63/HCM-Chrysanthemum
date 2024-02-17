@@ -194,22 +194,17 @@ const App = () => {
   React.useEffect(() => {
     if (dateStat.user) {
       let url = baseURL2 + '/' + dateStat.user.login + '?expand=personAbsence';
-      //console.log('URL:', url);
-      // Карточка пользователя
+      // Получение карточки пользователя
       axios
         .get(url)
         .then((response) => {
           console.log('Карточка пользователя:', response.data);
-          //console.log('GetPersonNik.url:', response.config.url);
           dateStat.personNik = response.data;
           dispatch(statsaveCreate(dateStat));
-          console.log('000dateStat.personNik:', dateStat.personNik);
-          //setTrigger(!trigger);
           setGetPersonNik(response.data);
-          //console.log('getPersonNik:', getPersonNik);
         })
         .catch((error: any) => {
-          console.error('ОКарточка пользователя:', error);
+          console.error('Карточка пользователя:', error);
         });
     }
   }, [dispatch, setGetPersonNik]);
@@ -233,20 +228,6 @@ const App = () => {
         );
         dateStat.picture = image;
       });
-
-    // axios
-    //   .get('https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg', {
-    //     responseType: 'arraybuffer',
-    //   })
-    //   .then(function (response) {
-    //     let image = btoa(
-    //       new Uint8Array(response.data).reduce(
-    //         (data, byte) => data + String.fromCharCode(byte),
-    //         '',
-    //       ),
-    //     );
-    //     dateStat.picture2 = image;
-    //   });
     dispatch(statsaveCreate(dateStat));
     flagOpenDebug = false;
   }
