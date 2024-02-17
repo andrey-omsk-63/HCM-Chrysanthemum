@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
+import HcmBl2Form1023 from './HcmBl2Form1023';
+
 import { BadExit, TablStr } from '../../HcmServiceFunctions';
 
 import { styleBl5Form00, styleModalEndBig } from '../../HcmMainStyle';
@@ -16,6 +18,8 @@ import { styleBl1Form09, styleBl2Form04 } from '../../HcmMainStyle';
 
 let flagInput = true;
 let HAVE = 0;
+let IDX = -1;
+let FORM: any = null;
 
 const HcmBl2Form1021 = (props: { form: any; close: Function }) => {
   //== Piece of Redux =======================================
@@ -28,6 +32,7 @@ const HcmBl2Form1021 = (props: { form: any; close: Function }) => {
   //========================================================
   const [open, setOpen] = React.useState(true);
   const [badExit, setBadExit] = React.useState(false);
+  const [viewing, setViewing] = React.useState(false);
   //const [trigger, setTrigger] = React.useState(false);
   //=== инициализация ======================================
   if (flagInput) {
@@ -71,6 +76,11 @@ const HcmBl2Form1021 = (props: { form: any; close: Function }) => {
   //   HAVE++;
   //   setTrigger(!trigger);
   // };
+  const ClicStr = (idx: number, form: any) => {
+    IDX = idx;
+    FORM = form;
+    setViewing(true);
+  };
   //========================================================
   const StrokaForm1021 = () => {
     let resStr = [];
@@ -89,6 +99,9 @@ const HcmBl2Form1021 = (props: { form: any; close: Function }) => {
           tasks: '8',
           pay: '7',
           load: '9',
+          link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
+          comment:
+            'Таганский суд Москвы в пятницу приступит к рассмотрению по существу иска к компании МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор».',
         };
 
         switch (j) {
@@ -154,7 +167,7 @@ const HcmBl2Form1021 = (props: { form: any; close: Function }) => {
           key={i}
           container
           sx={{ color: '#5B1080', cursor: 'pointer' }}
-          onClick={() => ClicStr(i)}>
+          onClick={() => ClicStr(i, masStr[i])}>
           {TablStr(0, 1.4, masStr[i].unit, styleBl1Form09(brb))}
           {TablStr(0, 0.8, masStr[i].period, styleBl1Form09(brb))}
           {TablStr(0, 1.0, masStr[i].why, styleBl1Form09(brb))}
@@ -170,10 +183,6 @@ const HcmBl2Form1021 = (props: { form: any; close: Function }) => {
       );
     }
     return resStr;
-  };
-
-  const ClicStr = (idx: number) => {
-    console.log('Запись:', idx);
   };
 
   const HeaderTabl = () => {
@@ -216,6 +225,7 @@ const HcmBl2Form1021 = (props: { form: any; close: Function }) => {
         </Box>
       </Modal>
       {badExit && <>{BadExit(badExit, handleCloseBadExit)}</>}
+      {viewing && <HcmBl2Form1023 idx={IDX} form={FORM} close={setViewing} />}
     </>
   );
 };

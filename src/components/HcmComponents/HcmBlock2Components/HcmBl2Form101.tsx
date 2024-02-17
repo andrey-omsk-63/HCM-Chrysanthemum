@@ -65,7 +65,7 @@ const HcmBl2Form101 = () => {
   };
 
   return (
-    <Grid container sx={styleBl3Form01(153)}>
+    <Grid container sx={styleBl3Form01(138)}>
       <Grid item xs={12}>
         {HeaderTabl()}
         <Box sx={styleBl2Form01}>{StrokaForm101()}</Box>

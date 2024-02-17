@@ -1,5 +1,6 @@
 import * as React from 'react';
-//import { useSelector } from "react-redux";
+//import { useDispatch, useSelector } from 'react-redux';
+//import { statsaveCreate } from '../../../redux/actions';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -19,7 +20,7 @@ import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
 import { styleBl5Form06, styleBl5Form03 } from '../../HcmMainStyle';
 import { styleBl5Form04, styleBl5Form05 } from '../../HcmMainStyle';
 
-let flagInput = true;
+let oldIdx = -1;
 let HAVE = 0;
 
 const date = new Date();
@@ -51,16 +52,18 @@ let currencies02: any = []; // Причины проведения
 let currencies03: any = []; // Подразделения
 
 let dat1 = ['Фантомас', 'Лишенец', 'Бугор', 'Ляля'];
-let dat2 = [
+let dat2: Array<string> = [];
+let dat22 = [
   'Очень важное основание',
   'Так себе основание',
   'Необходимая необходимость',
   'Фигня какая-та',
 ];
-let dat3 = ['ООО Рога и капыта', 'Пехота', 'Автобат', 'Конница', 'Хозвзвод'];
+let dat3: Array<string> = [];
+let dat33 = ['ООО Рога и капыта', 'Пехота', 'Автобат', 'Конница', 'Хозвзвод'];
 
-const HcmBl5Form104 = (props: { close: Function }) => {
-  //== Piece of Redux =======================================
+const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
+  ///== Piece of Redux =======================================
   // let massplan = useSelector((state: any) => {
   //   const { massplanReducer } = state;
   //   return massplanReducer.massplan;
@@ -68,12 +71,30 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   //const dispatch = useDispatch();
   //console.log("Setup_massplan:", massplan);
   //========================================================
+  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
+  //=== инициализация ======================================
+  if (oldIdx !== props.idx) {
+    HAVE = 0;
+    maskForm = props.form;
+    dat2 = [];
+    dat2.push(props.form.why);
+    for (let i = 0; i < dat22.length; i++) dat2.push(dat22[i]);
+    dat3 = [];
+    dat3.push(props.form.unit);
+    for (let i = 0; i < dat33.length; i++) dat3.push(dat33[i]);
+    setValueDate1(dayjs(formSett));
+    currencies01 = PreparCurrenciesCommon(dat1); // Авторы
+    currencies02 = PreparCurrenciesCommon(dat2); // Причины проведения
+    currencies03 = PreparCurrenciesCommon(dat3); // Подразделения
+    // massForm = JSON.parse(JSON.stringify(massplan.setup));
+    oldIdx = props.idx;
+  }
+  //========================================================
   const [valueStatus, setValueStatus] = React.useState(maskForm.status);
   const [valueConnect2, setValueConnect2] = React.useState(maskForm.connect2);
   const [valuePay, setValuePay] = React.useState(maskForm.pay);
   const [valueLoad, setValueLoad] = React.useState(maskForm.load);
 
-  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
   const [valueKnow, setValueKnow] = React.useState(maskForm.know);
   const [valueDevelop, setValueDevelop] = React.useState(maskForm.develop);
   const [valueTask, setValueTask] = React.useState(maskForm.tasks);
@@ -88,19 +109,8 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   const [open, setOpen] = React.useState(true);
   const [badExit, setBadExit] = React.useState(false);
   //const [trigger, setTrigger] = React.useState(false);
-  //=== инициализация ======================================
-  if (flagInput) {
-    HAVE = 0;
-    setValueDate1(dayjs(formSett));
-    currencies01 = PreparCurrenciesCommon(dat1); // Авторы
-    currencies02 = PreparCurrenciesCommon(dat2); // Причины проведения
-    currencies03 = PreparCurrenciesCommon(dat3); // Подразделения
-    // massForm = JSON.parse(JSON.stringify(massplan.setup));
-    flagInput = false;
-  }
   //========================================================
   const handleClose = () => {
-    flagInput = true;
     setOpen(false);
     props.close(false);
   };
@@ -301,7 +311,7 @@ const HcmBl5Form104 = (props: { close: Function }) => {
             <b>&#10006;</b>
           </Button>
           <Box sx={styleBl5Form01}>
-            <b>Добавить Health Check</b>
+            <b>Редактирование Health Check</b>
           </Box>
           <Box sx={styleBl5Form02}>{TableContent()}</Box>
           {HAVE > 0 && <>{FooterContent(SaveForm)}</>}
@@ -312,4 +322,4 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   );
 };
 
-export default HcmBl5Form104;
+export default HcmBl2Form1023;

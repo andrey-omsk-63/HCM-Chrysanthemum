@@ -169,7 +169,7 @@ const HcmBl2Form1022 = (props: { close: Function }) => {
             </Button>
             &nbsp;
             <Button sx={styleModalMenu} onClick={() => SavePeriod()}>
-              Сохранить
+              Применить
             </Button>
           </Box>
         </Box>

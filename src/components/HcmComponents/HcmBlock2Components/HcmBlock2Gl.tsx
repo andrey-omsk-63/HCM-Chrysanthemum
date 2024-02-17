@@ -34,12 +34,6 @@ const HcmBlock2Gl = (props: { idx: number }) => {
   const [bl2Form103, setBl2Form301] = React.useState(false);
   const [GetCatalog, setGetCatalog] = React.useState<any>(null);
   let url = 'https://catalog.chry.ls-dev.ru/departments?manager=' + datestat.personNik[0].nickName;
-  console.log(
-    '!!!datestat.personNik',
-    datestat.personNik[0].nickName,
-    datestat.personNik[0].manager,
-    url,
-  );
 
   // Получение иерархии подразделений
   React.useEffect(() => {

@@ -283,7 +283,7 @@ export const styleBl2Form00 = (part: number, mt: number) => {
 
 export const styleBl2Form01 = {
   overflowX: 'auto',
-  height: window.innerHeight - 190,
+  height: window.innerHeight - 175,
   textAlign: 'center',
 };
 

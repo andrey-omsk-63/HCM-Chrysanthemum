@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 
 import HcmBl2Form1021 from './HcmBl2Form1021';
 import HcmBl2Form1022 from './HcmBl2Form1022';
+import HcmBl2Form1023 from './HcmBl2Form1023';
 
 import { TablStr } from '../../HcmServiceFunctions';
 
@@ -27,21 +28,26 @@ if (tekMonth > 9) tekQ = 4;
 
 let Illum = tekQ;
 let optQ = tekQ;
+let IDX = -1;
+let FORM: any = null;
 
 let maskForm = {
   avtor: 'Доцент', // 'Автор
   why: 'Так себе основание', // Причина проведения
-  status: 'Хорошее', // Общее состояние команды
-  connect2: 'Не очень хорошее', // Взаимодействие с руководителем
-  pay: 'Хорошая', // Заработная плата, бонусы
-  load: 'Сильная', // Нагрузка, режим работы
+  status: '0.0', // Общее состояние команды
+  connect2: '0.0', // Взаимодействие с руководителем
+  pay: '0.0', // Заработная плата, бонусы
+  load: '0.0', // Нагрузка, режим работы
+  link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
+  comment:
+    'Таганский суд Москвы в пятницу приступит к рассмотрению по существу иска к компании МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор».',
   //============
   unit: 'ООО Рога и капыта', // Подразделение
   period: '1 квартал 2023',
-  know: 'Высокая', // Информированность
-  develop: 'Непрерывное', // Развитие
-  tasks: 'Сложные', // Текущие задачи
-  connect1: 'Хорошее', // Взаимодействие в команде
+  know: '0.0', // Информированность
+  develop: '0.0', // Развитие
+  tasks: '0.0', // Текущие задачи
+  connect1: '0.0', // Взаимодействие в команде
 };
 
 let formPeriod: any = null;
@@ -59,6 +65,7 @@ const HcmBl2Form102 = () => {
   //========================================================
   const [bl2Form1021, setBl2Form2011] = React.useState(false);
   const [bl2Form1022, setBl2Form2012] = React.useState(false);
+  const [viewing, setViewing] = React.useState(false);
   const [trigger, setTrigger] = React.useState(false);
   //=== Функции - обработчики ==============================
   const ClickKnop1 = () => {
@@ -122,7 +129,17 @@ const HcmBl2Form102 = () => {
           {KnopQ(4, ClickKnop4)}
         </Grid>
 
-        <Grid item xs={5} sx={{ border: 0, height: '30px' }}></Grid>
+        <Grid
+          item
+          xs={5}
+          sx={{
+            textAlign: 'center',
+            color: '#5B1080',
+            padding: '5px 0px 0px 0px',
+            height: '30px',
+          }}>
+          <em>Нажмите на запись для более детального просмотра</em>
+        </Grid>
         <Grid item xs={1.5} sx={{}}>
           <Button sx={styleMain04(1.5, Illum, 9)} onClick={() => ClickKnop5()}>
             Добавить НС
@@ -153,6 +170,12 @@ const HcmBl2Form102 = () => {
         {TablStr(1, 1, 'Нагрузка, режим работы', styleBl1Form08)}
       </Grid>
     );
+  };
+
+  const ClicStr = (idx: number, form: any) => {
+    IDX = idx;
+    FORM = form;
+    setViewing(true);
   };
 
   const StrokaForm1021 = () => {
@@ -221,7 +244,11 @@ const HcmBl2Form102 = () => {
     for (let i = 0; i < masStr.length; i++) {
       let brb: any = i === masStr.length - 1 ? 0 : '1px solid #d4d4d4';
       resStr.push(
-        <Grid key={i} container sx={{ color: '#5B1080' }}>
+        <Grid
+          key={i}
+          container
+          sx={{ color: '#5B1080', cursor: 'pointer' }}
+          onClick={() => ClicStr(i, masStr[i])}>
           {TablStr(0, 1.4, masStr[i].unit, styleBl1Form09(brb))}
           {TablStr(0, 0.8, masStr[i].period, styleBl1Form09(brb))}
           {TablStr(0, 1.0, masStr[i].why, styleBl1Form09(brb))}
@@ -240,24 +267,24 @@ const HcmBl2Form102 = () => {
   };
 
   const SetBl2Form2012 = (mask: any) => {
-    console.log('Пришло:', mask);
     formPeriod = mask;
     setBl2Form2012(false);
     setBl2Form2011(true);
   };
 
   return (
-    <Grid container sx={styleBl3Form01(153)}>
+    <Grid container sx={styleBl3Form01(138)}>
       <Grid item xs={12}>
         <Grid container>
           {MenuContent()}
           <Grid item xs={12} sx={styleBl2Form05}>
             {HeaderTabl()}
-            <Box sx={styleBl2Form04(245)}>{StrokaForm1021()}</Box>
+            <Box sx={styleBl2Form04(228)}>{StrokaForm1021()}</Box>
           </Grid>
         </Grid>
         {bl2Form1021 && <HcmBl2Form1021 form={formPeriod} close={setBl2Form2011} />}
         {bl2Form1022 && <HcmBl2Form1022 close={SetBl2Form2012} />}
+        {viewing && <HcmBl2Form1023 idx={IDX} form={FORM} close={setViewing} />}
       </Grid>
     </Grid>
   );
