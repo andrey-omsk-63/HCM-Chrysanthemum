@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 
 import { CloseInterval } from '../src/components/HcmServiceFunctions';
 
-import { SendSocketDispatch } from '../src/components/HcmSocketFunctions';
+import { SendSocketDispatch } from './HcmSocketFunctions';
 
 import { MaxFaz, CLINCH } from '../src/components/HcmMainConst';
 
