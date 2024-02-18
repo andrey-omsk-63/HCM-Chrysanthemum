@@ -439,19 +439,19 @@ export const styleBl5Form03 = {
 export const styleBl5Form04 = {
   fontSize: 15,
   marginTop: '-5px',
-  height: '27px',
+  height: '30px',
   width: '190px',
 };
 
 export const styleBl5Form05 = {
-  height: '27px',
+  height: '30px',
   maxWidth: '124px',
   minWidth: '124px',
 };
 
 export const styleBl5Form06 = {
   bgcolor: '#FFFBE5', // топлёное молоко
-  height: '27px',
+  height: '30px',
   width: '150px',
 };
 //=== Разное ==========================================================

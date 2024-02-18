@@ -831,11 +831,90 @@ export const FooterContent = (SaveForm: Function) => {
   );
 };
 
+export const FooterContentMode = (SaveForm: Function) => {
+  const styleSetPK04 = {
+    marginTop: 1.2,
+    display: 'flex',
+    justifyContent: 'center',
+  };
+
+  const styleFormPK03 = {
+    maxHeight: '30px',
+    minHeight: '30px',
+    bgcolor: '#E6F5D6', // светло салатовый
+    border: '1px solid #000',
+    borderRadius: 1,
+    borderColor: '#d4d4d4', // серый
+    textTransform: 'unset !important',
+    //padding: "6px 6px 6px 6px",
+    boxShadow: 6,
+    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+    color: '#5B1080', // сиреневый
+  };
+
+  return (
+    <Box sx={styleSetPK04}>
+      <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 0px' }}>
+        <Button sx={styleFormPK03} onClick={() => SaveForm(0)}>
+          <Box sx={{ color: 'red' }}>Удалить</Box>
+        </Button>
+      </Box>
+      <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 6px' }}>
+        <Button sx={styleFormPK03} onClick={() => SaveForm(1)}>
+          Редактировать
+        </Button>
+      </Box>
+      <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 6px' }}>
+        <Button sx={styleFormPK03} onClick={() => SaveForm(2)}>
+          Выйти
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
+export const FooterContentEndEdit = (SaveForm: Function) => {
+  const styleSetPK04 = {
+    marginTop: 1.2,
+    display: 'flex',
+    justifyContent: 'center',
+  };
+
+  const styleFormPK03 = {
+    maxHeight: '30px',
+    minHeight: '30px',
+    bgcolor: '#E6F5D6', // светло салатовый
+    border: '1px solid #000',
+    borderRadius: 1,
+    borderColor: '#d4d4d4', // серый
+    textTransform: 'unset !important',
+    //padding: "6px 6px 6px 6px",
+    boxShadow: 6,
+    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+    color: '#5B1080', // сиреневый
+  };
+
+  return (
+    <Box sx={styleSetPK04}>
+      <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 0px' }}>
+        <Button sx={styleFormPK03} onClick={() => SaveForm(0)}>
+          Выйти из Редактирования
+        </Button>
+      </Box>
+      {/* <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 6px' }}>
+        <Button sx={styleFormPK03} onClick={() => SaveForm(1)}>
+          Редактировать
+        </Button>
+      </Box> */}
+    </Box>
+  );
+};
+
 export const InputerDate = (valueDate: any, handleChangeDP: any, massGoodDate: any) => {
   const styleDatePicker = {
     '& > :not(style)': {
       width: '150px',
-      height: '27px',
+      height: '30px',
       display: 'flex',
       flexWrap: 'nowrap',
       flexDirection: 'row',
