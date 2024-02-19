@@ -60,6 +60,7 @@ let maskNom = {
   nomAvtor: "0",
   nomWho: "0",
   nomUnit: "0",
+  nomPeriod: "0",
 };
 
 let maskFormNew: any = null; // для мягкого отката
@@ -68,6 +69,7 @@ let maskNomNew: any = null; // для мягкого отката
 let currencies01: any = []; // Авторы
 let currencies02: any = []; // Причины проведения
 let currencies03: any = []; // Подразделения
+let currencies04: any = []; // Период..
 
 let dat1 = ["Фантомас", "Лишенец", "Бугор", "Ляля"];
 let dat2: Array<string> = [];
@@ -79,6 +81,9 @@ let dat22 = [
 ];
 let dat3: Array<string> = [];
 let dat33 = ["ООО Рога и капыта", "Пехота", "Автобат", "Конница", "Хозвзвод"];
+
+let dat4: Array<string> = [];
+//let dat44 = ["1-й квартал", "2-й квартал", "3-й квартал", "4-й квартал"];
 
 let MODE = 0; // режим работы
 
@@ -96,21 +101,34 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   );
   //=== инициализация ======================================
   if (oldIdx !== props.idx) {
+    console.log("PERIOD:", props.form.period);
     HAVE = MODE = 0;
     maskForm = JSON.parse(JSON.stringify(props.form));
     maskFormNew = JSON.parse(JSON.stringify(props.form));
     maskNom.nomAvtor = maskNom.nomWho = maskNom.nomUnit = "0";
     maskNomNew = JSON.parse(JSON.stringify(maskNom));
+    //===
     dat2 = [];
     dat2.push(props.form.why);
     for (let i = 0; i < dat22.length; i++) dat2.push(dat22[i]);
+    //===
     dat3 = [];
     dat3.push(props.form.unit);
     for (let i = 0; i < dat33.length; i++) dat3.push(dat33[i]);
+    //===
+    dat4 = [];
+    let year = props.form.period.slice(12);
+    let nomer = Number(props.form.period.slice(0, 1));
+    for (let i = 1; i < 5; i++) dat4.push(i + "-й квартал " + year);
+    maskNom.nomPeriod = (nomer - 1).toString();
+    maskNomNew.nomPeriod = (nomer - 1).toString();
+    console.log("YEAR:", year, nomer, dat4);
+    //===
     setValueDate1(dayjs(formSett));
     currencies01 = PreparCurrenciesCommon(dat1); // Авторы
     currencies02 = PreparCurrenciesCommon(dat2); // Причины проведения
     currencies03 = PreparCurrenciesCommon(dat3); // Подразделения
+    currencies04 = PreparCurrenciesCommon(dat4); // Период
     // massForm = JSON.parse(JSON.stringify(massplan.setup));
     oldIdx = props.idx;
     //console.log("!!!", maskForm);

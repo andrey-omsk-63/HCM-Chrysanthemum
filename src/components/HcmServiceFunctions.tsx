@@ -1,25 +1,25 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { CalendarPickerSkeleton } from '@mui/x-date-pickers/CalendarPickerSkeleton';
-import { PickersDay } from '@mui/x-date-pickers/PickersDay';
-import Badge from '@mui/material/Badge';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { CalendarPickerSkeleton } from "@mui/x-date-pickers/CalendarPickerSkeleton";
+import { PickersDay } from "@mui/x-date-pickers/PickersDay";
+import Badge from "@mui/material/Badge";
 
-import { ILLUM } from './HcmMain';
+import { ILLUM } from "./HcmMain";
 
 const handleKey = (event: any) => {
-  if (event.key === 'Enter') event.preventDefault();
+  if (event.key === "Enter") event.preventDefault();
 };
 
 export const RandomNumber = (min: number, max: number) => {
@@ -30,23 +30,23 @@ export const RandomNumber = (min: number, max: number) => {
 export const MakeDate = (tekData: Date) => {
   let ddd = new Date(tekData.toString());
   let SMes = ddd.getMonth() + 1;
-  let sDate = ddd.getFullYear() + '-';
+  let sDate = ddd.getFullYear() + "-";
   let sDay = ddd.getDate();
-  if (SMes < 10) sDate = sDate + '0';
-  sDate += SMes + '-';
-  if (sDay < 10) sDate += '0';
+  if (SMes < 10) sDate = sDate + "0";
+  sDate += SMes + "-";
+  if (sDay < 10) sDate += "0";
   sDate += sDay;
   return sDate;
 };
 
 export const MakeDateRus = (tekData: Date) => {
-  console.log('DATA:', tekData);
+  console.log("DATA:", tekData);
   let ddd = new Date(tekData.toString());
   let sDay = ddd.getDate();
   let sMes = ddd.getMonth() + 1;
   let sYear = ddd.getFullYear();
-  let dataRus = (sDay < 10 ? '0' + sDay : sDay) + '-';
-  dataRus += (sMes < 10 ? '0' + sMes : sMes) + '-' + sYear;
+  let dataRus = (sDay < 10 ? "0" + sDay : sDay) + "-";
+  dataRus += (sMes < 10 ? "0" + sMes : sMes) + "-" + sYear;
   return dataRus;
 };
 
@@ -57,12 +57,12 @@ export const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
         <Grid item xs={xss} sx={{ border: 0 }}>
           {recLeft}
         </Grid>
-        {typeof recRight === 'object' ? (
+        {typeof recRight === "object" ? (
           <Grid item xs>
             {recRight}
           </Grid>
         ) : (
-          <Grid item xs sx={{ fontSize: 15, color: '#5B1080', border: 0 }}>
+          <Grid item xs sx={{ fontSize: 15, color: "#5B1080", border: 0 }}>
             <b>{recRight}</b>
           </Grid>
         )}
@@ -98,11 +98,15 @@ export const TablStr = (mode: number, xss: number, arg: any, style: any) => {
   );
 };
 //=== Работа с файлами картинок ==========================
-export const b64toBlob = (b64Data: any, contentType: any, sliceSize: number) => {
-  contentType = contentType || '';
+export const b64toBlob = (
+  b64Data: any,
+  contentType: any,
+  sliceSize: number
+) => {
+  contentType = contentType || "";
   sliceSize = sliceSize || 256;
-  let byteCharacters1 = Buffer.from(b64Data, 'base64');
-  let byteCharacters2 = byteCharacters1.toString('base64');
+  let byteCharacters1 = Buffer.from(b64Data, "base64");
+  let byteCharacters2 = byteCharacters1.toString("base64");
   //let byteCharacters = atob(b64Data);
   let byteCharacters = atob(byteCharacters2);
   let byteArrays = [];
@@ -120,9 +124,9 @@ export const b64toBlob = (b64Data: any, contentType: any, sliceSize: number) => 
 };
 
 export const MakeNewBlob = (MESS: string) => {
-  let poz = MESS.indexOf(',');
+  let poz = MESS.indexOf(",");
   let sblob = MESS.slice(poz + 1);
-  let contentType = 'image/png';
+  let contentType = "image/png";
   let blob: any = b64toBlob(sblob, contentType, 256);
   return blob;
 };
@@ -130,11 +134,11 @@ export const MakeNewBlob = (MESS: string) => {
 export const PreparCurrencies01 = () => {
   const currencies: any = [];
   let dat = [
-    'Личный кабинет:',
-    'Первый пункт меню',
-    'Второй пункт меню',
-    'Третий пункт меню',
-    'Настройки',
+    "Личный кабинет:",
+    "Первый пункт меню",
+    "Второй пункт меню",
+    "Третий пункт меню",
+    "Настройки",
   ];
   let massKey: any = [];
   let massDat: any = [];
@@ -143,8 +147,8 @@ export const PreparCurrencies01 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -157,11 +161,11 @@ export const PreparCurrencies01 = () => {
 export const PreparCurrencies02 = () => {
   const currencies: any = [];
   let dat = [
-    'Мои подразделения:',
-    'Первый пункт меню',
-    'Второй пункт меню',
-    'Третий пункт меню',
-    'Настройки',
+    "Мои подразделения:",
+    "Первый пункт меню",
+    "Второй пункт меню",
+    "Третий пункт меню",
+    "Настройки",
   ];
   let massKey: any = [];
   let massDat: any = [];
@@ -170,8 +174,8 @@ export const PreparCurrencies02 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -184,11 +188,11 @@ export const PreparCurrencies02 = () => {
 export const PreparCurrencies03 = () => {
   const currencies: any = [];
   let dat = [
-    'Справочная информация:',
-    'Регламенты',
-    'Структура компании',
+    "Справочная информация:",
+    "Регламенты",
+    "Структура компании",
     //'Структура компании copy',
-    'Профили компетенций',
+    "Профили компетенций",
   ];
   let massKey: any = [];
   let massDat: any = [];
@@ -197,8 +201,8 @@ export const PreparCurrencies03 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -211,12 +215,12 @@ export const PreparCurrencies03 = () => {
 export const PreparCurrencies05 = () => {
   const currencies: any = [];
   let dat = [
-    'Ввод данных:',
-    'Адаптация',
-    'Добавить ИПР',
-    'Создать задачу',
+    "Ввод данных:",
+    "Адаптация",
+    "Добавить ИПР",
+    "Создать задачу",
     //'Добавить Risk&Value',
-    'Добавить Health Check',
+    "Добавить Health Check",
   ];
   let massKey: any = [];
   let massDat: any = [];
@@ -225,8 +229,8 @@ export const PreparCurrencies05 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -239,10 +243,10 @@ export const PreparCurrencies05 = () => {
 export const PreparCurrencies041 = () => {
   const currencies: any = [];
   let dat = [
-    'Первое подразделение',
-    'Второе подразделение',
-    'Третье подразделение',
-    'Четвёртое подразделение',
+    "Первое подразделение",
+    "Второе подразделение",
+    "Третье подразделение",
+    "Четвёртое подразделение",
   ];
   let massKey: any = [];
   let massDat: any = [];
@@ -251,8 +255,8 @@ export const PreparCurrencies041 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -264,7 +268,12 @@ export const PreparCurrencies041 = () => {
 
 export const PreparCurrencies042 = () => {
   const currencies: any = [];
-  let dat = ['Первый период', 'Второй период', 'Третий период', 'Четвёртый период'];
+  let dat = [
+    "Первый период",
+    "Второй период",
+    "Третий период",
+    "Четвёртый период",
+  ];
   let massKey: any = [];
   let massDat: any = [];
   for (let key in dat) {
@@ -272,8 +281,8 @@ export const PreparCurrencies042 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -285,7 +294,7 @@ export const PreparCurrencies042 = () => {
 
 export const PreparCurrencies043 = () => {
   const currencies: any = [];
-  let dat = ['Аналитика №1', 'Аналитика №2', 'Аналитика №3', 'Аналитика №4'];
+  let dat = ["Аналитика №1", "Аналитика №2", "Аналитика №3", "Аналитика №4"];
   let massKey: any = [];
   let massDat: any = [];
   for (let key in dat) {
@@ -293,8 +302,8 @@ export const PreparCurrencies043 = () => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -314,8 +323,8 @@ export const PreparCurrenciesCommon = (dat: Array<string>) => {
     massDat.push(dat[key]);
   }
   let maskCurrencies = {
-    value: '0',
-    label: 'Все режимы',
+    value: "0",
+    label: "Все режимы",
   };
   for (let i = 0; i < massKey.length; i++) {
     maskCurrencies.value = massKey[i];
@@ -330,27 +339,27 @@ export const WaysInput = (
   VALUE: any,
   SetValue: Function,
   MIN: number,
-  MAX: number,
+  MAX: number
 ) => {
   let value = VALUE;
 
   const styleSetID = {
-    width: '33px',
-    maxHeight: '1px',
-    minHeight: '1px',
-    border: '1px solid #d4d4d4', // серый
+    width: "33px",
+    maxHeight: "1px",
+    minHeight: "1px",
+    border: "1px solid #d4d4d4", // серый
     borderRadius: 1,
-    bgcolor: '#FFFBE5', // топлёное молоко
+    bgcolor: "#FFFBE5", // топлёное молоко
     boxShadow: 6,
-    textAlign: 'center',
+    textAlign: "center",
     p: 1.5,
   };
 
   const styleBoxFormID = {
-    '& > :not(style)': {
-      marginTop: '3px',
-      marginLeft: '-9px',
-      width: '53px',
+    "& > :not(style)": {
+      marginTop: "3px",
+      marginLeft: "-9px",
+      width: "53px",
     },
   };
 
@@ -358,7 +367,7 @@ export const WaysInput = (
     //let valueInp = event.target.value.replace(/^0+/, '');
     let valueInp = event.target.value;
     if (Number(valueInp) < MIN) valueInp = MIN;
-    if (valueInp === '') valueInp = MIN;
+    if (valueInp === "") valueInp = MIN;
     //valueInp = Math.trunc(Number(valueInp));
     if (valueInp <= MAX) {
       value = parseFloat(valueInp.toString()).toFixed(1);
@@ -376,10 +385,10 @@ export const WaysInput = (
           InputProps={{
             disableUnderline: true,
             style: {
-              maxHeight: '1px',
-              minHeight: '1px',
+              maxHeight: "1px",
+              minHeight: "1px",
               fontSize: 14,
-              backgroundColor: '#FFFBE5', // топлёное молоко
+              backgroundColor: "#FFFBE5", // топлёное молоко
             },
           }}
           value={value}
@@ -397,28 +406,28 @@ export const InputDirect = (
   handleChange: any,
   widthBlok: number,
   currency: any,
-  currencies: any,
+  currencies: any
 ) => {
   const styleSetNapr = {
     width: widthBlok - 27,
-    maxHeight: '2px',
-    minHeight: '2px',
+    maxHeight: "2px",
+    minHeight: "2px",
     fontSize: mode === ILLUM ? 14 : 12.5,
-    bgcolor: mode === ILLUM ? '#82e94a' : '#E6F5D6', // ярко-салатовый/светло-салатовый
+    bgcolor: mode === ILLUM ? "#82e94a" : "#E6F5D6", // ярко-салатовый/светло-салатовый
     //border: '1px solid #93D145', // тёмно салатовый
     //bgcolor: ILLUM === mode ? "#82e94a" : "#F4E8FB", // ярко-салатовый/светло-сиреневый
-    border: '1px solid #d4d4d4', // серый
+    border: "1px solid #d4d4d4", // серый
     borderRadius: 1,
-    padding: '15px 10px 11px 12px',
-    textAlign: 'center',
+    padding: "15px 10px 11px 12px",
+    textAlign: "center",
     boxShadow: mode === ILLUM ? 9 : 3,
   };
 
   const styleBoxFormNapr = {
-    '& > :not(style)': {
+    "& > :not(style)": {
       border: 0,
-      marginTop: '-11px',
-      marginLeft: '-8px',
+      marginTop: "-11px",
+      marginLeft: "-8px",
       width: widthBlok - 7,
     },
   };
@@ -435,12 +444,13 @@ export const InputDirect = (
           InputProps={{
             disableUnderline: true,
             style: {
-              fontSize: currency === '0' && mode === ILLUM ? 13.5 : 12.5,
-              fontWeight: currency === '0' ? 700 : 400,
+              fontSize: currency === "0" && mode === ILLUM ? 13.5 : 12.5,
+              fontWeight: currency === "0" ? 700 : 400,
             },
           }}
           variant="standard"
-          color="secondary">
+          color="secondary"
+        >
           {currencies.map((option: any) => (
             <MenuItem
               key={option.value}
@@ -448,9 +458,12 @@ export const InputDirect = (
               sx={{
                 fontSize: option.label === currencies[0].label ? 13.5 : 12.9,
                 fontWeight: option.label === currencies[0].label ? 700 : 400,
-                color: option.label === currencies[0].label ? '#7c31ab' : 'black',
-                cursor: option.label === currencies[0].label ? 'none' : 'pointer',
-              }}>
+                color:
+                  option.label === currencies[0].label ? "#7c31ab" : "black",
+                cursor:
+                  option.label === currencies[0].label ? "none" : "pointer",
+              }}
+            >
               {option.label}
             </MenuItem>
           ))}
@@ -465,27 +478,27 @@ export const InputDirectA = (
   handleChange: any,
   widthBlok: number,
   currency: any,
-  currencies: any,
+  currencies: any
 ) => {
   const styleSetNapr = {
     width: widthBlok - 27,
-    maxHeight: '2px',
-    minHeight: '2px',
+    maxHeight: "2px",
+    minHeight: "2px",
     fontSize: mode === ILLUM ? 14 : 12.5,
     //bgcolor: '#F4E8FB', // светло-сиреневый
-    bgcolor: '#E6F5D6', // светло-салатовый
-    border: '1px solid #d4d4d4', // серый
+    bgcolor: "#E6F5D6", // светло-салатовый
+    border: "1px solid #d4d4d4", // серый
     borderRadius: 1,
-    padding: '15px 10px 11px 12px',
-    textAlign: 'center',
+    padding: "15px 10px 11px 12px",
+    textAlign: "center",
     boxShadow: 3,
   };
 
   const styleBoxFormNapr = {
-    '& > :not(style)': {
+    "& > :not(style)": {
       border: 0,
-      marginTop: '-11px',
-      marginLeft: '-8px',
+      marginTop: "-11px",
+      marginLeft: "-8px",
       width: widthBlok - 7,
     },
   };
@@ -507,14 +520,16 @@ export const InputDirectA = (
             },
           }}
           variant="standard"
-          color="secondary">
+          color="secondary"
+        >
           {currencies.map((option: any) => (
             <MenuItem
               key={option.value}
               value={option.value}
               sx={{
                 fontSize: 13.5,
-              }}>
+              }}
+            >
               {option.label}
             </MenuItem>
           ))}
@@ -528,27 +543,27 @@ export const InputDirectRec = (
   handleChange: any,
   widthBlok: number,
   currency: any,
-  currencies: any,
+  currencies: any
 ) => {
   const styleSetNapr = {
     width: widthBlok - 27,
-    maxHeight: '2px',
-    minHeight: '2px',
+    maxHeight: "2px",
+    minHeight: "2px",
     fontSize: 15,
     //bgcolor: '#F4E8FB', // светло-сиреневый
     //bgcolor: '#E6F5D6', // светло-салатовый
-    bgcolor: '#FFFBE5', // топлёное молоко
-    border: '1px solid #d4d4d4', // серый
+    bgcolor: "#FFFBE5", // топлёное молоко
+    border: "1px solid #d4d4d4", // серый
     borderRadius: 1,
-    padding: '15px 10px 11px 12px',
+    padding: "15px 10px 11px 12px",
     boxShadow: 4,
   };
 
   const styleBoxFormNapr = {
-    '& > :not(style)': {
+    "& > :not(style)": {
       border: 0,
-      marginTop: '-11px',
-      marginLeft: '-8px',
+      marginTop: "-11px",
+      marginLeft: "-8px",
       width: widthBlok - 7,
     },
   };
@@ -567,19 +582,21 @@ export const InputDirectRec = (
             style: {
               fontSize: 15,
               fontWeight: 400,
-              color: '#5B1080', // сиреневый
+              color: "#5B1080", // сиреневый
             },
           }}
           variant="standard"
-          color="secondary">
+          color="secondary"
+        >
           {currencies.map((option: any) => (
             <MenuItem
               key={option.value}
               value={option.value}
               sx={{
                 fontSize: 15,
-                color: '#5B1080', // сиреневый
-              }}>
+                color: "#5B1080", // сиреневый
+              }}
+            >
               {option.label}
             </MenuItem>
           ))}
@@ -589,24 +606,28 @@ export const InputDirectRec = (
   );
 };
 
-export const InputStrField = (wdth: number, handleChangeName: any, valuen: string) => {
+export const InputStrField = (
+  wdth: number,
+  handleChangeName: any,
+  valuen: string
+) => {
   const styleFormPK05 = {
-    width: wdth + 'px',
-    height: '10px',
+    width: wdth + "px",
+    height: "10px",
     marginTop: -0.2,
-    bgcolor: '#FFFBE5', // топлёное молоко
-    border: '1px solid #d4d4d4', // серый
+    bgcolor: "#FFFBE5", // топлёное молоко
+    border: "1px solid #d4d4d4", // серый
     borderRadius: 1,
     boxShadow: 6,
-    textAlign: 'center',
+    textAlign: "center",
     p: 0.95,
   };
 
   const styleFormPK055 = {
-    '& > :not(style)': {
-      marginTop: '-7px',
-      marginLeft: '-5px',
-      width: wdth + 12 + 'px',
+    "& > :not(style)": {
+      marginTop: "-7px",
+      marginLeft: "-5px",
+      width: wdth + 12 + "px",
     },
   };
 
@@ -618,7 +639,7 @@ export const InputStrField = (wdth: number, handleChangeName: any, valuen: strin
           onKeyPress={handleKey} //отключение Enter
           InputProps={{
             disableUnderline: true,
-            style: { fontSize: 15, color: '#5B1080' }, // сиреневый
+            style: { fontSize: 15, color: "#5B1080" }, // сиреневый
           }}
           value={valuen}
           onChange={handleChangeName}
@@ -629,25 +650,29 @@ export const InputStrField = (wdth: number, handleChangeName: any, valuen: strin
   );
 };
 
-export const InputStrFieldSearch = (wdth: number, handleChangeName: any, valuen: string) => {
+export const InputStrFieldSearch = (
+  wdth: number,
+  handleChangeName: any,
+  valuen: string
+) => {
   const styleFormPK05 = {
-    width: wdth + 'px',
-    height: '11px',
+    width: wdth + "px",
+    height: "11px",
     //marginTop: -0.2,
-    bgcolor: '#FFFBE5', // топлёное молоко
-    border: '1px solid #d4d4d4', // серый
+    bgcolor: "#FFFBE5", // топлёное молоко
+    border: "1px solid #d4d4d4", // серый
     borderRadius: 1,
     boxShadow: 6,
-    textAlign: 'center',
+    textAlign: "center",
     p: 0.95,
   };
 
   const styleFormPK055 = {
-    '& > :not(style)': {
-      marginTop: '-9px',
-      marginLeft: '-8px',
-      width: wdth + 15 + 'px',
-      padding: '4px 0px 0px 0px',
+    "& > :not(style)": {
+      marginTop: "-9px",
+      marginLeft: "-8px",
+      width: wdth + 15 + "px",
+      padding: "4px 0px 0px 0px",
     },
   };
 
@@ -660,7 +685,7 @@ export const InputStrFieldSearch = (wdth: number, handleChangeName: any, valuen:
           placeholder=" 🔍 Поиск"
           InputProps={{
             disableUnderline: true,
-            style: { fontSize: 13.4, color: '#5B1080' }, // сиреневый
+            style: { fontSize: 13.4, color: "#5B1080" }, // сиреневый
           }}
           value={valuen}
           onChange={handleChangeName}
@@ -671,23 +696,27 @@ export const InputStrFieldSearch = (wdth: number, handleChangeName: any, valuen:
   );
 };
 
-export const InputStrFieldMult = (wdth: number, handleChangeName: any, valuen: string) => {
+export const InputStrFieldMult = (
+  wdth: number,
+  handleChangeName: any,
+  valuen: string
+) => {
   const styleFormPK05 = {
-    width: wdth + 15 + 'px',
-    height: '96px',
+    width: wdth + 15 + "px",
+    height: "96px",
     marginTop: -0.2,
-    bgcolor: '#FFFBE5', // топлёное молоко
-    border: '1px solid #d4d4d4', // серый
+    bgcolor: "#FFFBE5", // топлёное молоко
+    border: "1px solid #d4d4d4", // серый
     borderRadius: 1,
     boxShadow: 6,
-    textAlign: 'center',
+    textAlign: "center",
   };
 
   const styleFormPK055 = {
-    '& > :not(style)': {
+    "& > :not(style)": {
       //marginTop: '-7px',
-      marginLeft: '2px',
-      width: wdth + 15 + 'px',
+      marginLeft: "2px",
+      width: wdth + 15 + "px",
     },
   };
 
@@ -699,7 +728,7 @@ export const InputStrFieldMult = (wdth: number, handleChangeName: any, valuen: s
           onKeyPress={handleKey} //отключение Enter
           InputProps={{
             disableUnderline: true,
-            style: { fontSize: 15, color: '#5B1080' }, // сиреневый
+            style: { fontSize: 15, color: "#5B1080" }, // сиреневый
           }}
           value={valuen}
           onChange={handleChangeName}
@@ -715,46 +744,48 @@ export const InputStrFieldMult = (wdth: number, handleChangeName: any, valuen: s
 
 export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
   const styleSetPoint = {
-    outline: 'none',
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
+    outline: "none",
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: '#fcebfb', // бледно-розовый
-    border: '1px solid #fcebfb', // бледно-розовый
+    //bgcolor: '#fcebfb', // бледно-розовый
+    //border: '1px solid #fcebfb', // бледно-розовый
+    bgcolor: "background.paper",
+    border: "1px solid #FFFFFF",
     borderRadius: 1,
     boxShadow: 24,
-    textAlign: 'center',
+    textAlign: "center",
     p: 1,
   };
 
   const styleModalMenu = {
     marginTop: 0.5,
-    maxHeight: '30px',
-    minHeight: '30px',
-    border: '1px solid #d4d4d4', // серый
+    maxHeight: "30px",
+    minHeight: "30px",
+    border: "1px solid #d4d4d4", // серый
     borderRadius: 1,
-    bgcolor: '#E6F5D6', // светло салатовый
-    color: '#5B1080', // сиреневый
-    textTransform: 'unset !important',
-    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+    bgcolor: "#E6F5D6", // светло салатовый
+    color: "#5B1080", // сиреневый
+    textTransform: "unset !important",
+    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
     boxShadow: 6,
   };
 
   const styleModalEndAttent = {
-    position: 'absolute',
-    top: '0%',
-    left: 'auto',
-    right: '-0%',
-    maxHeight: '21px',
-    minHeight: '21px',
-    maxWidth: '2%',
-    minWidth: '2%',
+    position: "absolute",
+    top: "0%",
+    left: "auto",
+    right: "-0%",
+    maxHeight: "21px",
+    minHeight: "21px",
+    maxWidth: "2%",
+    minWidth: "2%",
     //color: "red",
     //color: "#801F95", // сиреневый
-    color: '#7620a2', // сиреневый
-    textShadow: '2px 2px 3px rgba(0,0,0,0.3)',
+    color: "#7620a2", // сиреневый
+    textShadow: "2px 2px 3px rgba(0,0,0,0.3)",
   };
 
   const handleClose = (mode: boolean) => {
@@ -762,7 +793,7 @@ export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === 'escapeKeyDown') handleClose(false);
+    if (reason === "escapeKeyDown") handleClose(false);
   };
 
   return (
@@ -771,12 +802,15 @@ export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
         <Button sx={styleModalEndAttent} onClick={() => handleClose(false)}>
           <b>&#10006;</b>
         </Button>
-        <Typography variant="h6" sx={{ color: 'red', textShadow: '1px 1px 2px rgba(0,0,0,0.25)' }}>
+        <Typography
+          variant="h6"
+          sx={{ color: "red", textShadow: "1px 1px 2px rgba(0,0,0,0.25)" }}
+        >
           Предупреждение
         </Typography>
-        <Box sx={{ marginTop: 0.5, color: '#5B1080' }}>
-          <Box sx={{ marginBottom: 1.2 }}>
-            <b>Будет произведён выход без сохранения введённых данных. Продолжать?</b>
+        <Box sx={{ marginTop: 0.5, color: "#5B1080" }}>
+          <Box sx={{ color: "red", marginBottom: 1.2 }}>
+            Будет произведён выход без сохранения введённых данных. Продолжать?
           </Box>
           <Button sx={styleModalMenu} onClick={() => handleClose(false)}>
             Нет
@@ -794,35 +828,35 @@ export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
 export const FooterContent = (SaveForm: Function) => {
   const styleSetPK04 = {
     marginTop: 1.2,
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
   };
 
   const styleFormPK03 = {
-    maxHeight: '30px',
-    minHeight: '30px',
-    bgcolor: '#E6F5D6', // светло салатовый
+    maxHeight: "30px",
+    minHeight: "30px",
+    bgcolor: "#E6F5D6", // светло салатовый
     //bgcolor: '#F4E8FB', // светло-сиреневый
-    border: '1px solid #000',
+    border: "1px solid #000",
     borderRadius: 1,
-    borderColor: '#d4d4d4', // серый
-    textTransform: 'unset !important',
+    borderColor: "#d4d4d4", // серый
+    textTransform: "unset !important",
     //padding: "6px 6px 6px 6px",
     boxShadow: 6,
-    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
     //color: "black",
-    color: '#5B1080', // сиреневый
+    color: "#5B1080", // сиреневый
     //color: "#7620a2", // сиреневый
   };
 
   return (
     <Box sx={styleSetPK04}>
-      <Box sx={{ display: 'inline-block', margin: '0px 5px 0px 0px' }}>
+      <Box sx={{ display: "inline-block", margin: "0px 5px 0px 0px" }}>
         <Button sx={styleFormPK03} onClick={() => SaveForm(0)}>
           Выйти без сохранения
         </Button>
       </Box>
-      <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 6px' }}>
+      <Box sx={{ display: "inline-block", margin: "0px 6px 0px 6px" }}>
         <Button sx={styleFormPK03} onClick={() => SaveForm(1)}>
           Сохранить изменения
         </Button>
@@ -834,37 +868,37 @@ export const FooterContent = (SaveForm: Function) => {
 export const FooterContentMode = (SaveForm: Function) => {
   const styleSetPK04 = {
     marginTop: 1.2,
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
   };
 
   const styleFormPK03 = {
-    maxHeight: '30px',
-    minHeight: '30px',
-    bgcolor: '#E6F5D6', // светло салатовый
-    border: '1px solid #000',
+    maxHeight: "30px",
+    minHeight: "30px",
+    bgcolor: "#E6F5D6", // светло салатовый
+    border: "1px solid #000",
     borderRadius: 1,
-    borderColor: '#d4d4d4', // серый
-    textTransform: 'unset !important',
+    borderColor: "#d4d4d4", // серый
+    textTransform: "unset !important",
     //padding: "6px 6px 6px 6px",
     boxShadow: 6,
-    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-    color: '#5B1080', // сиреневый
+    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+    color: "#5B1080", // сиреневый
   };
 
   return (
     <Box sx={styleSetPK04}>
-      <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 0px' }}>
+      <Box sx={{ display: "inline-block", margin: "0px 6px 0px 0px" }}>
         <Button sx={styleFormPK03} onClick={() => SaveForm(0)}>
-          <Box sx={{ color: 'red' }}>Удалить</Box>
+          <Box sx={{ color: "red" }}>Удалить</Box>
         </Button>
       </Box>
-      <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 6px' }}>
+      <Box sx={{ display: "inline-block", margin: "0px 6px 0px 6px" }}>
         <Button sx={styleFormPK03} onClick={() => SaveForm(1)}>
           Редактировать
         </Button>
       </Box>
-      <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 6px' }}>
+      <Box sx={{ display: "inline-block", margin: "0px 6px 0px 6px" }}>
         <Button sx={styleFormPK03} onClick={() => SaveForm(2)}>
           Выйти
         </Button>
@@ -876,27 +910,27 @@ export const FooterContentMode = (SaveForm: Function) => {
 export const FooterContentEndEdit = (SaveForm: Function) => {
   const styleSetPK04 = {
     marginTop: 1.2,
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
   };
 
   const styleFormPK03 = {
-    maxHeight: '30px',
-    minHeight: '30px',
-    bgcolor: '#E6F5D6', // светло салатовый
-    border: '1px solid #000',
+    maxHeight: "30px",
+    minHeight: "30px",
+    bgcolor: "#E6F5D6", // светло салатовый
+    border: "1px solid #000",
     borderRadius: 1,
-    borderColor: '#d4d4d4', // серый
-    textTransform: 'unset !important',
+    borderColor: "#d4d4d4", // серый
+    textTransform: "unset !important",
     //padding: "6px 6px 6px 6px",
     boxShadow: 6,
-    textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
-    color: '#5B1080', // сиреневый
+    textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+    color: "#5B1080", // сиреневый
   };
 
   return (
     <Box sx={styleSetPK04}>
-      <Box sx={{ display: 'inline-block', margin: '0px 6px 0px 0px' }}>
+      <Box sx={{ display: "inline-block", margin: "0px 6px 0px 0px" }}>
         <Button sx={styleFormPK03} onClick={() => SaveForm(0)}>
           Выйти из Редактирования
         </Button>
@@ -910,39 +944,45 @@ export const FooterContentEndEdit = (SaveForm: Function) => {
   );
 };
 
-export const InputerDate = (valueDate: any, handleChangeDP: any, massGoodDate: any) => {
+export const InputerDate = (
+  valueDate: any,
+  handleChangeDP: any,
+  massGoodDate: any
+) => {
   const styleDatePicker = {
-    '& > :not(style)': {
-      width: '150px',
-      height: '30px',
-      display: 'flex',
-      flexWrap: 'nowrap',
-      flexDirection: 'row',
-      flex: '1 1 0px',
-      borderColor: '#d4d4d4', // серый
+    "& > :not(style)": {
+      width: "150px",
+      height: "30px",
+      display: "flex",
+      flexWrap: "nowrap",
+      flexDirection: "row",
+      flex: "1 1 0px",
+      borderColor: "#d4d4d4", // серый
       borderRadius: 1,
       boxShadow: 4,
     },
   };
   return (
     <Box sx={styleDatePicker}>
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={'ru'}>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"ru"}>
         <DatePicker
-          views={['day']}
+          views={["day"]}
           value={valueDate}
           inputFormat="DD-MM-YYYY"
-          InputProps={{ style: { fontSize: 15, color: '#5B1080' } }} // сиреневый
+          InputProps={{ style: { fontSize: 15, color: "#5B1080" } }} // сиреневый
           onChange={handleChangeDP}
           renderInput={(params: any) => <TextField {...params} />}
           renderLoading={() => <CalendarPickerSkeleton />}
           renderDay={(day, _value, DayComponentProps) => {
             const isSelected =
-              !DayComponentProps.outsideCurrentMonth && massGoodDate.indexOf(MakeDate(day)) >= 0;
+              !DayComponentProps.outsideCurrentMonth &&
+              massGoodDate.indexOf(MakeDate(day)) >= 0;
             return (
               <Badge
                 key={day.toString()}
                 overlap="circular"
-                badgeContent={isSelected ? '👍' : undefined}>
+                badgeContent={isSelected ? "👍" : undefined}
+              >
                 <PickersDay {...DayComponentProps} />
               </Badge>
             );

@@ -88,7 +88,6 @@ export const styleModalEndBig = {
 };
 //=== HcmBlock1 =======================================================
 export const styleBl1Form01 = {
-  //height: "220px",
   bgcolor: 'background.paper',
   border: '1px solid #FFFFFF',
   borderRadius: 1,

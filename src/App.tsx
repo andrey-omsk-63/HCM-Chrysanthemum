@@ -238,7 +238,8 @@ const App = () => {
       sx={{
         height: '100vh',
         width: '100%',
-        background: 'linear-gradient(135deg, #DCE0AB 25%,#97BB92 52%, #D2D8B7 85%)',
+        //background: 'linear-gradient(135deg, #DCE0AB 25%,#97BB92 52%, #D2D8B7 85%)',
+        background: 'linear-gradient(140deg, #e3d8f7 26%,#dcbaf1 57%, #f8d7f7 85%)',
       }}>
       <Grid item xs>
         {getPerson && getPersonNik && getUsersRoles && getUsersPermission && (
