@@ -753,9 +753,9 @@ export const BadExit = (badExit: boolean, handleCloseEnd: Function) => {
     minHeight: '21px',
     maxWidth: '2%',
     minWidth: '2%',
-    //color: "red",
+    color: 'red',
     //color: "#801F95", // сиреневый
-    color: '#7620a2', // сиреневый
+    //color: '#7620a2', // сиреневый
     textShadow: '2px 2px 3px rgba(0,0,0,0.3)',
   };
 
