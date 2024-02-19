@@ -1,25 +1,32 @@
-import * as React from 'react';
+import * as React from "react";
 //import { useDispatch, useSelector } from 'react-redux';
 //import { statsaveCreate } from '../../../redux/actions';
 
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
-import 'dayjs/locale/ru';
-import dayjs, { Dayjs } from 'dayjs';
+import "dayjs/locale/ru";
+import dayjs, { Dayjs } from "dayjs";
 
-import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
-import { InputStrField, InputStrFieldMult } from '../../HcmServiceFunctions';
-import { MakeDate, InputerDate, InputDirectRec } from '../../HcmServiceFunctions';
-import { PreparCurrenciesCommon, WaysInput } from '../../HcmServiceFunctions';
-import { FooterContentMode, FooterContentEndEdit } from '../../HcmServiceFunctions';
+import { FooterContent, BadExit, StrTablProp } from "../../HcmServiceFunctions";
+import { InputStrField, InputStrFieldMult } from "../../HcmServiceFunctions";
+import {
+  MakeDate,
+  InputerDate,
+  InputDirectRec,
+} from "../../HcmServiceFunctions";
+import { PreparCurrenciesCommon, WaysInput } from "../../HcmServiceFunctions";
+import {
+  FooterContentMode,
+  FooterContentEndEdit,
+} from "../../HcmServiceFunctions";
 
-import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
-import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
-import { styleBl5Form06, styleBl5Form03 } from '../../HcmMainStyle';
-import { styleBl5Form04, styleBl5Form05 } from '../../HcmMainStyle';
+import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
+import { styleBl5Form01, styleBl5Form02 } from "../../HcmMainStyle";
+import { styleBl5Form06, styleBl5Form03 } from "../../HcmMainStyle";
+import { styleBl5Form04, styleBl5Form05 } from "../../HcmMainStyle";
 
 let oldIdx = -1;
 let HAVE = 0;
@@ -31,23 +38,27 @@ let eventInp1 = dayjs(formSett);
 let massGoodDate: Array<string> = [];
 
 let maskForm = {
-  avtor: 'Доцент', // 'Автор
-  why: 'Так себе основание', // Причина проведения
-  status: '0.0', // Общее состояние команды
-  connect2: '0.0', // Взаимодействие с руководителем
-  pay: '0.0', // Заработная плата, бонусы
-  load: '0.0', // Нагрузка, режим работы
-  link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
+  avtor: "Доцент", // 'Автор
+  why: "Так себе основание", // Причина проведения
+  status: "0.0", // Общее состояние команды
+  connect2: "0.0", // Взаимодействие с руководителем
+  pay: "0.0", // Заработная плата, бонусы
+  load: "0.0", // Нагрузка, режим работы
+  link: "https://e.mail.ru/newsletters/0:17066793751836945566",
   comment:
-    'Таганский суд Москвы в пятницу приступит к рассмотрению по существу иска к компании МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор». МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор».',
+    "Таганский суд Москвы в пятницу приступит к рассмотрению по существу иска к компании МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор». МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор».",
   //============
-  unit: 'ООО Рога и капыта', // Подразделение
-  period: '1 квартал 2023',
-  know: '0.0', // Информированность
-  develop: '0.0', // Развитие
-  tasks: '0.0', // Текущие задачи
-  connect1: '0.0', // Взаимодействие в команде
+  unit: "ООО Рога и капыта", // Подразделение
+  period: "1 квартал 2023",
+  know: "0.0", // Информированность
+  develop: "0.0", // Развитие
+  tasks: "0.0", // Текущие задачи
+  connect1: "0.0", // Взаимодействие в команде
 };
+
+let nomAvtor = "0";
+let nomWho = "0";
+let nomUnit = "0";
 
 let maskFormNew: any = null; // для мягкого отката
 
@@ -55,16 +66,16 @@ let currencies01: any = []; // Авторы
 let currencies02: any = []; // Причины проведения
 let currencies03: any = []; // Подразделения
 
-let dat1 = ['Фантомас', 'Лишенец', 'Бугор', 'Ляля'];
+let dat1 = ["Фантомас", "Лишенец", "Бугор", "Ляля"];
 let dat2: Array<string> = [];
 let dat22 = [
-  'Очень важное основание',
-  'Так себе основание',
-  'Необходимая необходимость',
-  'Фигня какая-та',
+  "Очень важное основание",
+  "Так себе основание",
+  "Необходимая необходимость",
+  "Фигня какая-та",
 ];
 let dat3: Array<string> = [];
-let dat33 = ['ООО Рога и капыта', 'Пехота', 'Автобат', 'Конница', 'Хозвзвод'];
+let dat33 = ["ООО Рога и капыта", "Пехота", "Автобат", "Конница", "Хозвзвод"];
 
 let MODE = 0; // режим работы
 
@@ -77,11 +88,15 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   //const dispatch = useDispatch();
   //console.log("Setup_massplan:", massplan);
   //========================================================
-  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
+  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(
+    dayjs(formSett)
+  );
   //=== инициализация ======================================
   if (oldIdx !== props.idx) {
     HAVE = MODE = 0;
-    maskForm = props.form;
+    maskForm = JSON.parse(JSON.stringify(props.form));
+    maskFormNew = JSON.parse(JSON.stringify(props.form));
+    nomAvtor = nomWho = nomUnit = "0";
     dat2 = [];
     dat2.push(props.form.why);
     for (let i = 0; i < dat22.length; i++) dat2.push(dat22[i]);
@@ -94,6 +109,7 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
     currencies03 = PreparCurrenciesCommon(dat3); // Подразделения
     // massForm = JSON.parse(JSON.stringify(massplan.setup));
     oldIdx = props.idx;
+    //console.log("!!!", maskForm);
   }
   //========================================================
   const [valueStatus, setValueStatus] = React.useState(maskForm.status);
@@ -109,13 +125,35 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   const [valueLink, setValueLink] = React.useState(maskForm.link);
   const [valueComment, setValueComment] = React.useState(maskForm.comment);
 
-  const [currency01, setCurrency01] = React.useState('0');
-  const [currency02, setCurrency02] = React.useState('0');
-  const [currency03, setCurrency03] = React.useState('0');
+  const [currency01, setCurrency01] = React.useState(nomAvtor);
+  const [currency02, setCurrency02] = React.useState(nomWho);
+  const [currency03, setCurrency03] = React.useState(nomUnit);
   const [open, setOpen] = React.useState(true);
   const [badExit, setBadExit] = React.useState(false);
   const [trigger, setTrigger] = React.useState(false);
   //========================================================
+  const SoftRollback = () => {
+    maskForm = JSON.parse(JSON.stringify(maskFormNew));
+    setValueStatus(maskForm.status);
+    setValueConnect2(maskForm.connect2);
+    setValuePay(maskForm.pay);
+    setValueLoad(maskForm.load);
+    setValueKnow(maskForm.know);
+    setValueDevelop(maskForm.develop);
+    setValueTask(maskForm.tasks);
+    setValueConnect1(maskForm.connect1);
+    setValueLink(maskForm.link);
+    setValueComment(maskForm.comment);
+    setCurrency01(nomAvtor);
+    setCurrency02(nomWho);
+    setCurrency03(nomUnit);
+  };
+
+  const EndEdit = (mode: number) => {
+    MODE = 0;
+    setTrigger(!trigger);
+  };
+
   const handleClose = () => {
     setOpen(false);
     props.close(false);
@@ -128,18 +166,19 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   };
 
   const handleCloseBadEdit = () => {
+    //console.log('handleCloseBadEdit:',HAVE)
     HAVE && setBadExit(true);
     !HAVE && handleClose();
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === 'escapeKeyDown') handleCloseBad();
+    if (reason === "escapeKeyDown" && !MODE) handleCloseBad();
   };
 
   const handleCloseBadExit = (mode: boolean) => {
     setBadExit(false);
     if (mode) {
-      // тутдолжен быть мягкий откат
+      SoftRollback(); // мягкий откат
       MODE = 0;
       setTrigger(!trigger);
       //handleClose(); // выход без сохранения
@@ -147,9 +186,10 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   };
   //=== Функции - обработчики ==============================
   const SaveForm = (mode: number) => {
+    //console.log('SaveForm:',mode,HAVE)
     if (mode) {
       //handleClose();
-      MODE = 0;
+      MODE = HAVE = 0;
       setTrigger(!trigger);
     } else {
       handleCloseBadEdit();
@@ -222,7 +262,7 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   //========================================================
   const InputDate1 = () => {
     const handleChangeDP = (event: any) => {
-      if (event.toString() === 'Invalid Date') {
+      if (event.toString() === "Invalid Date") {
         setValueDate1(dayjs(eventInp1));
       } else {
         setValueDate1((eventInp1 = event));
@@ -246,16 +286,19 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       switch (mode) {
         case 1: // Авторы
+          nomAvtor = event.target.value;
           setCurrency01(event.target.value);
           maskForm.avtor = dat1[Number(event.target.value)];
           HAVE++;
           break;
         case 2: // Причины проведения
+          nomWho = event.target.value;
           setCurrency02(event.target.value);
           maskForm.why = dat2[Number(event.target.value)];
           HAVE++;
           break;
         case 3: // Подразделения
+          nomUnit = event.target.value;
           setCurrency03(event.target.value);
           maskForm.unit = dat3[Number(event.target.value)];
           HAVE++;
@@ -263,52 +306,57 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
     };
 
     return (
-      <Box sx={{ marginTop: '-5px' }}>
+      <Box sx={{ marginTop: "-5px" }}>
         {InputDirectRec(handleChange, 232, currency, currencies)}
       </Box>
     );
   };
 
   //=== Реквизиты формы ====================================
+  //console.log("recAvtor", currencies01, currency01);
   let recAvtor = MODE ? (
     StrokaMenuGlob(1, currency01, currencies01)
   ) : (
-    <Box sx={{ padding: '1px 0px 2px 0px', fontWeight: 600 }}>
+    <Box sx={{ padding: "1px 0px 2px 0px", fontWeight: 600 }}>
       {currencies01[Number(currency01)].label}
     </Box>
   );
   let recWho = MODE ? (
-    StrokaMenuGlob(1, currency02, currencies02)
+    StrokaMenuGlob(2, currency02, currencies02)
   ) : (
-    <Box sx={{ padding: '1px 0px 1px 0px', fontWeight: 600 }}>
+    <Box sx={{ padding: "1px 0px 1px 0px", fontWeight: 600 }}>
       {currencies02[Number(currency02)].label}
     </Box>
   );
   let recStatus = MODE ? (
     WaysInput(0, valueStatus, hdlChangeStatus, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueStatus}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>
+      {valueStatus}
+    </Box>
   );
   let recConnect2 = MODE ? (
     WaysInput(0, valueConnect2, hdlChangeConnect2, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueConnect2}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>
+      {valueConnect2}
+    </Box>
   );
   let recPay = MODE ? (
     WaysInput(0, valuePay, hdlChangePay, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valuePay}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>{valuePay}</Box>
   );
   let recLoad = MODE ? (
     WaysInput(0, valueLoad, hdlChangeLoad, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueLoad}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>{valueLoad}</Box>
   );
   //========================================================
   let recUnit = MODE ? (
-    StrokaMenuGlob(1, currency03, currencies03)
+    StrokaMenuGlob(3, currency03, currencies03)
   ) : (
-    <Box sx={{ padding: '1px 0px 2px 0px', fontWeight: 600 }}>
+    <Box sx={{ padding: "1px 0px 2px 0px", fontWeight: 600 }}>
       {currencies03[Number(currency03)].label}
     </Box>
   );
@@ -316,51 +364,55 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   let recLink = MODE ? (
     InputStrField(500, hdlChangeLink, valueLink)
   ) : (
-    <Box sx={{ padding: '1px 0px 5px 0px', fontWeight: 600 }}>{valueLink}</Box>
+    <Box sx={{ padding: "1px 0px 5px 0px", fontWeight: 600 }}>{valueLink}</Box>
   );
   let recKnow = MODE ? (
     WaysInput(0, valueKnow, hdlChangeKnow, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueKnow}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>{valueKnow}</Box>
   );
   let recDevelop = MODE ? (
     WaysInput(0, valueDevelop, hdlChangeDevelop, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueDevelop}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>
+      {valueDevelop}
+    </Box>
   );
   let recTask = MODE ? (
     WaysInput(0, valueTask, hdlChangeTask, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueTask}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>{valueTask}</Box>
   );
   let recConnect1 = MODE ? (
     WaysInput(0, valueConnect1, hdlChangeConnect1, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueConnect1}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>
+      {valueConnect1}
+    </Box>
   );
 
   const TableContent = () => {
     return (
       <>
         <Grid container>
-          <Grid item xs={6} sx={{ padding: '0px 2px 0px 0px' }}>
-            {StrTablProp(4.5, 'Автор', recAvtor)}
-            {StrTablProp(4.5, 'Причина проведения', recWho)}
-            {StrTablProp(6, 'Общее состояние команды', recStatus)}
-            {StrTablProp(6, 'Взаимодействие с руководителем', recConnect2)}
-            {StrTablProp(6, 'Заработная плата, бонусы', recPay)}
-            {StrTablProp(6, 'Нагрузка, режим работы', recLoad)}
+          <Grid item xs={6} sx={{ padding: "0px 2px 0px 0px" }}>
+            {StrTablProp(4.5, "Автор", recAvtor)}
+            {StrTablProp(4.5, "Причина проведения", recWho)}
+            {StrTablProp(6, "Общее состояние команды", recStatus)}
+            {StrTablProp(6, "Взаимодействие с руководителем", recConnect2)}
+            {StrTablProp(6, "Заработная плата, бонусы", recPay)}
+            {StrTablProp(6, "Нагрузка, режим работы", recLoad)}
           </Grid>
-          <Grid item xs={6} sx={{ padding: '0px 0px 0px 2px' }}>
-            {StrTablProp(4.5, 'Подразделение', recUnit)}
-            {StrTablProp(4.5, 'За период', ContentDate1())}
-            {StrTablProp(6, 'Информированность', recKnow)}
-            {StrTablProp(6, 'Развитие', recDevelop)}
-            {StrTablProp(6, 'Текущие задачи', recTask)}
-            {StrTablProp(6, 'Взаимодействие в команде', recConnect1)}
+          <Grid item xs={6} sx={{ padding: "0px 0px 0px 2px" }}>
+            {StrTablProp(4.5, "Подразделение", recUnit)}
+            {StrTablProp(4.5, "За период", ContentDate1())}
+            {StrTablProp(6, "Информированность", recKnow)}
+            {StrTablProp(6, "Развитие", recDevelop)}
+            {StrTablProp(6, "Текущие задачи", recTask)}
+            {StrTablProp(6, "Взаимодействие в команде", recConnect1)}
           </Grid>
-          <Grid item xs={12} sx={{ padding: '0px 2px 0px 0px' }}>
-            {StrTablProp(2.2, 'Ссылка на НС', recLink)}
+          <Grid item xs={12} sx={{ padding: "0px 2px 0px 0px" }}>
+            {StrTablProp(2.2, "Ссылка на НС", recLink)}
           </Grid>
           <Grid container sx={{ marginTop: 2 }}>
             <Grid item xs={2.2} sx={{ height: 100 }}>
@@ -370,7 +422,7 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
               {MODE ? (
                 <>{InputStrFieldMult(500, hdlChangeComment, valueComment)}</>
               ) : (
-                <Box sx={{ fontSize: 15.5, width: 515 + 'px', height: '96px' }}>
+                <Box sx={{ fontSize: 15.5, width: 515 + "px", height: "96px" }}>
                   {valueComment.slice(0, 243)}
                 </Box>
               )}
@@ -382,20 +434,13 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   };
 
   const ChangeMode = (mode: number) => {
-    if (mode) {
-      MODE = 1;
-      maskFormNew = maskForm;
-      setTrigger(!trigger);
-    } else {
-      console.log('Здесь будет удаление!!!');
-    }
     switch (mode) {
       case 0: // Удалить
-        console.log('Здесь будет удаление!!!');
+        console.log("Здесь будет удаление!!!");
         break;
       case 1: // Редактировать
         MODE = 1;
-        maskFormNew = maskForm;
+        maskFormNew = JSON.parse(JSON.stringify(maskForm));
         setTrigger(!trigger);
         break;
       case 2: // Выйти
@@ -404,19 +449,19 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
     }
   };
 
-  const EndEdit = (mode: number) => {
-    MODE = 0;
-    setTrigger(!trigger);
-  };
+  //console.log("0MASKFORM:", maskForm);
+  //console.log("1MASKFORM:", maskFormNew);
 
-  let title = MODE ? 'Редактирование' : 'Просмотр';
+  let title = MODE ? "Редактирование" : "Просмотр";
   return (
     <>
       <Modal open={open} onClose={CloseEnd} hideBackdrop={false}>
         <Box sx={styleBl5Form00(1050, 509)}>
-          <Button sx={styleModalEnd} onClick={() => handleCloseBad()}>
-            <b>&#10006;</b>
-          </Button>
+          {MODE === 0 && (
+            <Button sx={styleModalEnd} onClick={() => handleCloseBad()}>
+              <b>&#10006;</b>
+            </Button>
+          )}
           <Box sx={styleBl5Form01}>
             <b>{title} Health Check</b>
           </Box>
