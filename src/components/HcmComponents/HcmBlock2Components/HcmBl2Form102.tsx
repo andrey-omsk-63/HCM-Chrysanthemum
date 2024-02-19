@@ -12,7 +12,7 @@ import { TablStr } from '../../HcmServiceFunctions';
 
 import { styleBl3Form01, styleMain04 } from '../../HcmMainStyle';
 import { styleBl1Form077, styleBl1Form08 } from '../../HcmMainStyle';
-import { styleBl2Form06, styleBl2Form05 } from '../../HcmMainStyle';
+import { styleBl2Form07, styleBl2Form05 } from '../../HcmMainStyle';
 import { styleBl1Form09, styleBl2Form04 } from '../../HcmMainStyle';
 
 const date = new Date();
@@ -21,15 +21,17 @@ const tekMonth = date.getMonth();
 //const tekMonth = 7;
 let tekQ = 0;
 
-if (tekMonth < 4) tekQ = 1;
-if (tekMonth > 3 && tekMonth < 7) tekQ = 2;
-if (tekMonth > 6 && tekMonth < 10) tekQ = 3;
-if (tekMonth > 9) tekQ = 4;
+// if (tekMonth < 4) tekQ = 1;
+// if (tekMonth > 3 && tekMonth < 7) tekQ = 2;
+// if (tekMonth > 6 && tekMonth < 10) tekQ = 3;
+// if (tekMonth > 9) tekQ = 4;
+let masQ: Array<string> = [];
 
 let Illum = tekQ;
 let optQ = tekQ;
 let IDX = -1;
 let FORM: any = null;
+let flagInic = true;
 
 let maskForm = {
   avtor: 'Доцент', // 'Автор
@@ -61,6 +63,31 @@ const HcmBl2Form102 = () => {
   //const dispatch = useDispatch();
   //console.log("Setup_massplan:", massplan);
   //=== инициализация ======================================
+  if (flagInic) {
+    flagInic = false;
+    if (tekMonth < 4) tekQ = 1;
+    if (tekMonth > 3 && tekMonth < 7) tekQ = 2;
+    if (tekMonth > 6 && tekMonth < 10) tekQ = 3;
+    if (tekMonth > 9) tekQ = 4;
+    masQ.push(tekQ + 'Q ' + tekYear);
+
+    let Q2 = tekQ - 1 === 0 ? 4 : tekQ - 1;
+    let year2 = Q2 > tekQ ? tekYear - 1 : tekYear;
+    masQ.push(Q2 + 'Q ' + year2);
+
+    let Q3 = Q2 - 1 === 0 ? 4 : Q2 - 1;
+    let year3 = Q3 > tekQ ? tekYear - 1 : tekYear;
+    masQ.push(Q3 + 'Q ' + year3);
+
+    let Q4 = Q3 - 1 === 0 ? 4 : Q3 - 1;
+    let year4 = Q4 > tekQ ? tekYear - 1 : tekYear;
+    masQ.push(Q4 + 'Q ' + year4);
+
+    console.log('!!!!!!:', tekQ, Q2, Q3, Q4, masQ);
+
+    Illum = 1;
+    optQ = 1;
+  }
 
   //========================================================
   const [bl2Form1021, setBl2Form2011] = React.useState(false);
@@ -99,7 +126,7 @@ const HcmBl2Form102 = () => {
     const KnopQ = (nomQ: number, func: Function) => {
       return (
         <>
-          {nomQ <= tekQ ? (
+          {/* {nomQ <= tekQ ? (
             <Button sx={styleMain04(1.0, Illum, nomQ)} onClick={() => func()}>
               {nomQ}Q {tekYear}
             </Button>
@@ -109,7 +136,10 @@ const HcmBl2Form102 = () => {
                 {nomQ}Q {tekYear}
               </b>
             </Box>
-          )}
+          )} */}
+          <Button sx={styleMain04(1.0, Illum, nomQ)} onClick={() => func()}>
+            {masQ[nomQ - 1]}
+          </Button>
         </>
       );
     };
@@ -129,15 +159,7 @@ const HcmBl2Form102 = () => {
           {KnopQ(4, ClickKnop4)}
         </Grid>
 
-        <Grid
-          item
-          xs={5}
-          sx={{
-            textAlign: 'center',
-            color: '#5B1080',
-            padding: '5px 0px 0px 0px',
-            height: '30px',
-          }}>
+        <Grid item xs={5} sx={styleBl2Form07}>
           <em>Нажмите на запись для более детального просмотра</em>
         </Grid>
         <Grid item xs={1.5} sx={{}}>
@@ -184,7 +206,8 @@ const HcmBl2Form102 = () => {
     for (let i = 0; i < 6; i++) {
       for (let j = 1; j < 5; j++) {
         let maskStr = JSON.parse(JSON.stringify(maskForm));
-        maskStr.period = optQ + '-й квартал ' + tekYear;
+        //maskStr.period = optQ + '-й квартал ' + tekYear;
+        maskStr.period = masQ[optQ - 1];
         switch (j) {
           case 1:
             maskStr.unit = 'ИТ отдел';

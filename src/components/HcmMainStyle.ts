@@ -342,6 +342,13 @@ export const styleBl2Form06 = {
   textAlign: 'center',
   padding: '6px 0px 0px 0px',
 };
+
+export const styleBl2Form07 = {
+  textAlign: 'center',
+  color: '#F68A1E', // оранж
+  padding: '5px 0px 0px 0px',
+  height: '30px',
+};
 //=== HcmBlock3 =======================================================
 export const styleBl3Form01 = (part: number) => {
   const styleBl3Form = {

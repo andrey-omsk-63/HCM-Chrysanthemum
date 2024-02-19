@@ -51,7 +51,6 @@ let blob: any = null;
 let reader: any = null;
 let compressedFile: any = null;
 let PICT: any = null;
-let openFace = true;
 
 const HcmBlock1Gl = (props: { nik: string }) => {
   //== Piece of Redux =======================================
@@ -75,9 +74,8 @@ const HcmBlock1Gl = (props: { nik: string }) => {
   const [getPersonNik, setGetPersonNik] = React.useState(null);
   const [openImg, setOpenImg] = React.useState(false);
   //const [trigger, setTrigger] = React.useState(false);
-  //let ppp = PICT ? false : true;
 
-  const [openLoader, setOpenLoader] = React.useState(PICT ? false : true);
+  const [openLoader, setOpenLoader] = React.useState(true);
 
   const handleImageUpload = async () => {
     let options = {
@@ -93,10 +91,34 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     }
   };
 
+  const UnpackPhoto = React.useCallback((photo: any) => {
+    //=== распаковка файла картинок ==========================
+    if (photo) {
+      PICT = null;
+      setOpenLoader(true);
+      //blob = MakeNewBlob(datestat.picture);
+      blob = MakeNewBlob(photo);
+      reader = new FileReader();
+      compressedFile = null;
+      handleImageUpload();
+      const handleMake = () => {
+        if (reader.result !== null) {
+          PICT = reader.result; // если длина спрессованной картинки < 200байт - косячная картинка
+          setOpenLoader(false);
+        } else {
+          setTimeout(() => {
+            handleMake();
+          }, 100);
+        }
+      };
+      handleMake();
+    } else setOpenLoader(false);
+  }, []);
+
   const FillMask = React.useCallback((rec: any) => {
     maskForm.name = rec.name;
     maskForm.nik = rec.nickName;
-    maskForm.birthDate = MakeDateRus(rec.birthDate);
+    maskForm.birthDate = MakeDateRus(rec.birthDate).slice(0, 5);
     maskForm.beginDate = MakeDateRus(rec.startDate);
     maskForm.post = rec.jobPosition;
     maskForm.department = rec.department.name;
@@ -111,53 +133,31 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     maskForm.status = rec.state;
   }, []);
 
-  //=== распаковка файла картинок ==========================
-  if (!PICT && openFace) {
-    openFace = false;
-    if (!PICT && datestat.picture) {
-      blob = MakeNewBlob(datestat.picture);
-      reader = new FileReader();
-      compressedFile = null;
-      handleImageUpload();
-      const handleMake = () => {
-        if (reader.result !== null) {
-          PICT = reader.result; // если длина спрессованной картинки < 200байт - косячная картинка
-          setOpenLoader(false);
-          openFace = false;
-        } else {
-          setTimeout(() => {
-            handleMake();
-          }, 100);
-        }
-      };
-      handleMake();
-    } else setOpenLoader(false);
-    openFace = false;
-  }
-
   //=== инициализация ======================================
   let kard = -1;
-  //console.log('££££££:', props.nik);
   for (let i = 0; i < datestat.person.length; i++) {
     if (datestat.person[i].nickName === props.nik) kard = i;
   }
+
   React.useEffect(() => {
     if (kard >= 0) {
       let url = baseURL2 + '/' + datestat.person[kard].nickName + '?expand=personAbsence';
 
       // Чтение карточки сотрудника
+
       axios
         .get(url)
         .then((response) => {
-          console.log('Карточка сотрудника:', response.data);
+          console.log('Карточка сотрудника:', response.data[0]);
           FillMask(response.data[0]);
+          UnpackPhoto(response.data[0].photo);
           setGetPersonNik(response.data);
         })
         .catch((error: any) => {
           console.error('Ошибка в GetPersonNik:', error);
         });
     }
-  }, [kard, props.nik, datestat, dispatch, FillMask, setGetPersonNik]);
+  }, [kard, props.nik, datestat, dispatch, FillMask, setGetPersonNik, UnpackPhoto]);
 
   if (props.nik !== oldNik) {
     oldNik = props.nik;
@@ -333,10 +333,8 @@ const HcmBlock1Gl = (props: { nik: string }) => {
   const styleBackdropBaza = {
     color: '#fff',
     marginLeft: '12px',
-    //marginRight: "90vh",
     width: '180px',
     marginTop: '63px',
-    //marginBottom: "73.5vh",
     marginBottom: (100 - 25000 / window.innerHeight).toString() + 'vh',
     zIndex: (theme: any) => theme.zIndex.drawer + 1,
   };
@@ -377,7 +375,7 @@ const HcmBlock1Gl = (props: { nik: string }) => {
       <Grid container>
         <Grid item xs={12} sx={styleBl1Form04}>
           <Box sx={styleBl1Form05} onClick={() => ClickImg()}>
-            {datestat.user.login !== props.nik && (
+            {/* {datestat.user.login !== props.nik && (
               <img
                 src="https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg"
                 //width={160}
@@ -386,15 +384,15 @@ const HcmBlock1Gl = (props: { nik: string }) => {
               />
             )}
             {datestat.user.login === props.nik && (
+              <> */}
+            {openLoader && <Dinama />}
+            {!openLoader && (
               <>
-                {openLoader && <Dinama />}
-                {!openLoader && (
-                  <>
-                    <img src={PICT} height={180} alt="PICT" />
-                  </>
-                )}
+                <img src={PICT} height={180} alt="PICT" />
               </>
             )}
+            {/* </>
+            )} */}
           </Box>
         </Grid>
       </Grid>

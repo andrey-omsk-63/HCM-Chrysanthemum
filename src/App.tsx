@@ -220,12 +220,14 @@ const App = () => {
         responseType: 'arraybuffer',
       })
       .then(function (response) {
+        //console.log('%%%%%%:', response.data);
         let image = btoa(
           new Uint8Array(response.data).reduce(
             (data, byte) => data + String.fromCharCode(byte),
             '',
           ),
         );
+        //console.log('image', image);
         dateStat.picture = image;
       });
     dispatch(statsaveCreate(dateStat));

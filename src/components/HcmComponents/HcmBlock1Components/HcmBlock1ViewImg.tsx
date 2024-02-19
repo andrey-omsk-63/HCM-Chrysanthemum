@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -27,10 +27,10 @@ const HcmBlock1ViewImg = (props: {
   //   return massplanReducer.massplan;
   // });
   // console.log("###massplan:", massplan);
-  let datestat = useSelector((state: any) => {
-    const { statsaveReducer } = state;
-    return statsaveReducer.datestat;
-  });
+  // let datestat = useSelector((state: any) => {
+  //   const { statsaveReducer } = state;
+  //   return statsaveReducer.datestat;
+  // });
   //===========================================================
   const [openImg, setOpenImg] = React.useState(true);
 
@@ -109,16 +109,16 @@ const HcmBlock1ViewImg = (props: {
         <b>{props.nik}</b>
         {nik2}
         <Box sx={styleWVI01}>
-          {datestat.user.login !== props.nik && (
+          {/* {datestat.user.login !== props.nik && (
             <img
               src="https://farm6.static.flickr.com/5100/5488231741_9105ea3953_b.jpg"
               height={window.innerHeight * 0.8 + 0}
               alt="PICT"
             />
           )}
-          {datestat.user.login === props.nik && (
-            <img src={props.pict} height={window.innerHeight * 0.8} alt="PICT" />
-          )}
+          {datestat.user.login === props.nik && ( */}
+          <img src={props.pict} height={window.innerHeight * 0.8} alt="PICT" />
+          {/* )} */}
         </Box>
       </Box>
     </Modal>
