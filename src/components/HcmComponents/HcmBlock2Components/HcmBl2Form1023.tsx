@@ -56,11 +56,14 @@ let maskForm = {
   connect1: "0.0", // Взаимодействие в команде
 };
 
-let nomAvtor = "0";
-let nomWho = "0";
-let nomUnit = "0";
+let maskNom = {
+  nomAvtor: "0",
+  nomWho: "0",
+  nomUnit: "0",
+};
 
 let maskFormNew: any = null; // для мягкого отката
+let maskNomNew: any = null; // для мягкого отката
 
 let currencies01: any = []; // Авторы
 let currencies02: any = []; // Причины проведения
@@ -96,7 +99,8 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
     HAVE = MODE = 0;
     maskForm = JSON.parse(JSON.stringify(props.form));
     maskFormNew = JSON.parse(JSON.stringify(props.form));
-    nomAvtor = nomWho = nomUnit = "0";
+    maskNom.nomAvtor = maskNom.nomWho = maskNom.nomUnit = "0";
+    maskNomNew = JSON.parse(JSON.stringify(maskNom));
     dat2 = [];
     dat2.push(props.form.why);
     for (let i = 0; i < dat22.length; i++) dat2.push(dat22[i]);
@@ -125,15 +129,16 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   const [valueLink, setValueLink] = React.useState(maskForm.link);
   const [valueComment, setValueComment] = React.useState(maskForm.comment);
 
-  const [currency01, setCurrency01] = React.useState(nomAvtor);
-  const [currency02, setCurrency02] = React.useState(nomWho);
-  const [currency03, setCurrency03] = React.useState(nomUnit);
+  const [currency01, setCurrency01] = React.useState(maskNom.nomAvtor);
+  const [currency02, setCurrency02] = React.useState(maskNom.nomWho);
+  const [currency03, setCurrency03] = React.useState(maskNom.nomUnit);
   const [open, setOpen] = React.useState(true);
   const [badExit, setBadExit] = React.useState(false);
   const [trigger, setTrigger] = React.useState(false);
   //========================================================
   const SoftRollback = () => {
     maskForm = JSON.parse(JSON.stringify(maskFormNew));
+    maskNom = JSON.parse(JSON.stringify(maskNomNew));
     setValueStatus(maskForm.status);
     setValueConnect2(maskForm.connect2);
     setValuePay(maskForm.pay);
@@ -144,9 +149,9 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
     setValueConnect1(maskForm.connect1);
     setValueLink(maskForm.link);
     setValueComment(maskForm.comment);
-    setCurrency01(nomAvtor);
-    setCurrency02(nomWho);
-    setCurrency03(nomUnit);
+    setCurrency01(maskNom.nomAvtor);
+    setCurrency02(maskNom.nomWho);
+    setCurrency03(maskNom.nomUnit);
   };
 
   const EndEdit = (mode: number) => {
@@ -286,19 +291,19 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       switch (mode) {
         case 1: // Авторы
-          nomAvtor = event.target.value;
+          maskNom.nomAvtor = event.target.value;
           setCurrency01(event.target.value);
           maskForm.avtor = dat1[Number(event.target.value)];
           HAVE++;
           break;
         case 2: // Причины проведения
-          nomWho = event.target.value;
+          maskNom.nomWho = event.target.value;
           setCurrency02(event.target.value);
           maskForm.why = dat2[Number(event.target.value)];
           HAVE++;
           break;
         case 3: // Подразделения
-          nomUnit = event.target.value;
+          maskNom.nomUnit = event.target.value;
           setCurrency03(event.target.value);
           maskForm.unit = dat3[Number(event.target.value)];
           HAVE++;
@@ -441,6 +446,7 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
       case 1: // Редактировать
         MODE = 1;
         maskFormNew = JSON.parse(JSON.stringify(maskForm));
+        maskNomNew = JSON.parse(JSON.stringify(maskNom));
         setTrigger(!trigger);
         break;
       case 2: // Выйти
