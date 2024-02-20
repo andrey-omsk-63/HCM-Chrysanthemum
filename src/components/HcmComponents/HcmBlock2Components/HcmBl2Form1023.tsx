@@ -1,26 +1,27 @@
-import * as React from 'react';
+import * as React from "react";
 //import { useDispatch, useSelector } from 'react-redux';
 //import { statsaveCreate } from '../../../redux/actions';
 
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
-import 'dayjs/locale/ru';
-import dayjs, { Dayjs } from 'dayjs';
+import "dayjs/locale/ru";
+import dayjs, { Dayjs } from "dayjs";
 
-import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
-import { InputStrField, InputStrFieldMult } from '../../HcmServiceFunctions';
-import { InputerDate, InputDirectRec } from '../../HcmServiceFunctions';
-import { PreparCurrenciesCommon, WaysInput } from '../../HcmServiceFunctions';
-import { MakeDate, FooterContentMode } from '../../HcmServiceFunctions';
-import { FooterContentEndEdit } from '../../HcmServiceFunctions';
+import { FooterContent, BadExit, StrTablProp } from "../../HcmServiceFunctions";
+import { InputStrField, InputStrFieldMult } from "../../HcmServiceFunctions";
+import { InputerDate, InputDirectRec } from "../../HcmServiceFunctions";
+import { PreparCurrenciesCommon, WaysInput } from "../../HcmServiceFunctions";
+import { MakeDate, FooterContentMode } from "../../HcmServiceFunctions";
+import { FooterContentEndEdit, СonvertMonth } from "../../HcmServiceFunctions";
+import { MakeDateRus } from "../../HcmServiceFunctions";
 
-import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
-import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
-import { styleBl5Form06, styleBl5Form03 } from '../../HcmMainStyle';
-import { styleBl5Form04, styleBl5Form05 } from '../../HcmMainStyle';
+import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
+import { styleBl5Form01, styleBl5Form02 } from "../../HcmMainStyle";
+import { styleBl5Form06, styleBl5Form03 } from "../../HcmMainStyle";
+import { styleBl5Form04, styleBl5Form05 } from "../../HcmMainStyle";
 
 let oldIdx = -1;
 let HAVE = 0;
@@ -32,29 +33,29 @@ let eventInp1 = dayjs(formSett);
 let massGoodDate: Array<string> = [];
 
 let maskForm = {
-  avtor: 'Доцент', // 'Автор
-  why: 'Так себе основание', // Причина проведения
-  status: '0.0', // Общее состояние команды
-  connect2: '0.0', // Взаимодействие с руководителем
-  pay: '0.0', // Заработная плата, бонусы
-  load: '0.0', // Нагрузка, режим работы
-  link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
+  avtor: "Доцент", // 'Автор
+  why: "Так себе основание", // Причина проведения
+  status: "0.0", // Общее состояние команды
+  connect2: "0.0", // Взаимодействие с руководителем
+  pay: "0.0", // Заработная плата, бонусы
+  load: "0.0", // Нагрузка, режим работы
+  link: "https://e.mail.ru/newsletters/0:17066793751836945566",
   comment:
-    'Таганский суд Москвы в пятницу приступит к рассмотрению по существу иска к компании МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор». МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор».',
+    "Таганский суд Москвы в пятницу приступит к рассмотрению по существу иска к компании МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор». МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор».",
   //============
-  unit: 'ООО Рога и капыта', // Подразделение
-  period: '1 квартал 2023',
-  know: '0.0', // Информированность
-  develop: '0.0', // Развитие
-  tasks: '0.0', // Текущие задачи
-  connect1: '0.0', // Взаимодействие в команде
+  unit: "ООО Рога и капыта", // Подразделение
+  period: "1 квартал 2023",
+  know: "0.0", // Информированность
+  develop: "0.0", // Развитие
+  tasks: "0.0", // Текущие задачи
+  connect1: "0.0", // Взаимодействие в команде
 };
 
 let maskNom = {
-  nomAvtor: '0',
-  nomWho: '0',
-  nomUnit: '0',
-  nomPeriod: '0',
+  nomAvtor: "0",
+  nomWho: "0",
+  nomUnit: "0",
+  //nomPeriod: "0",
 };
 
 let maskFormNew: any = null; // для мягкого отката
@@ -65,16 +66,16 @@ let currencies02: any = []; // Причины проведения
 let currencies03: any = []; // Подразделения
 let currencies04: any = []; // Период..
 
-let dat1 = ['Фантомас', 'Лишенец', 'Бугор', 'Ляля'];
+let dat1 = ["Фантомас", "Лишенец", "Бугор", "Ляля"];
 let dat2: Array<string> = [];
 let dat22 = [
-  'Очень важное основание',
-  'Так себе основание',
-  'Необходимая необходимость',
-  'Фигня какая-та',
+  "Очень важное основание",
+  "Так себе основание",
+  "Необходимая необходимость",
+  "Фигня какая-та",
 ];
 let dat3: Array<string> = [];
-let dat33 = ['ООО Рога и капыта', 'Пехота', 'Автобат', 'Конница', 'Хозвзвод'];
+let dat33 = ["ООО Рога и капыта", "Пехота", "Автобат", "Конница", "Хозвзвод"];
 
 let dat4: Array<string> = [];
 //let dat44 = ["1-й квартал", "2-й квартал", "3-й квартал", "4-й квартал"];
@@ -90,14 +91,16 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   //const dispatch = useDispatch();
   //console.log("Setup_massplan:", massplan);
   //========================================================
-  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
+  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(
+    dayjs(formSett)
+  );
   //=== инициализация ======================================
   if (oldIdx !== props.idx) {
-    console.log('PERIOD:', props.form.period);
+    console.log("PERIOD:", props.form.period);
     HAVE = MODE = 0;
     maskForm = JSON.parse(JSON.stringify(props.form));
     maskFormNew = JSON.parse(JSON.stringify(props.form));
-    maskNom.nomAvtor = maskNom.nomWho = maskNom.nomUnit = '0';
+    maskNom.nomAvtor = maskNom.nomWho = maskNom.nomUnit = "0";
     maskNomNew = JSON.parse(JSON.stringify(maskNom));
     //===
     dat2 = [];
@@ -108,13 +111,12 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
     dat3.push(props.form.unit);
     for (let i = 0; i < dat33.length; i++) dat3.push(dat33[i]);
     //===
-    dat4 = [];
-    let year = props.form.period.slice(12);
-    let nomer = Number(props.form.period.slice(0, 1));
-    for (let i = 1; i < 5; i++) dat4.push(i + '-й квартал ' + year);
-    maskNom.nomPeriod = (nomer - 1).toString();
-    maskNomNew.nomPeriod = (nomer - 1).toString();
-    console.log('YEAR:', year, nomer, dat4);
+    // dat4 = [];
+    // let year = props.form.period.slice(12);
+    // let nomer = Number(props.form.period.slice(0, 1));
+    // for (let i = 1; i < 5; i++) dat4.push(i + "-й квартал " + year);
+    // maskNom.nomPeriod = (nomer - 1).toString();
+    // maskNomNew.nomPeriod = (nomer - 1).toString();
     //===
     setValueDate1(dayjs(formSett));
     currencies01 = PreparCurrenciesCommon(dat1); // Авторы
@@ -187,7 +189,7 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === 'escapeKeyDown' && !MODE) handleCloseBad();
+    if (reason === "escapeKeyDown" && !MODE) handleCloseBad();
   };
 
   const handleCloseBadExit = (mode: boolean) => {
@@ -277,8 +279,9 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   //========================================================
   const InputDate1 = () => {
     const handleChangeDP = (event: any) => {
-      if (event.toString() === 'Invalid Date') {
-        setValueDate1(dayjs(eventInp1));
+      if (event.toString() === "Invalid Date") {
+        //setValueDate1(dayjs(eventInp1));
+        setValueDate1(eventInp1);
       } else {
         setValueDate1((eventInp1 = event));
         HAVE++;
@@ -321,9 +324,39 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
     };
 
     return (
-      <Box sx={{ marginTop: '-5px' }}>
+      <Box sx={{ marginTop: "-5px" }}>
         {InputDirectRec(handleChange, 232, currency, currencies)}
       </Box>
+    );
+  };
+
+  const InputPeriod = () => {
+    let period = "";
+    if (valueDate1) {
+      let dt = valueDate1.toISOString();
+      let year = dt.slice(0, 4);
+      period = СonvertMonth(Number(dt.slice(5, 7))) + "-й квартал " + year;
+    }
+
+    return (
+      <Grid item container sx={{}}>
+        <Grid item xs={6} sx={{ border: 0 }}>
+          {MODE ? (
+            <>{ContentDate1()}</>
+          ) : (
+            <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>
+              {MakeDateRus(new Date(eventInp1.toISOString()))}
+            </Box>
+          )}
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          sx={{ padding: "0px 0px 0px 5px", marginTop: "-1px" }}
+        >
+          {period}
+        </Grid>
+      </Grid>
     );
   };
 
@@ -332,42 +365,46 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   let recAvtor = MODE ? (
     StrokaMenuGlob(1, currency01, currencies01)
   ) : (
-    <Box sx={{ padding: '1px 0px 2px 0px', fontWeight: 600 }}>
+    <Box sx={{ padding: "1px 0px 2px 0px", fontWeight: 600 }}>
       {currencies01[Number(currency01)].label}
     </Box>
   );
   let recWho = MODE ? (
     StrokaMenuGlob(2, currency02, currencies02)
   ) : (
-    <Box sx={{ padding: '1px 0px 1px 0px', fontWeight: 600 }}>
+    <Box sx={{ padding: "1px 0px 1px 0px", fontWeight: 600 }}>
       {currencies02[Number(currency02)].label}
     </Box>
   );
   let recStatus = MODE ? (
     WaysInput(0, valueStatus, hdlChangeStatus, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueStatus}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>
+      {valueStatus}
+    </Box>
   );
   let recConnect2 = MODE ? (
     WaysInput(0, valueConnect2, hdlChangeConnect2, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueConnect2}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>
+      {valueConnect2}
+    </Box>
   );
   let recPay = MODE ? (
     WaysInput(0, valuePay, hdlChangePay, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valuePay}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>{valuePay}</Box>
   );
   let recLoad = MODE ? (
     WaysInput(0, valueLoad, hdlChangeLoad, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueLoad}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>{valueLoad}</Box>
   );
   //========================================================
   let recUnit = MODE ? (
     StrokaMenuGlob(3, currency03, currencies03)
   ) : (
-    <Box sx={{ padding: '1px 0px 2px 0px', fontWeight: 600 }}>
+    <Box sx={{ padding: "1px 0px 2px 0px", fontWeight: 600 }}>
       {currencies03[Number(currency03)].label}
     </Box>
   );
@@ -375,51 +412,55 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   let recLink = MODE ? (
     InputStrField(500, hdlChangeLink, valueLink)
   ) : (
-    <Box sx={{ padding: '1px 0px 5px 0px', fontWeight: 600 }}>{valueLink}</Box>
+    <Box sx={{ padding: "1px 0px 5px 0px", fontWeight: 600 }}>{valueLink}</Box>
   );
   let recKnow = MODE ? (
     WaysInput(0, valueKnow, hdlChangeKnow, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueKnow}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>{valueKnow}</Box>
   );
   let recDevelop = MODE ? (
     WaysInput(0, valueDevelop, hdlChangeDevelop, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueDevelop}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>
+      {valueDevelop}
+    </Box>
   );
   let recTask = MODE ? (
     WaysInput(0, valueTask, hdlChangeTask, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueTask}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>{valueTask}</Box>
   );
   let recConnect1 = MODE ? (
     WaysInput(0, valueConnect1, hdlChangeConnect1, 0, 20)
   ) : (
-    <Box sx={{ padding: '1px 0px 7px 0px', fontWeight: 600 }}>{valueConnect1}</Box>
+    <Box sx={{ padding: "1px 0px 7px 0px", fontWeight: 600 }}>
+      {valueConnect1}
+    </Box>
   );
 
   const TableContent = () => {
     return (
       <>
         <Grid container>
-          <Grid item xs={6} sx={{ padding: '0px 2px 0px 0px' }}>
-            {StrTablProp(4.5, 'Автор', recAvtor)}
-            {StrTablProp(4.5, 'Причина проведения', recWho)}
-            {StrTablProp(6, 'Общее состояние команды', recStatus)}
-            {StrTablProp(6, 'Взаимодействие с руководителем', recConnect2)}
-            {StrTablProp(6, 'Заработная плата, бонусы', recPay)}
-            {StrTablProp(6, 'Нагрузка, режим работы', recLoad)}
+          <Grid item xs={6} sx={{ padding: "0px 2px 0px 0px" }}>
+            {StrTablProp(4.5, "Автор", recAvtor)}
+            {StrTablProp(4.5, "Причина проведения", recWho)}
+            {StrTablProp(6, "Общее состояние команды", recStatus)}
+            {StrTablProp(6, "Взаимодействие с руководителем", recConnect2)}
+            {StrTablProp(6, "Заработная плата, бонусы", recPay)}
+            {StrTablProp(6, "Нагрузка, режим работы", recLoad)}
           </Grid>
-          <Grid item xs={6} sx={{ padding: '0px 0px 0px 2px' }}>
-            {StrTablProp(4.5, 'Подразделение', recUnit)}
-            {StrTablProp(4.5, 'За период', ContentDate1())}
-            {StrTablProp(6, 'Информированность', recKnow)}
-            {StrTablProp(6, 'Развитие', recDevelop)}
-            {StrTablProp(6, 'Текущие задачи', recTask)}
-            {StrTablProp(6, 'Взаимодействие в команде', recConnect1)}
+          <Grid item xs={6} sx={{ padding: "0px 0px 0px 2px" }}>
+            {StrTablProp(4.5, "Подразделение", recUnit)}
+            {StrTablProp(4.5, "За период", InputPeriod())}
+            {StrTablProp(6, "Информированность", recKnow)}
+            {StrTablProp(6, "Развитие", recDevelop)}
+            {StrTablProp(6, "Текущие задачи", recTask)}
+            {StrTablProp(6, "Взаимодействие в команде", recConnect1)}
           </Grid>
-          <Grid item xs={12} sx={{ padding: '0px 2px 0px 0px' }}>
-            {StrTablProp(2.2, 'Ссылка на НС', recLink)}
+          <Grid item xs={12} sx={{ padding: "0px 2px 0px 0px" }}>
+            {StrTablProp(2.2, "Ссылка на НС", recLink)}
           </Grid>
           <Grid container sx={{ marginTop: 2 }}>
             <Grid item xs={2.2} sx={{ height: 100 }}>
@@ -429,7 +470,7 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
               {MODE ? (
                 <>{InputStrFieldMult(500, hdlChangeComment, valueComment)}</>
               ) : (
-                <Box sx={{ fontSize: 15.5, width: 515 + 'px', height: '96px' }}>
+                <Box sx={{ fontSize: 15.5, width: 515 + "px", height: "96px" }}>
                   {valueComment.slice(0, 243)}
                 </Box>
               )}
@@ -443,7 +484,7 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   const ChangeMode = (mode: number) => {
     switch (mode) {
       case 0: // Удалить
-        console.log('Здесь будет удаление!!!');
+        console.log("Здесь будет удаление!!!");
         break;
       case 1: // Редактировать
         MODE = 1;
@@ -460,7 +501,7 @@ const HcmBl2Form1023 = (props: { idx: number; form: any; close: Function }) => {
   //console.log("0MASKFORM:", maskForm);
   //console.log("1MASKFORM:", maskFormNew);
 
-  let title = MODE ? 'Редактирование' : 'Просмотр';
+  let title = MODE ? "Редактирование" : "Просмотр";
   return (
     <>
       <Modal open={open} onClose={CloseEnd} hideBackdrop={false}>

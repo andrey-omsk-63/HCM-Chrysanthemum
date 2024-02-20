@@ -18,7 +18,7 @@ const HcmBl0Form101 = (props: { pers: any; openCard: Function }) => {
     const { statsaveReducer } = state;
     return statsaveReducer.datestat;
   });
-  console.log('dateStat.person:', datestat.user.login, datestat.person);
+  //console.log('dateStat.person:', datestat.user.login, datestat.person);
   //let PERSON = datestat.person;
   let PERSON = props.pers;
 

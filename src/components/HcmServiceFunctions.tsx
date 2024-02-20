@@ -50,6 +50,15 @@ export const MakeDateRus = (tekData: Date) => {
   return dataRus;
 };
 
+export const СonvertMonth = (tekMonth: number) => {
+  let tekQ = 0;
+  if (tekMonth < 4) tekQ = 1;
+  if (tekMonth > 3 && tekMonth < 7) tekQ = 2;
+  if (tekMonth > 6 && tekMonth < 10) tekQ = 3;
+  if (tekMonth > 9) tekQ = 4;
+  return tekQ;
+};
+
 export const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
   return (
     <>

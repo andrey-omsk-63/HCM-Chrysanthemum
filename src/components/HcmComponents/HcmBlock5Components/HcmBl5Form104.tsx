@@ -1,23 +1,24 @@
-import * as React from 'react';
+import * as React from "react";
 //import { useSelector } from "react-redux";
 
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
-import 'dayjs/locale/ru';
-import dayjs, { Dayjs } from 'dayjs';
+import "dayjs/locale/ru";
+import dayjs, { Dayjs } from "dayjs";
 
-import { FooterContent, BadExit, StrTablProp } from '../../HcmServiceFunctions';
-import { InputStrField, InputStrFieldMult } from '../../HcmServiceFunctions';
-import { MakeDate, InputerDate, InputDirectRec } from '../../HcmServiceFunctions';
-import { PreparCurrenciesCommon, WaysInput } from '../../HcmServiceFunctions';
+import { FooterContent, BadExit, StrTablProp } from "../../HcmServiceFunctions";
+import { InputStrField, InputStrFieldMult } from "../../HcmServiceFunctions";
+import { InputerDate, InputDirectRec } from "../../HcmServiceFunctions";
+import { PreparCurrenciesCommon, WaysInput } from "../../HcmServiceFunctions";
+import { MakeDate, СonvertMonth } from "../../HcmServiceFunctions";
 
-import { styleModalEnd, styleBl5Form00 } from '../../HcmMainStyle';
-import { styleBl5Form01, styleBl5Form02 } from '../../HcmMainStyle';
-import { styleBl5Form06, styleBl5Form03 } from '../../HcmMainStyle';
-import { styleBl5Form04, styleBl5Form05 } from '../../HcmMainStyle';
+import { styleModalEnd, styleBl5Form00 } from "../../HcmMainStyle";
+import { styleBl5Form01, styleBl5Form02 } from "../../HcmMainStyle";
+import { styleBl5Form06, styleBl5Form03 } from "../../HcmMainStyle";
+import { styleBl5Form04, styleBl5Form05 } from "../../HcmMainStyle";
 
 let flagInput = true;
 let HAVE = 0;
@@ -29,35 +30,35 @@ let eventInp1 = dayjs(formSett);
 let massGoodDate: Array<string> = [];
 
 let maskForm = {
-  avtor: 'Доцент', // 'Автор
-  why: 'Так себе основание', // Причина проведения
-  status: '0.0', // Общее состояние команды
-  connect2: '0.0', // Взаимодействие с руководителем
-  pay: '0.0', // Заработная плата, бонусы
-  load: '0.0', // Нагрузка, режим работы
-  link: 'https://e.mail.ru/newsletters/0:17066793751836945566',
+  avtor: "Доцент", // 'Автор
+  why: "Так себе основание", // Причина проведения
+  status: "0.0", // Общее состояние команды
+  connect2: "0.0", // Взаимодействие с руководителем
+  pay: "0.0", // Заработная плата, бонусы
+  load: "0.0", // Нагрузка, режим работы
+  link: "https://e.mail.ru/newsletters/0:17066793751836945566",
   comment:
-    'Таганский суд Москвы в пятницу приступит к рассмотрению по существу иска к компании МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор».',
+    "Таганский суд Москвы в пятницу приступит к рассмотрению по существу иска к компании МТС с требованием компенсации миллиарда долларов за «голую вечеринку» в клубе «Мутабор».",
   //============
-  unit: 'ООО Рога и капыта', // Подразделение
-  period: '1 квартал 2023',
-  know: '0.0', // Информированность
-  develop: '0.0', // Развитие
-  tasks: '0.0', // Текущие задачи
-  connect1: '0.0', // Взаимодействие в команде
+  unit: "ООО Рога и капыта", // Подразделение
+  period: "1 квартал 2023",
+  know: "0.0", // Информированность
+  develop: "0.0", // Развитие
+  tasks: "0.0", // Текущие задачи
+  connect1: "0.0", // Взаимодействие в команде
 };
 let currencies01: any = []; // Авторы
 let currencies02: any = []; // Причины проведения
 let currencies03: any = []; // Подразделения
 
-let dat1 = ['Фантомас', 'Лишенец', 'Бугор', 'Ляля'];
+let dat1 = ["Фантомас", "Лишенец", "Бугор", "Ляля"];
 let dat2 = [
-  'Очень важное основание',
-  'Так себе основание',
-  'Необходимая необходимость',
-  'Фигня какая-та',
+  "Очень важное основание",
+  "Так себе основание",
+  "Необходимая необходимость",
+  "Фигня какая-та",
 ];
-let dat3 = ['ООО Рога и капыта', 'Пехота', 'Автобат', 'Конница', 'Хозвзвод'];
+let dat3 = ["ООО Рога и капыта", "Пехота", "Автобат", "Конница", "Хозвзвод"];
 
 const HcmBl5Form104 = (props: { close: Function }) => {
   //== Piece of Redux =======================================
@@ -73,7 +74,9 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   const [valuePay, setValuePay] = React.useState(maskForm.pay);
   const [valueLoad, setValueLoad] = React.useState(maskForm.load);
 
-  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(dayjs(formSett));
+  const [valueDate1, setValueDate1] = React.useState<Dayjs | null>(
+    dayjs(formSett)
+  );
   const [valueKnow, setValueKnow] = React.useState(maskForm.know);
   const [valueDevelop, setValueDevelop] = React.useState(maskForm.develop);
   const [valueTask, setValueTask] = React.useState(maskForm.tasks);
@@ -82,9 +85,9 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   const [valueLink, setValueLink] = React.useState(maskForm.link);
   const [valueComment, setValueComment] = React.useState(maskForm.comment);
 
-  const [currency01, setCurrency01] = React.useState('0');
-  const [currency02, setCurrency02] = React.useState('0');
-  const [currency03, setCurrency03] = React.useState('0');
+  const [currency01, setCurrency01] = React.useState("0");
+  const [currency02, setCurrency02] = React.useState("0");
+  const [currency03, setCurrency03] = React.useState("0");
   const [open, setOpen] = React.useState(true);
   const [badExit, setBadExit] = React.useState(false);
   //const [trigger, setTrigger] = React.useState(false);
@@ -111,7 +114,7 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   };
 
   const CloseEnd = (event: any, reason: string) => {
-    if (reason === 'escapeKeyDown') handleCloseBad();
+    if (reason === "escapeKeyDown") handleCloseBad();
   };
 
   const handleCloseBadExit = (mode: boolean) => {
@@ -191,7 +194,7 @@ const HcmBl5Form104 = (props: { close: Function }) => {
   //========================================================
   const InputDate1 = () => {
     const handleChangeDP = (event: any) => {
-      if (event.toString() === 'Invalid Date') {
+      if (event.toString() === "Invalid Date") {
         setValueDate1(dayjs(eventInp1));
       } else {
         setValueDate1((eventInp1 = event));
@@ -232,9 +235,33 @@ const HcmBl5Form104 = (props: { close: Function }) => {
     };
 
     return (
-      <Box sx={{ marginTop: '-5px' }}>
+      <Box sx={{ marginTop: "-5px" }}>
         {InputDirectRec(handleChange, 232, currency, currencies)}
       </Box>
+    );
+  };
+
+  const InputPeriod = () => {
+    let period = "";
+    if (valueDate1) {
+      let dt = valueDate1.toISOString();
+      let year = dt.slice(0, 4);
+      period = СonvertMonth(Number(dt.slice(5, 7))) + "-й квартал " + year;
+    }
+
+    return (
+      <Grid item container sx={{}}>
+        <Grid item xs={6} sx={{ border: 0 }}>
+          {ContentDate1()}
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          sx={{ padding: "0px 0px 0px 5px", marginTop: "-2px" }}
+        >
+          {period}
+        </Grid>
+      </Grid>
     );
   };
 
@@ -242,44 +269,72 @@ const HcmBl5Form104 = (props: { close: Function }) => {
     return (
       <>
         <Grid container>
-          <Grid item xs={6} sx={{ padding: '0px 2px 0px 0px' }}>
-            {StrTablProp(4.5, 'Автор', StrokaMenuGlob(1, currency01, currencies01))}
-            {StrTablProp(4.5, 'Причина проведения', StrokaMenuGlob(2, currency02, currencies02))}
+          <Grid item xs={6} sx={{ padding: "0px 2px 0px 0px" }}>
             {StrTablProp(
-              6,
-              'Общее состояние команды',
-              WaysInput(0, valueStatus, hdlChangeStatus, 0, 20),
+              4.5,
+              "Автор",
+              StrokaMenuGlob(1, currency01, currencies01)
+            )}
+            {StrTablProp(
+              4.5,
+              "Причина проведения",
+              StrokaMenuGlob(2, currency02, currencies02)
             )}
             {StrTablProp(
               6,
-              'Взаимодействие с руководителем',
-              WaysInput(0, valueConnect2, hdlChangeConnect2, 0, 20),
+              "Общее состояние команды",
+              WaysInput(0, valueStatus, hdlChangeStatus, 0, 20)
             )}
             {StrTablProp(
               6,
-              'Заработная плата, бонусы',
-              WaysInput(0, valuePay, hdlChangePay, 0, 20),
+              "Взаимодействие с руководителем",
+              WaysInput(0, valueConnect2, hdlChangeConnect2, 0, 20)
             )}
             {StrTablProp(
               6,
-              'Нагрузка, режим работы',
-              WaysInput(0, valueLoad, hdlChangeLoad, 0, 20),
+              "Заработная плата, бонусы",
+              WaysInput(0, valuePay, hdlChangePay, 0, 20)
             )}
-          </Grid>
-          <Grid item xs={6} sx={{ padding: '0px 0px 0px 2px' }}>
-            {StrTablProp(4.5, 'Подразделение', StrokaMenuGlob(3, currency03, currencies03))}
-            {StrTablProp(4.5, 'За период', ContentDate1())}
-            {StrTablProp(6, 'Информированность', WaysInput(0, valueKnow, hdlChangeKnow, 0, 20))}
-            {StrTablProp(6, 'Развитие', WaysInput(0, valueDevelop, hdlChangeDevelop, 0, 20))}
-            {StrTablProp(6, 'Текущие задачи', WaysInput(0, valueTask, hdlChangeTask, 0, 20))}
             {StrTablProp(
               6,
-              'Взаимодействие в команде',
-              WaysInput(0, valueConnect1, hdlChangeConnect1, 0, 20),
+              "Нагрузка, режим работы",
+              WaysInput(0, valueLoad, hdlChangeLoad, 0, 20)
             )}
           </Grid>
-          <Grid item xs={12} sx={{ padding: '0px 2px 0px 0px' }}>
-            {StrTablProp(2.2, 'Ссылка на НС', InputStrField(500, hdlChangeLink, valueLink))}
+          <Grid item xs={6} sx={{ padding: "0px 0px 0px 2px" }}>
+            {StrTablProp(
+              4.5,
+              "Подразделение",
+              StrokaMenuGlob(3, currency03, currencies03)
+            )}
+            {StrTablProp(4.5, "За период", InputPeriod())}
+            {StrTablProp(
+              6,
+              "Информированность",
+              WaysInput(0, valueKnow, hdlChangeKnow, 0, 20)
+            )}
+            {StrTablProp(
+              6,
+              "Развитие",
+              WaysInput(0, valueDevelop, hdlChangeDevelop, 0, 20)
+            )}
+            {StrTablProp(
+              6,
+              "Текущие задачи",
+              WaysInput(0, valueTask, hdlChangeTask, 0, 20)
+            )}
+            {StrTablProp(
+              6,
+              "Взаимодействие в команде",
+              WaysInput(0, valueConnect1, hdlChangeConnect1, 0, 20)
+            )}
+          </Grid>
+          <Grid item xs={12} sx={{ padding: "0px 2px 0px 0px" }}>
+            {StrTablProp(
+              2.2,
+              "Ссылка на НС",
+              InputStrField(500, hdlChangeLink, valueLink)
+            )}
           </Grid>
           <Grid container sx={{ marginTop: 2 }}>
             <Grid item xs={2.2} sx={{ height: 100 }}>

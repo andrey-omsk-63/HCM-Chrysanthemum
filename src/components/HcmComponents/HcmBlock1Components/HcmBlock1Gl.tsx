@@ -1,50 +1,54 @@
-import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
 //import { statsaveCreate } from './../../../redux/actions';
-import imageCompression from 'browser-image-compression';
+import imageCompression from "browser-image-compression";
 
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import axios from 'axios';
+import axios from "axios";
 //import 'dayjs/locale/ru';
 //import dayjs, { Dayjs } from 'dayjs';
 
-import HcmBl1Form101 from './HcmBl1Form101';
-import HcmBl1Form102 from './HcmBl1Form102';
-import HcmBl1Form103 from './HcmBl1Form103';
-import HcmBl1Form104 from './HcmBl1Form104';
-import HcmBl1Form106 from './HcmBl1Form106';
-import HcmBl1Form105 from './HcmBl1Form105';
-import HcmBl1Form107 from './HcmBl1Form107';
-import HcmBl1Form108 from './HcmBl1Form108';
-import HcmBlock1ViewImg from './HcmBlock1ViewImg';
+import HcmBl1Form101 from "./HcmBl1Form101";
+import HcmBl1Form102 from "./HcmBl1Form102";
+import HcmBl1Form103 from "./HcmBl1Form103";
+import HcmBl1Form104 from "./HcmBl1Form104";
+import HcmBl1Form106 from "./HcmBl1Form106";
+import HcmBl1Form105 from "./HcmBl1Form105";
+import HcmBl1Form107 from "./HcmBl1Form107";
+import HcmBl1Form108 from "./HcmBl1Form108";
+import HcmBlock1ViewImg from "./HcmBlock1ViewImg";
 
-import { RandomNumber, MakeNewBlob, MakeDateRus } from '../../HcmServiceFunctions';
+import {
+  RandomNumber,
+  MakeNewBlob,
+  MakeDateRus,
+} from "../../HcmServiceFunctions";
 
-import { baseURL2 } from '../../HcmMainConst';
+import { baseURL2 } from "../../HcmMainConst";
 
-import { styleMain04, styleBl2Gl01, styleBl1Form01 } from '../../HcmMainStyle';
-import { styleBl1Form03, styleBl1Form04 } from '../../HcmMainStyle';
-import { styleBl1Form05, styleBl1Form15 } from '../../HcmMainStyle';
+import { styleMain04, styleBl2Gl01, styleBl1Form01 } from "../../HcmMainStyle";
+import { styleBl1Form03, styleBl1Form04 } from "../../HcmMainStyle";
+import { styleBl1Form05, styleBl1Form15 } from "../../HcmMainStyle";
 
 let Illum = 1;
-let oldNik = '######';
+let oldNik = "######";
 
 let maskForm = {
-  name: '',
-  nik: '',
-  birthDate: '',
-  beginDate: '21.12.2021',
-  post: 'Гранатомётчик',
-  department: 'Пехота',
-  chief: 'Бугор',
-  location: 'Россия, Омск UTC+6 (MSK+3)',
-  status: '💊 больничный',
+  name: "",
+  nik: "",
+  birthDate: "",
+  beginDate: "21.12.2021",
+  post: "Гранатомётчик",
+  department: "Пехота",
+  chief: "Бугор",
+  location: "Россия, Омск UTC+6 (MSK+3)",
+  status: "💊 больничный",
 };
 
 let blob: any = null;
@@ -124,13 +128,13 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     maskForm.department = rec.department.name;
     maskForm.chief = rec.manager;
 
-    let znak1 = rec.location.timeZone <= 0 ? '+' : '-';
-    maskForm.location = rec.location.country + ', ' + rec.location.city;
-    maskForm.location += ' UTC' + znak1 + Math.abs(rec.location.timeZone);
-    let znak2 = rec.location.timeZone - 3 <= 0 ? '+' : '-';
-    maskForm.location += ' (MSK' + znak2 + Math.abs(rec.location.timeZone - 3) + ')';
-
-    maskForm.status = rec.state;
+    let znak1 = rec.location.timeZone <= 0 ? "+" : "-";
+    maskForm.location = rec.location.country + ", " + rec.location.city;
+    maskForm.location += " UTC" + znak1 + Math.abs(rec.location.timeZone);
+    let znak2 = rec.location.timeZone - 3 <= 0 ? "+" : "-";
+    maskForm.location +=
+      " (MSK" + znak2 + Math.abs(rec.location.timeZone - 3) + ")";
+    maskForm.status = rec.state === "Работа" ? "🛠️ " + rec.state : rec.state;
   }, []);
 
   //=== инициализация ======================================
@@ -141,23 +145,35 @@ const HcmBlock1Gl = (props: { nik: string }) => {
 
   React.useEffect(() => {
     if (kard >= 0) {
-      let url = baseURL2 + '/' + datestat.person[kard].nickName + '?expand=personAbsence';
+      let url =
+        baseURL2 +
+        "/" +
+        datestat.person[kard].nickName +
+        "?expand=personAbsence";
 
       // Чтение карточки сотрудника
 
       axios
         .get(url)
         .then((response) => {
-          console.log('Карточка сотрудника:', response.data[0]);
+          console.log("Карточка сотрудника:", response.data[0]);
           FillMask(response.data[0]);
           UnpackPhoto(response.data[0].photo);
           setGetPersonNik(response.data);
         })
         .catch((error: any) => {
-          console.error('Ошибка в GetPersonNik:', error);
+          console.error("Ошибка в GetPersonNik:", error);
         });
     }
-  }, [kard, props.nik, datestat, dispatch, FillMask, setGetPersonNik, UnpackPhoto]);
+  }, [
+    kard,
+    props.nik,
+    datestat,
+    dispatch,
+    FillMask,
+    setGetPersonNik,
+    UnpackPhoto,
+  ]);
 
   if (props.nik !== oldNik) {
     oldNik = props.nik;
@@ -289,16 +305,22 @@ const HcmBlock1Gl = (props: { nik: string }) => {
   };
 
   const ClickNik1 = () => {
-    console.log('Действие по нажатию на ник1');
+    console.log("Действие по нажатию на ник1");
   };
 
   const ClickNik2 = () => {
-    console.log('Действие по нажатию на ник2');
+    console.log("Действие по нажатию на ник2");
   };
   //=== Компоненты =========================================
-  const MenuBatton = (xss: number, wt: number, ill: number, name: string, func: Function) => {
+  const MenuBatton = (
+    xss: number,
+    wt: number,
+    ill: number,
+    name: string,
+    func: Function
+  ) => {
     return (
-      <Grid item xs={xss} sx={{ height: '30px' }}>
+      <Grid item xs={xss} sx={{ height: "30px" }}>
         <Button sx={styleMain04(wt, Illum, ill)} onClick={() => func()}>
           {name}
         </Button>
@@ -308,16 +330,16 @@ const HcmBlock1Gl = (props: { nik: string }) => {
 
   const StrTablProp = (xss: number, recLeft: string, recRight: any) => {
     return (
-      <Grid container sx={{ marginTop: 1, color: '#5B1080' }}>
-        <Grid item xs={xss} sx={{ textShadow: '1px 1px 2px rgba(0,0,0,0.3)' }}>
+      <Grid container sx={{ marginTop: 1, color: "#5B1080" }}>
+        <Grid item xs={xss} sx={{ textShadow: "1px 1px 2px rgba(0,0,0,0.3)" }}>
           {recLeft}
         </Grid>
-        {typeof recRight === 'object' ? (
+        {typeof recRight === "object" ? (
           <Grid item xs>
             {recRight}
           </Grid>
         ) : (
-          <Grid item xs sx={{ fontSize: 14, marginLeft: '6px', border: 0 }}>
+          <Grid item xs sx={{ fontSize: 14, marginLeft: "6px", border: 0 }}>
             <b>{recRight}</b>
           </Grid>
         )}
@@ -331,11 +353,11 @@ const HcmBlock1Gl = (props: { nik: string }) => {
   };
 
   const styleBackdropBaza = {
-    color: '#fff',
-    marginLeft: '12px',
-    width: '180px',
-    marginTop: '63px',
-    marginBottom: (100 - 25000 / window.innerHeight).toString() + 'vh',
+    color: "#fff",
+    marginLeft: "12px",
+    width: "180px",
+    marginTop: "63px",
+    marginBottom: (100 - 25000 / window.innerHeight).toString() + "vh",
     zIndex: (theme: any) => theme.zIndex.drawer + 1,
   };
 
@@ -404,28 +426,40 @@ const HcmBlock1Gl = (props: { nik: string }) => {
       <Grid container>
         <Grid item xs={12} sx={styleBl1Form01}>
           <Grid container>
-            <Grid item xs={2} sx={{ height: '180px' }}>
+            <Grid item xs={2} sx={{ height: "180px" }}>
               {Title()}
               {Portrait()}
             </Grid>
             <Grid item xs={10} sx={{ fontSize: 14.5 }}>
               <Grid container>
-                <Grid item xs={4} sx={{ border: 0, height: '56px', fontSize: 14.5 }}>
-                  {StrTablProp(3, 'Имя:', maskForm.name)}
-                  {StrTablProp(3, 'Ник:', ButtonLink(maskForm.nik, ClickNik1))}
+                <Grid
+                  item
+                  xs={4}
+                  sx={{ border: 0, height: "56px", fontSize: 14.5 }}
+                >
+                  {StrTablProp(3, "Имя:", maskForm.name)}
+                  {StrTablProp(3, "Ник:", ButtonLink(maskForm.nik, ClickNik1))}
                 </Grid>
-                <Grid item xs={8} sx={{ border: 0, height: '56px' }}>
-                  {StrTablProp(0.1, '', maskForm.location)}
-                  {StrTablProp(0.1, '', maskForm.status)}
+                <Grid item xs={8} sx={{ border: 0, height: "56px" }}>
+                  {StrTablProp(0.1, "", maskForm.location)}
+                  {StrTablProp(0.1, "", maskForm.status)}
                 </Grid>
               </Grid>
               <Grid container sx={{}}>
-                <Grid item xs={12} sx={{ border: 0, height: '150px', fontSize: 14.5 }}>
-                  {StrTablProp(2, 'Дата рождения:', maskForm.birthDate)}
-                  {StrTablProp(2, 'В компании с:', maskForm.beginDate)}
-                  {StrTablProp(2, 'Должность:', maskForm.post)}
-                  {StrTablProp(2, 'Подразделение:', maskForm.department)}
-                  {StrTablProp(2, 'Руководитель(Ник):', ButtonLink(maskForm.chief, ClickNik2))}
+                <Grid
+                  item
+                  xs={12}
+                  sx={{ border: 0, height: "150px", fontSize: 14.5 }}
+                >
+                  {StrTablProp(2, "Дата рождения:", maskForm.birthDate)}
+                  {StrTablProp(2, "В компании с:", maskForm.beginDate)}
+                  {StrTablProp(2, "Должность:", maskForm.post)}
+                  {StrTablProp(2, "Подразделение:", maskForm.department)}
+                  {StrTablProp(
+                    2,
+                    "Руководитель(Ник):",
+                    ButtonLink(maskForm.chief, ClickNik2)
+                  )}
                 </Grid>
               </Grid>
             </Grid>
@@ -439,24 +473,26 @@ const HcmBlock1Gl = (props: { nik: string }) => {
     <Grid container sx={styleBl2Gl01}>
       <Grid item xs={12}>
         {CardContent()}
-        {(datestat.permissions.length > 0 || datestat.user.login === props.nik) && (
+        {(datestat.permissions.length > 0 ||
+          datestat.user.login === props.nik) && (
           <Grid container sx={{ marginTop: 2, border: 0 }}>
             <Grid item xs={12}>
               <Grid container>
-                {MenuBatton(1.5, 1.5, 1, 'Отсутствия', ClickKnop1)}
-                {MenuBatton(1.5, 1.5, 2, 'Оборудование', ClickKnop2)}
-                {MenuBatton(1.75, 1.75, 3, 'В структуре компании', ClickKnop3)}
-                {MenuBatton(1.25, 1.25, 4, 'ИПР', ClickKnop4)}
-                {MenuBatton(1.75, 1.75, 5, 'Оценка компетенций', ClickKnop5)}
-                {MenuBatton(1.5, 1.5, 6, 'Адаптация', ClickKnop6)}
-                {MenuBatton(1.25, 1.25, 7, 'Цели', ClickKnop7)}
-                {MenuBatton(1.5, 1.5, 8, 'Задачи', ClickKnop8)}
+                {MenuBatton(1.5, 1.5, 1, "Отсутствия", ClickKnop1)}
+                {MenuBatton(1.5, 1.5, 2, "Оборудование", ClickKnop2)}
+                {MenuBatton(1.75, 1.75, 3, "В структуре компании", ClickKnop3)}
+                {MenuBatton(1.25, 1.25, 4, "ИПР", ClickKnop4)}
+                {MenuBatton(1.75, 1.75, 5, "Оценка компетенций", ClickKnop5)}
+                {MenuBatton(1.5, 1.5, 6, "Адаптация", ClickKnop6)}
+                {MenuBatton(1.25, 1.25, 7, "Цели", ClickKnop7)}
+                {MenuBatton(1.5, 1.5, 8, "Задачи", ClickKnop8)}
               </Grid>
             </Grid>
           </Grid>
         )}
         {bl1Form101 &&
-          (datestat.permissions.length > 0 || datestat.user.login === props.nik) &&
+          (datestat.permissions.length > 0 ||
+            datestat.user.login === props.nik) &&
           getPersonNik && <HcmBl1Form101 card={getPersonNik} />}
         {bl1Form102 && <HcmBl1Form102 />}
         {bl1Form103 && <HcmBl1Form103 />}
@@ -466,7 +502,12 @@ const HcmBlock1Gl = (props: { nik: string }) => {
         {bl1Form107 && <HcmBl1Form107 />}
         {bl1Form108 && <HcmBl1Form108 idx={RandomNumber(1, 10000)} />}
         {openImg && (
-          <HcmBlock1ViewImg close={setOpenImg} name={maskForm.name} nik={props.nik} pict={PICT} />
+          <HcmBlock1ViewImg
+            close={setOpenImg}
+            name={maskForm.name}
+            nik={props.nik}
+            pict={PICT}
+          />
         )}
       </Grid>
     </Grid>
